@@ -12,9 +12,6 @@ using System.Collections.Generic;
 
 namespace Complex.Wallets
 {
-    //https://ton.org/testnet-global.config.json
-    //https://ton.org/global-config.json
-
     public class TonAdapter : WalletAdapter
     {
         const string testUrl = "https://ton.org/testnet-global.config.json";
@@ -22,70 +19,8 @@ namespace Complex.Wallets
         const string testComxUrl = "http://complex-soft.com/res/config_test_valid.json";
         const string mainComxUrl = "http://complex-soft.com/res/config_valid.json";
 
-        private static async void GetHfts()
-        {
-            //string owner = "EQDsP4js-X1VVS7mBZAuoeXvKcvOYlkpsdELBHwJOez07ZTW";
-            //string json = @"{""query"":""" + Resources.GetText("getNfts.graphql") + @""",""variables"":{""ownerAddress"":""" + owner + @""",""first"":""20"",""after"":""0""}}";
-
-            //string res = Http.Get("https://api.getgems.io/graphql", json);
-            //string res = await Http.Post("https://api.getgems.io/graphql", json);
-
-        }
-
         static TonAdapter()
         {
-            //GetHfts();
-            //string hex = TonLib.AddressToHex("EQDsP4js-X1VVS7mBZAuoeXvKcvOYlkpsdELBHwJOez07ZTW");
-            //HttpTonApi.GetNftItems("EQDsP4js-X1VVS7mBZAuoeXvKcvOYlkpsdELBHwJOez07ZTW", "EQAG2BH0JlmFkbMrLEnyn2bIITaOSssd4WdisE4BdFMkZbir", false);
-            //HttpAnton.GetNftCollections("EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", false);
-
-            //Array<NftMintItem> items = new Array<NftMintItem>();
-            //items.Add(new NftMintItem(10000, 0, "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg"));
-            //items.Add(new NftMintItem(10000, 1, "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg"));
-            //items.Add(new NftMintItem(10000, 2, "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg"));
-            //items.Add(new NftMintItem(10000, 3, "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg"));
-            //items.Add(new NftMintItem(10000, 4, "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg"));
-            //items.Add(new NftMintItem(10000, 5, "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg"));
-            //items.Add(new NftMintItem(10000, 6, "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg", "EQCSCRdQvxNIYEOy3MjbyAZo_RGI0gHxuROV_vnYQoHuJwIg"));
-
-            //NftController.BatchMint(1, items.ToArray());
-
-            //string msg = "Simultaneous work with several wallets, including test ones";
-            //byte[] salt = Crypto.RandomSecure(24);
-            //PrivateKey privateKey = PrivateKey.Generate();
-            //PublicKey publicKey = privateKey.GetPublicKey();
-            //byte[] data = Crypto.EncryptData(msg, publicKey, privateKey, salt);
-            //string res = Crypto.DecryptData(data, publicKey, privateKey, salt);
-
-            //string testText = "Simultaneous work with several wallets, including test ones";
-            //(byte[] publicKey, byte[] privateKey) = Nacl.Generate();
-            //byte[] nonce = Nacl.GenNonce();
-            //byte[] encrypt = Nacl.Encrypt(publicKey, privateKey, Util.GetBytes(testText), nonce);
-            //byte[] decrypt = Nacl.Decrypt(publicKey, privateKey, encrypt, nonce);
-            //string res = Util.GetString(decrypt);
-
-            //Util.Run(() => { UniqueCollection<WhiteWallet> Wallets = WhiteWallet.Wallets; });
-
-            //ConnectEventError error = new ConnectEventError(1, ErrorCode.UserDeclinedTheConnection, null);
-            //string json = Json.Serialize(error);
-
-            //string msg = "Simultaneous work with several wallets, including test ones";
-            //var (pub1, priv1) = Nacl.Generate();
-            //var (pub2, priv2) = Nacl.Generate();
-            //byte[] nonce = Nacl.GenNonce();
-            //byte[] encrypted = Nacl.Encrypt2(pub2, priv1, msg.ToBytes(), nonce);
-            //byte[] decrypted = Nacl.Decrypt2(pub1, priv2, encrypted, nonce);
-
-            ////JNacl.Nacl nacl1 = new JNacl.Nacl(priv1, pub2);
-            ////byte[] encrypted2 = nacl1.Encrypt2(msg.ToBytes(), nonce);
-
-            ////JNacl.Nacl nacl2 = new JNacl.Nacl(priv2, pub1);
-            ////byte[] decrypted = nacl2.Decrypt2(encrypted2, nonce);
-            //////string text = decrypted.GetString();
-
-            //////byte[] encrypted = Chaos.NaCl.XSalsa20Poly1305.Encrypt(msg.ToBytes(), pub2, nonce);
-            //////byte[] decrypted = Chaos.NaCl.XSalsa20Poly1305.TryDecrypt(encrypted, pub2, nonce);
-            //string text = decrypted.GetString();
         }
         protected TonAdapter(IData data)
             : base(data)
