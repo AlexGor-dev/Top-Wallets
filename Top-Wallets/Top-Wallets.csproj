@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D82255B7-5840-4EA6-82E8-2898B5C343D2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Complex.Wallets</RootNamespace>
+    <AssemblyName>Top-Wallets</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>top_wallets.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Complex.Audio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Drawing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Dialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Trader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Trader.Adapters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.Adapters.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Trader.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainContainer.cs" />
+    <Compile Include="MainForm.cs" />
+    <Compile Include="MessagesMenu.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExplorersContent.cs" />
+    <Compile Include="TotalPanel.Container.cs" />
+    <Compile Include="TotalPanel.cs" />
+    <Compile Include="TotalPanel.Currencies.cs" />
+    <Compile Include="TotalPanel.Expand.cs" />
+    <Compile Include="TotalPanel.Support.cs" />
+    <Compile Include="TotalPanel.SupportItem.cs" />
+    <Compile Include="TotalPanel.TopSupport.cs" />
+    <Compile Include="WalletsWorkspace.cs" />
+    <Compile Include="WalletsContent.cs" />
+    <Compile Include="WorkspacePanel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Complex.Ton\Complex.Ton.csproj">
+      <Project>{9989b540-4c00-4574-946d-735b6d181d0d}</Project>
+      <Name>Complex.Ton</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Complex.Wallet.Shared\Complex.Wallets.Shared.csproj">
+      <Project>{03427464-e0e6-45cf-92f1-3b024f99e213}</Project>
+      <Name>Complex.Wallets.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Complex.Wallets\Complex.Wallets.csproj">
+      <Project>{7933d5c2-7376-4f7e-92bd-2d04c90b7e34}</Project>
+      <Name>Complex.Wallets</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\lang.lang" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\Main.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\wallets.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\coins.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\create_wallet.svg" />
+    <EmbeddedResource Include="Resource\import_wallet.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\explorers.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\top_wallets_96.png" />
+    <EmbeddedResource Include="Resource\top_wallets_48.png" />
+    <Content Include="top_wallets.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <EmbeddedResource Include="Resource\StartDefault.tww" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+  <PropertyGroup>
+    <PreBuildEvent>set fileName="$(TargetDir)tonlib.dll"
+IF NOT EXIST %25fileName%25 (
+    copy /Y "$(SolutionDir)Libs\tonlib.dll" %25fileName%25 
+)</PreBuildEvent>
+  </PropertyGroup>
+</Project>

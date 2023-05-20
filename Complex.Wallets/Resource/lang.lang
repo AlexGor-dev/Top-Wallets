@@ -1,0 +1,205 @@
+﻿id;en;ru;
+
+allTransactionLoaded; All transaction loaded; Все транзакции загружены;
+confirmation; Confirmation; Подтверждение;
+walletConfirmationText; Do you want to send {0} {1} to address:; Вы хотите отправить {0} {1} на адрес:;
+invalidAddress; Invalid address; Неверный адрес;
+fee; Fee; Fee;
+insufficientFunds; Unfortunately, your transfer couldn't be completed. You don't have enough funds..; К сожалению, ваш перевод не может быть завершен. У вас недостаточно средств.;
+walletCantEncryptComment; Note: Your comment "{0}" will not be encrypted.; Примечание. Ваш комментарий "{0}" не будет зашифрован.;
+invalidPassword; Invalid password; Неверный пароль;
+walletSendingGramsInfo; Please wait a few seconds for your transaction to be processed...; Пожалуйста, подождите несколько секунд, пока ваша транзакция будет обработана...;
+sending; Sending; Отправка;
+walletSendWarningText; This address belongs to a non-deployed wallet. Are you sure you want to transfer {0} to it?; Этот адрес принадлежит не развернутому кошельку. Вы уверены, что хотите передать ему {0}?;
+walletSendSameWalletText; Sending {0} from a wallet to the same wallet doesn't make sense, you will simply waste a portion of the value on blockchain fees.; Отправка {0} из кошелька в тот же кошелек не имеет смысла, вы просто потратите часть стоимости на комиссии блокчейна.;
+errorOccurred; An error occurred.; Произошла ошибка.;
+sendingCompleted; Sending {0} completed!; Отправка {0} выполнена!;
+walletSendDoneText; {0} {1} have been sent to\n{2}; {0} {1} отправлены на\n{2};
+createInvoice; Create Invoice; Создать ссылку;
+walletInvoiceInfo; You can specify the amount and purpose of the payment to save the sender some time:; Вы можете указать сумму и назначение платежа, чтобы сэкономить отправителю время:;
+generateQrCode; Generate QR-code; Сгенерировать QR-код;
+copyInvoiceUrl; Copy invoice URL; Копировать ссылку;
+invoiceUrl; Invoice Url; Ссылка;
+invoiceQr; Invoice QR-code; QR-код ссылки;
+copyQr; Copy QR-code; Копировать QR-код;
+walletShareInvoiceUrlInfo; Share this link to receive {0}.; Поделитесь этой ссылкой, чтобы получить {0}.;
+walletDeployment ; Wallet deployment; Развертывание кошелька;
+walletDeploymentInfo; Please wait a few seconds while your wallet is deployed on the {0} network...; Пожалуйста, подождите несколько секунд, пока ваш кошелек будет развернут в сети {0}...;
+deploymentCompleted; Deployment completed; ;
+walletDeploymentDoneText; Your wallet has been successfully deployed on the {0} network.; Ваш кошелек успешно развернут в сети {0}.;
+
+
+createWallet; Create wallet; Создать кошелек;
+importWallet; Import wallet; Импорт кошелька;
+importWalletFromFile; Import wallet from file; Импорт кошелька из файла;
+copyAddress; Copy address; Копировать адрес;
+copiedToClipboard; copied to clipboard; скопирован в буфер обмена;
+address; Address; Адрес;
+
+importWalletDescription; You can restore access to your wallet by entering the 24 words you wrote down when creating the wallet.; Вы можете восстановить доступ к своему кошельку, введя 24 слова, которые вы записали при создании кошелька.;
+yourAddress; Your Wallet Address; Адрес вашего кошелька;
+yourWallet; Your Wallet {0}; Ваш кошелек {0};
+walletAddress; Wallet Address; Адрес кошелька;
+walletShareInfo; Share this address with other {0}\nwallet owners to receive {0} from them.; Поделитесь этим адресом с другими владельцами кошельков {0}\n, чтобы получать от них {0}.;
+recipientWalletAddress; Recipient wallet address; Адрес кошелька получателя;
+recipientOwnerWalletAddress; Recipient owner wallet address; Адрес владельца кошелька получателя;
+enterWalletAddress; Enter wallet address; Введите адрес кошелька;
+commentOptional; Comment (optional); Комментарий (необязательно);
+enterAmountToSend; Enter amount to send; Введите количество для отправки;
+noTransaction; No transaction; Нет транзакции;
+copyWalletAddress; Copy wallet address; Копировать адрес кошелька;
+exportWalletToFile; Export wallet to file; Экспорт кошелька в файл;
+
+walletInfo; The {0} wallet allows you to make fast and secure blockchain-based payments without intermediaries.; Кошелек {0} позволяет совершать быстрые и безопасные платежи на основе блокчейна без посредников.;
+coinWallet; {0} Wallet; {0} Кошелёк;
+congratulations; Congratulations; Поздравления;
+walletCongratulationsinfo; Your {0} wallet has just been created. Only you control it.\n\nTo be able to always have access to it, please write down secret words and set up a secure passcode.; Ваш кошелек {0} только что создан. Только вы контролируете его. \n\nЧтобы всегда иметь к нему доступ, пожалуйста, запишите секретные слова и установите безопасный пароль.;
+createWalletDescription; Write down these 24 words in the correct order and store them in a secret place. \nUse these secret words to restore access to your wallet if you lose your passcode or device.; Запишите эти 24 слова в правильном порядке и сохраните их в секретном месте. \nИспользуйте эти секретные слова, чтобы восстановить доступ к вашему кошельку, если вы потеряете пароль или устройство.;
+24SecretWords; 24 Secret Words; 24 Секретных Слова;
+testTime; Test time!; Время тестирования!;
+walletTestTimeInfo; Now let’s check that you wrote your secret words correctly.\n\nPlease enter the words {0}, {1} and {2} below:; Теперь давайте проверим, правильно ли вы написали свои секретные слова.\n\nПожалуйста, введите слова {0}, {1} и {2} ниже:;
+walletTestTimeAlertText; The secret words you have entered do not match the ones in the list.; Введенные вами секретные слова не совпадают с теми, что указаны в списке.;
+walletTestTimeAlertTitle; Incorrect words; Неправильные слова;
+perfect; Perfect!; Отлично!;
+walletPerfectInfo; Now set up a passcode to secure your transactions.; Теперь установите пароль для защиты ваших транзакций.;
+walletReady; Ready to go!; Готово!;
+walletReadyInfo; You are all set. Now you have a wallet that only you control — directly, without middlemen or bankers.; У вас все настроено. Теперь у вас есть кошелек, которым управляете только вы — напрямую, без посредников и банкиров.;
+walletView; View My Wallet; Посмотреть мой кошелек;
+waitCreateWalletCaption; Wallet creating; Создание кошелька;
+waitCreateWalletDescription; Please wait a few seconds for your wallet to be created...; Пожалуйста, подождите несколько секунд, пока ваш кошелёк будет создан...;
+waitCreateWordsCaption; Secret words creating; Создание секретных слов;
+waitCreateWordsDescription; Please wait a few seconds for the secret words to be generated...; Пожалуйста, подождите несколько секунд, пока секретные слова будут созданы...;
+waitImportCaption; Import wallet data; Импорт данных кошелька;
+waitImportDescription; Please wait a few seconds while the data is being imported..; Пожалуйста, подождите несколько секунд, пока импортируются данные..;
+walletAlreadyExist; Wallet with address\n{0}\nhas already been added to your list of wallets.; Кошелёк с адресом\n{0}\nуже добавлен в Ваш список кошельков.;
+importWalletError; Failed to import wallet.; Не удалось импортировать кошелёк.;
+notFoundAddress; Not found wallet address; Не найден адрес кошелька;
+transactionsIntervals; Transactions intervals; Интервалы транзакций;
+addressRecipient; Address of the recipient; Адрес получателя;
+sendersAddress; Sender's address; Адрес отправителя;
+resendCoins; Send {0} to this Recipient; Отправить {0} этому получателю;
+
+lastChanges; Last changes; Последние изменения;
+allLoadedTransactions; All loaded transactions; Все загруженные транзакции;
+exportWalletToFile; Export wallet to file; Экспорт кошелька в файл;
+viewWalletWords; View wallet secret words; Посмотреть секретные слова кошелька;
+allPeriod; All period; Весь период;
+exporToFile; Export wallet {0} to file; Экспорт кошелька {0} в файл;
+exporToFile2; Export wallet to file; Экспорт кошелька в файл;
+exporToFileDescription; Your wallet will be exported to a file.\n\nSet a secure password for wallet export data.; Ваш кошелёк будет экспортирован в файл.\n\nУстановите безопасный пароль для экспортных данных кошелька.;
+errorGetExportData; Error getting export data.; Ошибка получения экспортных данных.;
+exportWalletDone; Wallet export completed successfully.; Экспорт кошелька успешно выполнен.;
+waitExportDataCaption; Getting export data.; Получение экспортных данных.;
+waitExportDataDescription; Please wait a few seconds while the data is being exported...; Пожалуйста, подождите несколько секунд, пока идет экспорт данных...;
+notExportWaller; Failed to export wallet.; Не удалось экспортировать кошелёк.;
+enterPassword; Enter password.; Введите пароль.;
+enterWalletPassword; Enter the password for your wallet.; Введите пароль для вашего кошелька.;
+setExportDataPassword; Set a secure password for wallet export data.; Установите безопасный пароль для экспортных данных кошелька.;
+enterExportDataPassword; Enter the password for the wallet export data.; Введите пароль для экспортных данных кошелька.;
+exportWalletCancelled; Wallet export has been cancelled.; Экспорт кошелька отменён.;
+saveWalletToFile; Save your wallet to a file.; Сохраните Ваш кошелёк в файл.;
+setWalletPassword; Set a secure password for your wallet.; Установите безопасный пароль для Вашего кошелька.;
+importWalletCanceled; Wallet import cancelled.; Импорт кошелька отменен.;
+invalidFile; Invalid file {0}.; Некорректный файл {0}.;
+notFoundAdapter; Adapter not found {0}.; Не найден адаптер {0}.;
+importFromFileInfo; To import, you must enter a password for your wallet and a password for export data.; Для импорта необходимо ввести пароль для кошелька и пароль для экспортных данных.;
+exportDataError; Data export error.; Ошибка экспорта данных.;
+writeSecretWords; Write down secret words; Записать секретные слова;
+
+deleteWallet; Delete wallet; Удалить кошелек;
+deleteWalletDesc; To restore the wallet, you can write down secret words or export to a file.; Что бы восстановить кошелёк, Вы можете записать секретные слова или экспортировать в файл.;
+deletingWallet; Deleting a wallet {0}; Удаление кошелька {0};
+walletDeletedSuccessfully; Wallet deleted successfully.; Кошелёк успешно удален.;
+waitDeleteWalletCaption; Deleting a wallet; Удаление кошелька;
+waitDeleteWalletDescription; Please wait a few seconds while the wallet is deleted..; Пожалуйста, подождите несколько секунд, пока удаляется кошелёк..;
+pleaseWait; Please wait a few seconds..; Пожалуйста, подождите несколько секунд..;
+
+buyCoins; Buy {0}; Купить {0};
+sellCoins; Sell {0}; Продать {0};
+
+USDLang; U.S. dollar; Доллар США;
+EURLang; Euro; Евро;
+RUBLang; Russian ruble; Российский рубль;
+
+loadTransactions; Load transactions; Загрузить транзакции;
+transactionsChart; Transactions chart; График транзакций;
+TONChart; TON chart; График TON;
+
+addressNotFoundFromPublicKey; Public key address not found; Не найден адрес по открытому ключу;
+noChanges; No changes; Нет изменений;
+setWalletName; Set wallet name; Задайте имя кошелька;
+createExplorer; Create cryptocurrency explorer; Создать обозреватель криптовалют;
+closeExplorer; Close cryptocurrency explorer; Закрыть обозреватель криптовалют;
+
+totalReal; Total real; Total real;
+totalTest; Total test; Total test;
+multiWalletCryptocurrency; Multiple wallets cryptocurrency; Мульти кошелёк криптовалют;
+supportProject; Support project; Поддержать проект;
+total1; Total; Total;
+selectWalletToSend; Choose a wallet to send coins.; Выберете кошелёк для отправки монет.;
+selectedWallet; Selected wallet; Выбранный кошелек;
+enterPasswordForWallet; Enter password for wallet {0}\n{1}; Введите пароль для кошелька {0}\n{1};
+
+enterYourNameMessage; Enter your name and message; Введите Ваше имя и сообщение;
+enterYourNameMessageDesc; When sending more than {0}, your name and message will be shown to all users using the program at the moment.; При отправки более {0} Ваше имя и сообщение будут показаны всем пользователям использующим программу в данный момент.;
+enterYourNameOrLink; Enter your name or link; Введите ваше имя или ссылку;
+enterYourNameOptional; Enter your name (Optional); Введите ваше имя (Необязательно);
+enterMessageOrLink; Enter message or link; Введите сообщение или ссылку;
+enterMessageOptional; Enter message (Optional); Введите сообщение (Необязательно);
+noWalletsAvailable; No wallets available; Нет доступных кошельков;
+relativeTimeTransactions; Display relative time of transactions; Отображать относительное время транзакций;
+thankYouSupport; Thank you very much for your support!!!; Спасибо большое за поддержку!!!;
+showYourMessage; Your name and message will be shown to all users using the program at the moment.; Ваше имя и сообщение будут показаны всем пользователям использующим программу в данный момент.;
+topProjectSupport; Top project support; Top поддержка проекта;
+lastMessages; Last messages; Последние сообщения;
+incognito; Incognito; Инкогнито;
+showProjectSupportMessages; Show project support messages; Показывать сообщения о поддержки проекта;
+inTransaction; Incoming transaction; Входящая транзакция;
+outTransaction; Outgoing transaction; Исходящая транзакция;
+projectSupportMessages; Project support messages; Сообщения о поддержки проекта;
+showTransactionMessages; Show transaction messages; Показывать сообщения о транзакциях;
+lastTransactions; Last transactions; Последние транзакции;
+tgCanal; Telegram channel; Телеграм канал;
+tgSupport; Support Chat; Чат поддержки;
+supportMail; Support Email; Емаил поддержки;
+myWallet; My wallet; Мой кошелёк;
+
+totalSupply; Total supply; Общий объем;
+owner; Owner; Владелец;
+ownerAddress; Owner address; Адрес владельца;
+symbol; Symbol; Символ;
+decimals; Decimals; Точность;
+
+TransactionMessageType.None; None; Неопределено;
+TransactionMessageType.Message; Message; Сообщение;
+TransactionMessageType.TransactionType; Transaction type; Тип транзакции;
+TransactionMessageType.FunctionName; Function name; Имя функции;
+
+skipSaveWords; Skip saving words; Пропуск сохранения слов;
+warnSkipSaveWords; You missed saving the secret words, without saving the words you cannot recover your wallet. But after creating a wallet, you will be able to save secret words and export the wallet to a file.; Вы пропустили сохранение секретных слов, без сохранения слов Вы не можене восстановить ваш кошелёк. Но после создания кошелька Вам будет доступно сохранение секретных слов и экспорт кошелька в файл.;
+
+showHideChildWallets; Show/hide child wallets; Показать/скрыть дочерние кошельки;
+selectChildsToImport; Select child wallets to import.; Выберите дочерние кошельки для импорта.;
+createdWith; Created with; Создано с помощью;
+sendingCoinsToAddress; Sending coins to address {0}; Отправка монет на адрес {0};
+
+connectToDApp; Connection to a DApp; Подключение к DApp;
+connect; Connect; Соединить;
+decline; Decline; Отклонить;
+termsOfUse; Terms of use; Условия использования;
+privacyPolicy; Privacy policy; Политика конфиденциальности;
+UserDeclinedTheConnection; User declined the connection; Пользователь отклонил соединение;
+UserDisconnectTheConnection; User disconnect the connection; Пользователь прервал соединение;
+connectionRejected; Connection Rejected; Соединение отклонено;
+connectionTerminated; Connection terminated; Соединение прервано;
+commissionCalculation; Commission calculation..; Расчёт комиссии..;
+sendTransactions; Send transactions; Отправить транзакции;
+totalSend; Total send; Всего отправить;
+totalFees; Total fees; Суммарная комиссия;
+sendTransactionsResult; Result of sending transactions; Результат отправки транзакций;
+
+
+
+
+
+

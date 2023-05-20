@@ -1,0 +1,42 @@
+﻿{
+    "actor": [
+        {
+            "name": "Neocrypto",
+            "image": "http://complex-soft.com/icons/neocrypto28.jpg",
+            "urlBuy": "https://new.neocrypto.net/",
+            "action": "buy",
+            "enBuy": "Buy TON with a bank card.",
+            "ruBuy": "Покупка TON по банковской карте. Не работает с картами России и Беларуси."
+        },
+        {
+            "name": "Bestchange",
+            "image": "http://complex-soft.com/icons/bc.jpg",
+            "urlBuy": "https://www.bestchange.ru/sberbank-to-ton.html",
+            "urlSell": "https://www.bestchange.ru/ton-to-sberbank.html",
+            "action": "buy sell",
+            "enBuy": "Buy TON with a bank card.",
+            "ruBuy": "Покупка TON по банковской карте.",
+            "enSell": "Sell TON and withdrawal of funds to a bank card.",
+            "ruSell": "Продажа TON и вывод средств на банковскую карту."
+        },
+        {
+            "name": "Mercuryo",
+            "image": "http://complex-soft.com/icons/mercuryo.jpg",
+            "urlBuy": "https://exchange.mercuryo.io/?currency=TONCOIN",
+            "urlSell": "https://exchange.mercuryo.io/?currency=TONCOIN",
+            "action": "buy sell",
+            "enBuy": "Buy TON with a bank card.",
+            "ruBuy": "Покупка TON по банковской карте. Не работает с картами России и Беларуси.",
+            "enSell": "Sell TON and withdrawal of funds to a bank card.",
+            "ruSell": "Продажа TON и вывод средств на банковскую карту. Не работает с картами России и Беларуси."
+        },
+        {
+            "name": "Wallet (Telegram bot)",
+            "image": "",
+            "urlBuy": "https://t.me/wallet_news/103",
+            "action": "buy",
+            "enBuy": "Buying TON with a bank card.",
+            "ruBuy": "Покупка TON по банковской карте."
+        }
+    ]
+}

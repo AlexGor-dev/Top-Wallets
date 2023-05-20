@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7933D5C2-7376-4F7E-92BD-2D04C90B7E34}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Complex.Wallets</RootNamespace>
+    <AssemblyName>Complex.Wallets</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Complex.Audio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Drawing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Dialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Trader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Trader.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\AdapterCurrencyLabel.cs" />
+    <Compile Include="Components\AdapterWaitLabel.cs" />
+    <Compile Include="Components\AdapterLabel.cs" />
+    <Compile Include="Components\BalanceChangedLabel.cs" />
+    <Compile Include="Components\BalanceLabel.cs" />
+    <Compile Include="Components\BuySellPanel.cs" />
+    <Compile Include="Components\ChartPanel.cs" />
+    <Compile Include="CoinImage.cs" />
+    <Compile Include="CoinsAdapter.cs" />
+    <Compile Include="Components\MarketPanel.cs" />
+    <Compile Include="Components\NftsPanel.cs" />
+    <Compile Include="Components\TokenItem.cs" />
+    <Compile Include="Components\TokensListPanel.cs" />
+    <Compile Include="Components\TokensPanel.cs" />
+    <Compile Include="Components\TransactionDetailItem.cs" />
+    <Compile Include="Components\TransactionExpandedPanel.cs" />
+    <Compile Include="Components\TransactionGroupItem.cs" />
+    <Compile Include="Components\TransactionItem.cs" />
+    <Compile Include="Components\TransactionWaitPanel.cs" />
+    <Compile Include="Forms\AddressItem.cs" />
+    <Compile Include="Forms\DoneWalletPanel.cs" />
+    <Compile Include="Components\WalletLiteItem.cs" />
+    <Compile Include="Forms\SendInfoPanel.cs" />
+    <Compile Include="HttpClients\TatumClient.cs" />
+    <Compile Include="WalletBasePanel.cs" />
+    <Compile Include="Wallets\CustomWallet.cs" />
+    <Compile Include="Forms\MultiSendController.cs" />
+    <Compile Include="Forms\MultiSendForm.cs" />
+    <Compile Include="Forms\MultiWalletsSelectPanel.cs" />
+    <Compile Include="Forms\SendController.cs" />
+    <Compile Include="Forms\SendMainPanel.cs" />
+    <Compile Include="Forms\SupportForm.cs" />
+    <Compile Include="Forms\SupportSendController.cs" />
+    <Compile Include="Settings\BuySellActor.cs" />
+    <Compile Include="Settings\CoinGeckoInfo.cs" />
+    <Compile Include="Settings\CoinGeckoSettings.cs" />
+    <Compile Include="Settings\CoinMarket.cs" />
+    <Compile Include="Settings\Controller.cs" />
+    <Compile Include="CoinGecko.cs" />
+    <Compile Include="Wallets\Explorer.cs" />
+    <Compile Include="Components\AdapterItem .cs" />
+    <Compile Include="Components\ExplorerItem.cs" />
+    <Compile Include="Components\ExplorerPanel.cs" />
+    <Compile Include="Forms\BuySellMenu.cs" />
+    <Compile Include="Forms\DeleteWalletController.cs" />
+    <Compile Include="Forms\DeleteWalletForm.cs" />
+    <Compile Include="Forms\ExportToFileController.cs" />
+    <Compile Include="Forms\ExportToFileForm.cs" />
+    <Compile Include="Forms\ExportWordsController.cs" />
+    <Compile Include="Forms\ExportWordsForm.cs" />
+    <Compile Include="Forms\FilePanel.cs" />
+    <Compile Include="Forms\ReceiveMainPanel.cs" />
+    <Compile Include="Forms\ReceiveMenu.cs" />
+    <Compile Include="Forms\WalletController.cs" />
+    <Compile Include="Forms\WalletForm.cs" />
+    <Compile Include="Forms\WordsPanel.cs" />
+    <Compile Include="Interfaces.cs" />
+    <Compile Include="Forms\ReceiveForm.cs" />
+    <Compile Include="Forms\SendForm.cs" />
+    <Compile Include="Components\LastTimeLabel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\CryptoCoinInfo.cs" />
+    <Compile Include="Settings\CurrencyInfo.cs" />
+    <Compile Include="Settings\MainSettings.cs" />
+    <Compile Include="Settings\RemoteSettings.cs" />
+    <Compile Include="Settings\SupportSetting.cs" />
+    <Compile Include="Wallets\WalletsData.cs" />
+    <Compile Include="Settings\WalletsSetting.cs" />
+    <Compile Include="Components\TransactionDetailPanel.cs" />
+    <Compile Include="Components\TransactionMessageContainer.cs" />
+    <Compile Include="Components\TransactionPanel.cs" />
+    <Compile Include="Components\TransactionsChangedLabel.cs" />
+    <Compile Include="Components\TransactionsChartData.cs" />
+    <Compile Include="Components\TransactionsChartPanel.cs" />
+    <Compile Include="Components\TransactionsIntervalLabel.cs" />
+    <Compile Include="Wallets\Wallet.cs" />
+    <Compile Include="Wallets\WalletAdapter.cs" />
+    <Compile Include="Wallets\WalletAdapterExtension.cs" />
+    <Compile Include="Wallets\WalletInfo.cs" />
+    <Compile Include="Components\WalletItem.cs" />
+    <Compile Include="Components\WalletMainPanel.cs" />
+    <Compile Include="Components\WalletPage.cs" />
+    <Compile Include="Components\WalletPanel.cs" />
+    <Compile Include="Words.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Complex.Wallet.Shared\Complex.Wallets.Shared.csproj">
+      <Project>{03427464-e0e6-45cf-92f1-3b024f99e213}</Project>
+      <Name>Complex.Wallets.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\words.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\copyAddress.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\in_transaction.svg" />
+    <EmbeddedResource Include="Resource\out_transaction.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\adapter_connected.mp3" />
+    <EmbeddedResource Include="Resource\adapter_disconnected.mp3" />
+    <EmbeddedResource Include="Resource\in_transaction.mp3" />
+    <EmbeddedResource Include="Resource\nft_token.svg" />
+    <None Include="Resource\switch.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\cross.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\export.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\find.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\lang.lang" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\load_transactions.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\top_wallets.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\support_message.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\out_transaction.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\dapp.svg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

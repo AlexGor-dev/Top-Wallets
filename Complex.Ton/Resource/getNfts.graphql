@@ -1,0 +1,39 @@
+query NftItemConnection($ownerAddress: String!, $first: Int!, $after: String) {
+  nftItemsByOwner(ownerAddress: $ownerAddress, first: $first, after: $after) {
+    cursor
+    items {
+      id
+      name
+      address
+      index
+      kind
+      image: content {
+        type: __typename
+        ... on NftContentImage {
+          originalUrl
+          thumb: image {
+            sized(width: 480, height: 480)
+          }
+        }
+        ... on NftContentLottie {
+          preview: image {
+            sized(width: 480, height: 480)
+          }
+        }
+        ... on NftContentVideo {
+          cover: preview(width: 480, height: 480)
+        }
+      }
+      collection {
+        address
+        name
+        isVerified
+      }
+      sale {
+        ... on NftSaleFixPrice {
+          fullPrice
+        }
+      }
+    }
+  }
+}

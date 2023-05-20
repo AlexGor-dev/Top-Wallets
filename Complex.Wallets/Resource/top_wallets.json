@@ -1,0 +1,220 @@
+﻿{
+    "version": "2",
+    "tgCanalRu": "https://t.me/top_wallets",
+    "tgCanalEn": "https://t.me/top_wallets",
+    "tgSupportRu": "https://t.me/Top_Wallets_Support",
+    "tgSupportEn": "https://t.me/Top_Wallets_Support",
+    "supportMail": "",
+    "site": "",
+    "support": {
+        "enabled": "false",
+        "maxTops": "5",
+        "maxLasts": "10",
+        "maxDays": "7",
+        "maxNameLenght": "126",
+        "maxMessageLenght": "256"
+    },
+    "coinGecko": {
+        "useBarsUrl": "false",
+        "barsUrl": "https://www.coingecko.com/price_charts/",
+        "coinsInfos": [
+            {
+                "symbol": "TON",
+                "geckoSymbol": "the-open-network",
+                "geckoID": "17980",
+                "tickSize": "0.01"
+            },
+            {
+                "symbol": "TRX",
+                "geckoSymbol": "tron",
+                "geckoID": "1094",
+                "tickSize": "0.0001"
+            },
+            {
+                "symbol": "USDT",
+                "geckoSymbol": "tether",
+                "geckoID": "325",
+                "tickSize": "0.01"
+            },
+            {
+                "symbol": "BTC",
+                "geckoSymbol": "bitcoin",
+                "geckoID": "1",
+                "tickSize": "0"
+            },
+            {
+                "symbol": "ETH",
+                "geckoSymbol": "ethereum",
+                "geckoID": "279",
+                "tickSize": "0"
+            },
+            {
+                "symbol": "BNB",
+                "geckoSymbol": "binancecoin",
+                "geckoID": "825",
+                "tickSize": "0"
+            }
+        ]
+    },
+    "cryptoCoins": [
+        {
+            "symbol": "TON",
+            "adapterID": "TON",
+            "name": "Toncoin",
+            "enabled": "true",
+            "color": "#2190c7",
+            "geckoSymbol": "the-open-network",
+            "geckoID": "17980",
+            "tickSize": "0.01",
+            "supportEnabled": "true",
+            "supportAddress": "EQAj618k7jvJ28jYNbtpHvkVF0JNSSgAuSNY5uTmoGf_Ew-V",
+            "supportTestAddress": "EQCoK1mOW8kkcp9887bxOSXN0zNRw5AvQ6MidejbMTZQPhgA",
+            "supportActionAmount": "0.5",
+            "buySellActors": [
+                {
+                    "name": "Neocrypto",
+                    "image": "http://complex-soft.com/icons/neocrypto28.jpg",
+                    "urlBuy": "https://new.neocrypto.net/",
+                    "action": "buy",
+                    "enBuy": "Buy TON with a bank card.",
+                    "ruBuy": "Покупка TON по банковской карте. Не работает с картами России и Беларуси."
+                },
+                {
+                    "name": "Bestchange",
+                    "image": "http://complex-soft.com/icons/bc.jpg",
+                    "urlBuy": "https://www.bestchange.ru/sberbank-to-ton.html",
+                    "urlSell": "https://www.bestchange.ru/ton-to-sberbank.html",
+                    "action": "buy sell",
+                    "enBuy": "Buy TON with a bank card.",
+                    "ruBuy": "Покупка TON по банковской карте.",
+                    "enSell": "Sell TON and withdrawal of funds to a bank card.",
+                    "ruSell": "Продажа TON и вывод средств на банковскую карту."
+                },
+                {
+                    "name": "Mercuryo",
+                    "image": "http://complex-soft.com/icons/mercuryo.jpg",
+                    "urlBuy": "https://exchange.mercuryo.io/?currency=TONCOIN",
+                    "urlSell": "https://exchange.mercuryo.io/?currency=TONCOIN",
+                    "action": "buy sell",
+                    "enBuy": "Buy TON with a bank card.",
+                    "ruBuy": "Покупка TON по банковской карте. Не работает с картами России и Беларуси.",
+                    "enSell": "Sell TON and withdrawal of funds to a bank card.",
+                    "ruSell": "Продажа TON и вывод средств на банковскую карту. Не работает с картами России и Беларуси."
+                },
+                {
+                    "name": "Wallet (Telegram bot)",
+                    "image": "",
+                    "urlBuy": "https://t.me/wallet_news/103",
+                    "action": "buy",
+                    "enBuy": "Buying TON with a bank card.",
+                    "ruBuy": "Покупка TON по банковской карте."
+                }
+            ]
+        },
+        {
+            "symbol": "BTC",
+            "adapterID": "BTC",
+            "name": "Bitcoin",
+            "enabled": "false",
+            "color": "#f6921a",
+            "geckoSymbol": "bitcoin",
+            "geckoID": "1",
+            "tickSize": "0",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "0.00009"
+        },
+        {
+            "symbol": "ETH",
+            "adapterID": "ETH",
+            "name": "Ethereum",
+            "enabled": "false",
+            "color": "#666d92",
+            "geckoSymbol": "ethereum",
+            "geckoID": "279",
+            "tickSize": "0",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "0.0013"
+        },
+        {
+            "symbol": "BNB",
+            "adapterID": "BNB",
+            "name": "Binancecoin",
+            "enabled": "false",
+            "color": "#f0b909",
+            "geckoSymbol": "binancecoin",
+            "geckoID": "825",
+            "tickSize": "0",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "0.0065"
+        },
+        {
+            "symbol": "TRX",
+            "adapterID": "TRX",
+            "name": "Tron",
+            "enabled": "false",
+            "color": "#cf5d57",
+            "geckoSymbol": "tron",
+            "geckoID": "1094",
+            "tickSize": "0.0001",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "40"
+        },
+        {
+            "symbol": "USDT",
+            "adapterID": "TRX",
+            "name": "Tether USD",
+            "enabled": "false",
+            "color": "#019396",
+            "geckoSymbol": "tether",
+            "geckoID": "325",
+            "tickSize": "0.01",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "2.5"
+        },
+        {
+            "symbol": "USDC",
+            "adapterID": "TRX",
+            "name": "USD Coin",
+            "enabled": "false",
+            "color": "#2975cb",
+            "geckoSymbol": "usd-coin",
+            "geckoID": "6319",
+            "tickSize": "0.01",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "2.5"
+        },
+        {
+            "symbol": "TUSD",
+            "adapterID": "TRX",
+            "name": "TrueUSD",
+            "enabled": "false",
+            "color": "#015afe",
+            "geckoSymbol": "true-usd",
+            "geckoID": "3449",
+            "tickSize": "0.01",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "2.5"
+        },
+        {
+            "symbol": "USDD",
+            "adapterID": "TRX",
+            "name": "USDD",
+            "enabled": "false",
+            "color": "#007458",
+            "geckoSymbol": "usdd",
+            "geckoID": "25380",
+            "tickSize": "0.01",
+            "supportEnabled": "false",
+            "supportAddress": "",
+            "supportActionAmount": "2.5"
+        }
+
+    ]
+}

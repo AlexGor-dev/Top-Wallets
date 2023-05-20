@@ -1,0 +1,42 @@
+﻿[
+    {
+        "name": "STON.fi",
+        "image": "https://avatars.githubusercontent.com/u/105225974?s=200&v=4",
+        "url": "https://app.ston.fi/swap?ft=TON&fa=1",
+        "en": "Decentralized exchanger with a minimum commission.",
+        "ru": "Децентрализованный обменник с минимальной комиссией."
+    },
+    {
+        "name": "DeDust",
+        "image": "https://api.ton.app/uploads/dedust_1ff61d880b.png",
+        "url": "https://dedust.io/swap",
+        "en": "Decentralized exchange of digital assets.",
+        "ru": "Децентрализованный обменник цифровых активов."
+    },
+    {
+        "name": "TON Domains",
+        "image": "https://dns.ton.org/assets/meta/favicon_32x32.png",
+        "url": "https://dns.ton.org/",
+        "en": "Register short readable names for wallets, smart contracts and websites.",
+        "ru": "Зарегистрируйте короткие читаемые имена для кошельков, смарт-контрактов и веб-сайтов."
+    },
+    {
+        "name": "Tonstarter",
+        "image": "https://tonstarter-cdn.ams3.digitaloceanspaces.com/tonstarter/assets/favicon-64.png",
+        "url": "https://tonstarter.com/",
+        "en": "Investments in projects on TON.",
+        "ru": "Инвестиции в проекты на TON."
+    },
+    {
+        "name": "Megaton.fi",
+        "url": "https://megaton.fi/",
+        "en": "AMM DEX on the TON blockchain.",
+        "ru": "AMM DEX на блокчейне TON."
+    },
+    {
+        "name": "Tegro Finance",
+        "url": "https://tegro.finance/",
+        "en": "DeFi exchange on the TON blockchain.",
+        "ru": "DeFi биржа на блокчейне TON."
+    }
+]

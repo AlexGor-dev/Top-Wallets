@@ -1,0 +1,104 @@
+﻿id;en;ru;
+
+ChangeOwner; Change owner; Смена владельца;
+ChangeContent; Change content; Изменение контента;
+Mint; Mint; Чеканка монет;
+Transfer; Transfer; Перевод;
+TransferNotification; Transfer notification; Уведомление о переводе;
+InternalTransfer; Internal transfer; Внутренний перевод;
+Excesses; Excesses; Сдача;
+Burn; Burn; Сжигание монет;
+BurnNotification; Burn notification; Уведомление о сжигании;
+UnknownTr; Unknown; Неизвестная;
+
+createToken; Create token; Создать токен;
+createJetton; Create Jetton; Создать Jetton;
+attachJetton; Attach Jetton; Подключить Jetton;
+attachJettonWallet; Attach Jetton wallet; Подключить кошелёк Jetton;
+removingToken; Removing a token; Удаление токена;
+removingWallet; Removing a wallet; Удаление кошелька;
+deleteToken; Delete token {0}?\nIn the future, you can connect the token to the address.; Удалить токен {0}?\nВ дальнейшем Вы сможете подключить токен по адресу.;
+deleteWalletInfo; Your wallet {0} will be deleted. {1} Subsequently, it can be restored by secret words.; Ваш кошелёк {0} будет удалён. {1} Впоследствии его можно будет восстановить по секретным словам.;
+deleteChildWallets; All child wallets will be deleted.; Будут удалены все дочерние кошельки.;
+
+mintYourToken; Mint your token; Выпустите свой токен;
+mintYourTokenInfo; Token is a fungible token standard for the TON blockchain. You can deploy your own Token on the mainnet with a single click. You will need at least 0.25 TON for the deployment fee.; Jetton — это стандарт взаимозаменяемых токенов для блокчейна TON. Вы можете развернуть свой собственный токен в основной сети одним щелчком мыши. Вам потребуется не менее 0,25 TON для платы за развертывание.;
+enoughBalance; Not enough balance in deployer wallet.\nYou need at least 0.25 TON for the deployment fee.; Недостаточно баланса в кошельке владельца.\nНеобходимо не менее 0,25 TON для платы за развертывание.;
+enterTokenName; Enter token name; Введите имя токена;
+projectUnabbreviatedName; Your token unabbreviated name with spaces (usually 1-3 words).; Полное название вашего токена с пробелами (обычно 1-3 слова).;
+enterTokenSymbol; Enter token symbol; Введите символ токена;
+tokenSymbolInfo; Currency symbol appearing in balance (usually 3-5 uppercase chars).; Символ токена (обычно 3-5 символов в верхнем регистре).;
+decimalPrecisionInfo; The decimal precision of your token (9 is TON default).; Десятичная точность вашего токена (9 по умолчанию).;
+tokensMintHint; Tokens to Mint; ;
+numberTokensInfo; Number of initial tokens to mint and send to your wallet address.; Количество первоначальных токенов, которые нужно отчеканить и отправить на адрес вашего кошелька.;
+enterTokenDescription; Enter token description (optional); Введите описание токена (необязательно);
+descriptionTokenInfo; Description of your token.; Описание вашего токена.;
+enterTokenImageUrl; Enter token image url; Введите URL изображения токена;
+enterTokenImageUrlOrSelectImageFile; Enter token image URL or select image file; Введите URL изображения токена или выберите файл изображения;
+tokenInformation; Token information; Информация о токене;
+
+jettonMinterAddress; Jetton minter address; Адрес токена Jetton;
+jettonWalletAddress; Jetton wallet address; Адрес кошелька Jetton;
+enterTokenAddresses; Enter token addresses; Введите адреса токенов;
+enterTokenAddress; Enter token address; Введите адрес токена;
+enterTokenWalletAddress; Enter token wallet address; Введите адрес кошелька токена;
+enterJettonAddress; Enter Jetton address; Введите адрес Jetton;
+enterJettonWalletAddress;  Enter Jetton wallet address; Введите адрес кошелька Jetton;
+
+addressNotJetton; Wallet with address\n{0}\nis not a jetton.; Кошелёк с адресом\n{0}\nне является жетоном.;
+addressNotJettonWallet; Wallet with address\n{0}\nis not a jetton wallet.; Кошелёк с адресом\n{0}\nне является кошельком жетона.;
+addressOwnerValid; The address of the owner of the jetton is the same as the address of your wallet.; Адрес владельца жетона совпадает с адресом вашего кошелька.;
+addressOwnerInvalid; The address of the owner of the jetton does not match the address of your wallet.; Адрес владельца жетона не совпадает с адресом вашего кошелька.;
+jettonMinterIsCreated; Jetton with the address\n{0}\n has already been created.; Жетон с адресом\n{0}\nуже создан.;
+sendCoins; Send coins; Отправить монеты;
+changeContract; Change contract; Изменить контракт;
+enoughFunds; There are not enough funds in the owner's wallet to pay the commission.; В кошельке владельце недостаточно средств для оплаты комиссии.;
+jettonAttached; Your jetton is attached.; Ваш жетон подключен.;
+jettonWalletAttached; Your jetton wallet is attached.; Ваш кошелёк жетона подключен.;
+creatingJetton; Creating jetton; Создание жетона;
+
+burn2; Burn; Сжечь;
+burning; Burning; Сжигание;
+burnCoins; Burn coins; Сжечь монеты;
+burnConfirmationText; You are about to burn {0} {1}.; Вы собираетесь сжечь {0} {1}.;
+burningCompleted; Burning completed; Сжигание завершено;
+burningSuccessfull; Burning {0} {1} completed successfully.; Сжигание {0} {1} выполнено успешно.;
+
+mint2; Mint; Чеканить;
+mintCoins; Mint coins; Чеканка монет;
+minting; Minting; Чеканка;
+mintConfirmationText; You are about to mint {0} {1}.; Вы собираетесь чеканить {0} {1}.;
+mintingCompleted; Minting completed; Чеканка завершена;
+mintingSuccessfull; Minting {0} {1} completed successfully.; Чеканка {0} {1} выполнена успешно.;
+
+enterPasswordOwnerJetton; Enter the password for the wallet owner of the jetton.; Введите пароль для кошелька владельца жетона.;
+jettonColor; Jetton color; Цвет жетона;
+
+youCanChangeContent; You can change the content of the token or change the owner.; Вы можете изменить контент жетона или сменить владельца.;
+
+changingContent; Changing content; Изменение контента;
+changingContentCompleted; Changing content completed; Изменение контента завершено;
+changingContentSuccessfull; Changing content completed successfully.; Изменение контента выполнено успешно.;
+changeContentConfirmation; You are about to change the content of the token.; Вы собираетесь изменить контент жетона.;
+changeContent2; Change content; Изменить контент;
+
+ownerJettonAddress; Jetton owner's address; Адрес владельца жетона;
+attentionChangeOwner; Attention! When you change the owner, you will no longer be able to manage the token.; Внимание! При смене владельца Вы больше не сможете управлять жетоном.;
+changeOwnerConfirmation; You are about to change the owner of the token.; Вы собираетесь сменить владельца жетона.;
+changeOwner2; Change Owner; Сменить владельца;
+changingOwner; Changing owner; Смена владельца;
+changingOwnerCompleted; Changing owner completed; Смена владельца завершена;
+changingOwnerSuccessfull; Changing owner completed successfully.; Смена владельца выполнена успешно.;
+
+copyJettonAddress; Copy Jetton address; Копировать адрес жетона;
+possibleOwnerOptions; Possible Owner Options; Возможные варианты владельцев;
+copyWalletOwnerAddress; Copy wallet owner address; Копировать адрес владельца кошелька;
+walletOwnerAddress; Wallet owner address; Адрес владельца кошелька;
+
+tonConnect; Connect; Connect;
+tonConnectDesc; TON Connect provides connectivity between wallets and applications in the TON ecosystem.\nScanning the screen for the presence of a QR code.; TON Connect обеспечивает связь между кошельками и приложениями в экосистеме TON.\nСканирование экрана на наличие QR кода.;
+notFoundWhiteWallet; Not found White Wallet "{0}"; Не найден Белый кошелек "{0}";
+dappDisconnect; DApp has dropped the connection.; DApp разорвал соединение.;
+noBridgeConnection; No bridge connection; Нет соединения с бриджем;
+connectionEstablishedUsing; The connection was established using the {0} bridge.; Соединение установлено с помощью моста {0}.;
+connectionEstablishingUsing; The connection was established using the {0} bridge.; Соединение устанавливается помощью моста {0}.;

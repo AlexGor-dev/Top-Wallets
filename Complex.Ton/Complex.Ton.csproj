@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9989B540-4C00-4574-946D-735B6D181D0D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Complex.Ton</RootNamespace>
+    <AssemblyName>Complex.Ton</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Complex.Drawing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Dialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Navigation.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Navigation.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Trader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Trader.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Complex.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\DAppInfoContainer.cs" />
+    <Compile Include="Components\DAppsMenu.cs" />
+    <Compile Include="Components\JettonEnterInfoPanel.cs" />
+    <Compile Include="Components\JettonInfoContainer.cs" />
+    <Compile Include="Components\JettonMenu.cs" />
+    <Compile Include="Components\JettonWalletInfoContainer.cs" />
+    <Compile Include="Components\JettonWalletItem.cs" />
+    <Compile Include="Components\TonTokenItem.cs" />
+    <Compile Include="Components\TonTransactionDetailItem.cs" />
+    <Compile Include="Components\TonWalletMainPanel.cs" />
+    <Compile Include="Forms\ChangeForm.Content.cs" />
+    <Compile Include="Forms\ChangeForm.Owner.cs" />
+    <Compile Include="Forms\JettonMultiSendForm.cs" />
+    <Compile Include="Forms\JettonReceiveForm.cs" />
+    <Compile Include="Forms\JettonSendForm.cs" />
+    <Compile Include="Forms\MintCoinsForm.cs" />
+    <Compile Include="Forms\BurnCoinsForm.cs" />
+    <Compile Include="Forms\CreateJettonController.Create.cs" />
+    <Compile Include="Forms\CreateJettonController.cs" />
+    <Compile Include="Forms\CreateJettonController.Import.cs" />
+    <Compile Include="Forms\CreateJettonController.ImportJetton.cs" />
+    <Compile Include="Forms\CreateJettonController.ImportJettonWallet.cs" />
+    <Compile Include="Forms\CreateWalletForm.Create.cs" />
+    <Compile Include="Forms\CreateWalletForm.Import.cs" />
+    <Compile Include="Forms\CreateWalletForm.ImportFromFile.cs" />
+    <Compile Include="Forms\TonMultiSendForm.cs" />
+    <Compile Include="Forms\TonConnectForm.cs" />
+    <Compile Include="Forms\TonConnectionForm.cs" />
+    <Compile Include="Forms\CreateWalletForm.cs" />
+    <Compile Include="JettonMinter.cs" />
+    <Compile Include="JettonWallet.cs" />
+    <Compile Include="KnownAddress.cs" />
+    <Compile Include="TonAdapterExtension.cs" />
+    <Compile Include="TonAdapter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TonConnect\AppRequest.cs" />
+    <Compile Include="TonConnect\ConnectEvent.cs" />
+    <Compile Include="TonConnect\Connection.cs" />
+    <Compile Include="TonConnect\DApp.cs" />
+    <Compile Include="TonConnect\DAppInfo.cs" />
+    <Compile Include="TonConnect\WhiteWallet.cs" />
+    <Compile Include="TonUnknownWallet.cs" />
+    <Compile Include="TonWallet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Complex.TonLib\Complex.TonLib.csproj">
+      <Project>{5747c6bd-6a35-4642-a914-617c7d875527}</Project>
+      <Name>Complex.TonLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Complex.Wallet.Shared\Complex.Wallets.Shared.csproj">
+      <Project>{03427464-e0e6-45cf-92f1-3b024f99e213}</Project>
+      <Name>Complex.Wallets.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Complex.Wallets\Complex.Wallets.csproj">
+      <Project>{7933d5c2-7376-4f7e-92bd-2d04c90b7e34}</Project>
+      <Name>Complex.Wallets</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\gem_l.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\dapps.json" />
+    <EmbeddedResource Include="Resource\config.json" />
+    <EmbeddedResource Include="Resource\config_test.json" />
+    <EmbeddedResource Include="Resource\config_valid.json" />
+    <EmbeddedResource Include="Resource\whiteList.json" />
+    <None Include="Resource\config_test2.json" />
+    <EmbeddedResource Include="Resource\ton_mainnet.state" />
+    <EmbeddedResource Include="Resource\ton_testnet.state" />
+    <EmbeddedResource Include="Resource\ton.svg" />
+    <EmbeddedResource Include="Resource\lang.lang" />
+    <EmbeddedResource Include="Resource\jetton.svg" />
+    <EmbeddedResource Include="Resource\getNfts.graphql" />
+    <EmbeddedResource Include="Resource\config_test_valid.json" />
+    <EmbeddedResource Include="Resource\test.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>set fileName="C:\Users\Admin\AppData\Local\Alex Gor\Top-Wallets\ton_mainnet.state"
+IF EXIST %25fileName%25 (
+    copy /Y %25fileName%25 $(ProjectDir)Resource\ton_mainnet.state
+) ELSE (
+    echo %25fileName%25 missing.
+)
+
+set fileName="C:\Users\Admin\AppData\Local\Alex Gor\Top-Wallets\ton_testnet.state"
+IF EXIST %25fileName%25 (
+    copy /Y %25fileName%25 $(ProjectDir)Resource\ton_testnet.state
+) ELSE (
+    echo %25fileName%25 missing.
+)
+</PreBuildEvent>
+  </PropertyGroup>
+</Project>
