@@ -51,21 +51,10 @@ namespace Complex.Wallets
             key.SetValue("URL Protocol", "");
             key.CreateSubKey(@"shell\open\command").SetValue("", "\"" + Resources.ExecutablePath + "\"" + "-url \"%1\"");
 
-            string path = Resources.LocalApplicationData + "Default.tww";
-            if (!File.Exists(path))
-            {
-                Directory.CreateDirectory(Resources.LocalApplicationData);
-                File.WriteAllBytes(path, Resources.GetBytes("StartDefault.tww"));
-            }
-
             Application.Site = MainSettings.Current.Remote.Site;
 
             Controller.Extensions.Add(new TonAdapterExtension());
             Controller.Extensions.Add(new TonAdapterExtension(true));
-            //Controller.Extensions.Add(new TronAdapterExtension());
-            //Controller.Extensions.Add(new TronAdapterExtension(true));
-            //Controller.Extensions.Add(new EtherAdapterExtension());
-            //Controller.Extensions.Add(new EtherAdapterExtension(true));
 
             Application.Start<MainForm>(fileName, cmd);
         }
