@@ -128,8 +128,10 @@ namespace Complex.Ton
         {
             if (IsHandleCreated)
             {
-                while (queries.Count > 0)
+                int tick = Environment.TickCount;
+                while (queries.Count > 0 && Environment.TickCount - tick < 10000)
                     WinApi.Sleep(100);
+                this.queries.Clear();
                 TonLib.LiteClientDestroy(this);
                 this.DeleteHandle();
             }

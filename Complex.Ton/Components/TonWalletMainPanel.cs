@@ -125,22 +125,13 @@ namespace Complex.Ton
                     }
                     break;
             }
-            if (this.wallet.State == WalletState.Active)
-                this.InitTonConnect();
-            else
-                this.wallet.Created += Wallet_Created;
+            this.InitTonConnect();
         }
         protected override void OnDisposed()
         {
-            this.wallet.Created -= Wallet_Created;
             if (this.wallet is TonWallet tonWallet)
                 tonWallet.Connections.Clear(true);
             base.OnDisposed();
-        }
-
-        private void Wallet_Created(object sender)
-        {
-            this.InitTonConnect();
         }
 
 
@@ -151,6 +142,7 @@ namespace Complex.Ton
         private ColorButton burnButton;
         private TextButton ownerButton;
         private TonConnectionContainer connectionContainer;
+        private bool tonConnectInited = false;
 
         protected override void OnWalletChanged()
         {
@@ -165,6 +157,7 @@ namespace Complex.Ton
                 }
                 this.textButton.Parent.Layout();
             }
+            this.InitTonConnect();
             base.OnWalletChanged();
         }
         protected override void OnConnectionChanged()
@@ -183,12 +176,15 @@ namespace Complex.Ton
 
         private void InitTonConnect()
         {
+            if (this.tonConnectInited)
+                return;
             switch (this.wallet.Type)
             {
                 case WalletType.WalletV3:
                 case WalletType.WalletV4:
                     if (this.wallet.IsMain && this.wallet.State == WalletState.Active)
                     {
+                        this.tonConnectInited = true;
                         QrScannerButton mbutton = new QrScannerButton("tonConnect", "qr_scanner.svg");
                         mbutton.ToolTipInfo = new ToolTipInfo(mbutton.ImageID, "Ton Connect 2.0", "tonConnectDesc");
                         mbutton.Dock = DockStyle.Right;

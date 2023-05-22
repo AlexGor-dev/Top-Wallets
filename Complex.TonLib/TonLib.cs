@@ -7,11 +7,7 @@ namespace Complex.Ton
 {
     internal unsafe class TonLib
     {
-#if DEBUG
-        private const string Dll = @"E:\Complex\Ton\Top-Wallets\tonlib_win\x64\Debug\tonlib.dll";
-#else
         private const string Dll = "tonlib.dll";
-#endif
 
 
         [DllImport(Dll)]

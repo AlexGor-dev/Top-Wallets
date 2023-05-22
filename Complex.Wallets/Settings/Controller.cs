@@ -110,7 +110,7 @@ namespace Complex.Wallets
         {
             if (Application.IsCreated)
             {
-                SingleThread.Run("Adapter" + adapter.ID, () =>
+                adapter.Run(() =>
                 {
                     if (adapter.Refresh())
                     {

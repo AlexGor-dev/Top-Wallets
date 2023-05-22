@@ -149,21 +149,13 @@ namespace Complex.Wallets
         private void CalcFee()
         {
             this.sendInfoPanel.UpdateDestState(this.destWallet, GetSymbolCoinsText());
-            if (this.wallet.State != WalletState.Active)
+            wallet.CalcFees(this.address, this.amount, this.comment, (fee, error) =>
             {
+                if (error == null)
+                    this.fees = fee;
                 this.sendInfoPanel.UpdateFee(this.amount, this.wallet.Balance, this.fees, GetSymbolCoinsText());
                 this.switchContainer.Next = this.sendInfoPanel;
-            }
-            else
-            {
-                wallet.CalcFees(this.address, this.amount, this.comment, (fee, error) =>
-                {
-                    if (error == null)
-                        this.fees = fee;
-                    this.sendInfoPanel.UpdateFee(this.amount, this.wallet.Balance, this.fees, GetSymbolCoinsText());
-                    this.switchContainer.Next = this.sendInfoPanel;
-                });
-            }
+            });
         }
 
         public void Send(string address, decimal amount, string comment)

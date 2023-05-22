@@ -61,12 +61,6 @@ namespace comx
         return ton::ManualDns::create(key, static_cast<td::uint32>(wallet_id), revision)->get_address(workchain_id);
     }
 
-    //td::Result<block::StdAddress> get_account_addressPaymentChannel(const tonlib_api::pchan_initialAccountState& pchan_state,
-    //                                                  td::int32 revision, ton::WorkchainId workchain_id)
-    //{
-    //    TRY_RESULT(config, to_pchan_config(pchan_state));
-    //    return ton::PaymentChannel::create(config, revision)->get_address(workchain_id);
-    //}
     td::Result<block::StdAddress> get_account_addressWalletV1(std::string& public_key, td::int32 revision, ton::WorkchainId workchain_id)
     {
         TRY_RESULT(key_bytes, get_public_key(public_key));

@@ -96,7 +96,7 @@ namespace Complex.Wallets
                                 instr.Send(time, b.GetDecimal("price_change_percentage_24h"), 0, MarketDataType.NetChange);
                                 instr.Send(time, b.GetDecimal("high_24h"), 0, MarketDataType.High);
                                 instr.Send(time, b.GetDecimal("low_24h"), 0, MarketDataType.Low);
-                                instr.Send(time, b.GetDecimal("total_volume"), 0, MarketDataType.Volume);
+                                instr.Send(time, 0, b.GetDecimal("total_volume"), MarketDataType.Volume);
                                 instr.Send(time, b.GetDecimal("current_price"), 0, MarketDataType.LastPrice);
                                 instr.Send(time, b.GetDecimal("current_price"), 0, MarketDataType.Tick);
                                 instr.Send(time, 0, 0, MarketDataType.Quote);

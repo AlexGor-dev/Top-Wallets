@@ -62,6 +62,10 @@ namespace Complex.Wallets
 
             Controller.Extensions.Add(new TonAdapterExtension());
             Controller.Extensions.Add(new TonAdapterExtension(true));
+            //Controller.Extensions.Add(new TronAdapterExtension());
+            //Controller.Extensions.Add(new TronAdapterExtension(true));
+            //Controller.Extensions.Add(new EtherAdapterExtension());
+            //Controller.Extensions.Add(new EtherAdapterExtension(true));
 
             Application.Start<MainForm>(fileName, cmd);
         }

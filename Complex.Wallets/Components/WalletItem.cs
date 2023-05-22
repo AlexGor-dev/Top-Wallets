@@ -74,8 +74,9 @@ namespace Complex.Wallets
         {
             if (this.multiWallet != null && this.Parent is AnyView)
             {
-                this.Parent.Components.Added += Wallets_Added;
-                this.Parent.Components.Removed += Wallets_Removed;
+                this.Parent.Components.Added -= Wallets_Added;
+                this.Parent.Components.Removed -= Wallets_Removed;
+                this.Parent.FocusedComponentChanged -= Parent_FocusedComponentChanged;
             }
             this.Wallet.Market.CoinChanged -= Wallet_CoinChanged;
             this.Wallet.Market.QuoteChanged -= Wallet_CoinQuoteChanged;
@@ -187,7 +188,7 @@ namespace Complex.Wallets
                     this.expandButton.ToolTipInfo = new ToolTipInfo("showHideChildWallets", null);
                     this.expandButton.MaxSize.Set(26, 26);
                     this.expandButton.Dock = DockStyle.Left;
-                    this.expandButton.CheckedChanged += (s) => this.Expanded = !this.expanded;
+                    this.expandButton.CheckedChanged += (s) => this.Expanded = this.expandButton.Checked;
                     this.nameCaption.Add(this.expandButton);
                 }
             }
@@ -208,9 +209,29 @@ namespace Complex.Wallets
             {
                 this.Parent.Components.Added += Wallets_Added;
                 this.Parent.Components.Removed += Wallets_Removed;
+                this.Parent.FocusedComponentChanged += Parent_FocusedComponentChanged;
             }
             this.UpdateQuote();
             base.OnCreated();
+        }
+
+        private void Parent_FocusedComponentChanged(object sender)
+        {
+            if (!this.expanded)
+            {
+                Component component = this.Parent.FocusedComponent;
+                if (component != null && !component.Visible)
+                {
+                    foreach (Component cp in this.EnumChilds())
+                    {
+                        if (cp == component)
+                        {
+                            this.Expanded = true;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         protected override void OnDrawBack(Graphics g)
@@ -233,12 +254,22 @@ namespace Complex.Wallets
 
         void IEndAnimation.OnEndAnimation(Animator animator, float value)
         {
+            AnyView anyView = this.Parent as AnyView;
             if (animator.Dir < 0)
             {
                 foreach (Component component in this.childs)
                     component.Visible = false;
             }
-            if (this.Parent is AnyView anyView)
+            else
+            {
+                if (anyView != null)
+                {
+                    Component component = this.Parent.FocusedComponent;
+                    if (component != null)
+                        anyView.EnsureVisibleAnimation(component);
+                }
+            }
+            if (anyView != null)
                 anyView.Relayout();
         }
 

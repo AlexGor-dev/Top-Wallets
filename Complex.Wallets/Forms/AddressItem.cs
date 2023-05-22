@@ -23,7 +23,7 @@ namespace Complex.Wallets
             {
                 name = wt.Name;
                 if (wt.IsMain)
-                    name = Language.Current["myWallet"] + " " + name;
+                    name = Language.Current["myWallet"] + " (" + name + ")";
             }
             else
                 name = wallet.Adapter.GetKnownAddress(address);

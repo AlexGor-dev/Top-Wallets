@@ -372,7 +372,7 @@ namespace Complex.Wallets
 
         public void Decrypt(string passcode, string encryption, byte[] passcodeSalt, ParamHandler<byte[], byte[], string> resultHandler)
         {
-            Application.Run(()=>
+            this.Run(()=>
             {
                 try
                 {

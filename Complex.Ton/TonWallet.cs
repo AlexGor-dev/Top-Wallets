@@ -137,7 +137,7 @@ namespace Complex.Ton
                                 handler = (s) =>
                                 {
                                     this.Created -= handler;
-                                    this.Adapter.SendMessage(this, publicKey.keyData, password, secret, messages, resultHanler);
+                                    this.Adapter.Run(()=> this.Adapter.SendMessage(this, publicKey.keyData, password, secret, messages, resultHanler));
                                 };
                                 this.Created += handler;
                             }
@@ -201,7 +201,10 @@ namespace Complex.Ton
         }
         public void CalcFees(ParamHandler<Balance, string> resultHanler, params MessageInfo[] messages)
         {
-            this.Adapter.CalcFees(this.Address, messages, resultHanler);
+            if (this.State != WalletState.Active)
+                resultHanler(this.Balance.Clone(this.Balance.FromDecimal(0.015m)), null);
+            else
+                this.Adapter.CalcFees(this.Address, messages, resultHanler);
         }
 
         public void CalcFees(string destAddress, UInt128 amount, string message, Cell body, Cell initState, ParamHandler<Balance, string> resultHanler)

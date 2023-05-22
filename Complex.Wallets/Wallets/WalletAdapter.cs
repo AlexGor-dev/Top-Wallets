@@ -147,6 +147,11 @@ namespace Complex.Wallets
             return true;
         }
 
+        public void Run(EmptyHandler handler)
+        {
+            SingleThread.Run("Adapter" + this.ID, handler);
+        }
+
         public bool Refresh()
         {
             if (!this.Updating && !this.IsDisposed)
