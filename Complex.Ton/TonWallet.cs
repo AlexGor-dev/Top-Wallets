@@ -181,7 +181,7 @@ namespace Complex.Ton
 
         public void CreateJetton(string passcode, JettonDeployData data, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, data.jettonMinterAddress, data.deployParams.amount, "", data.deployParams.message, data.deployParams.stateInit, resultHanler);
+            this.SendMessage(passcode, data.JettonMinterAddress, data.deployParams.amount, "", data.deployParams.message, data.deployParams.stateInit, resultHanler);
         }
 
         public override void CreateWallet(string passcode, ParamHandler<object, string> resultHanler)
@@ -286,7 +286,7 @@ namespace Complex.Ton
             return base.CheckSendWallet(wallet) && !(wallet is JettonMinter);
         }
 
-        public TonUnknownWallet GetMianChild(string symbol, WalletType walletType)
+        public TonUnknownWallet GetMainChild(string symbol, WalletType walletType)
         {
             foreach (TonUnknownWallet wallet in this.wallets)
                 if (wallet.IsMain && wallet.Symbol == symbol && wallet.Type == walletType)
@@ -310,10 +310,8 @@ namespace Complex.Ton
             base.CreateMenu(item, (menu)=>
             {
                 MenuStrip ms = menu as MenuStrip;
-                ms.Add("createToken").Executed += (s) =>
-                {
-                    new CreateJettonForm(this).ShowDialog(Application.Form);
-                };
+                ms.Add("createToken").Executed += (s) => new CreateJettonForm(this).ShowDialog(Application.Form);
+                ms.Add("createNft").Executed += (s) => new CreateNftForm(this).ShowDialog(Application.Form);
                 paramHandler(menu);
             });
         }

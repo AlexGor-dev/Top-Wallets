@@ -48,7 +48,12 @@ namespace Complex.Wallets
         string Address { get; }
         string Owner { get; }
         int Color { get; }
-        IImage LoadImage(ParamHandler<IImage> resultHandler);
+        void LoadImage(ParamHandler<IImage> resultHandler);
+    }
+
+    public interface ITokenInfoSource
+    {
+        ITokenInfo TokenInfo { get; set; }
     }
 
     public interface INftInfo : IUnique
@@ -56,7 +61,7 @@ namespace Complex.Wallets
         string Name { get; }
         string Address { get; }
         string Owner { get; }
-        IImage LoadImage(ParamHandler<IImage> resultHandler);
+        void LoadImage(int imageSize, float ovalRadius, ParamHandler<IImage, string> resultHandler);
 
     }
 }

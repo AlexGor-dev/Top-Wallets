@@ -12,6 +12,9 @@ using System.Collections.Generic;
 
 namespace Complex.Wallets
 {
+    //https://ton.org/testnet-global.config.json
+    //https://ton.org/global-config.json
+
     public class TonAdapter : WalletAdapter
     {
         const string testUrl = "https://ton.org/testnet-global.config.json";
@@ -226,6 +229,43 @@ namespace Complex.Wallets
             client.CreateAccountState(address, paramHandler);
         }
 
+
+        public NftInfo GetNftInfo(AccountState state)
+        {
+            NftInfo info = null;
+            switch (state.Type)
+            {
+                case WalletType.NftCollection:
+                    info = HttpTonApi.GetNftCollectionData(state.Address, this.IsTestnet);
+                    if(info == null)
+                        info = NftController.GetCollectionData(state);
+                    break;
+                case WalletType.NftItem:
+                case WalletType.NftSingle:
+                    info = HttpTonApi.GetNftData(state.Address, this.IsTestnet);
+                    if(info == null)
+                        info = NftController.GetNftData(state);
+                    break;
+            }
+            if (info != null)
+                info.Type = state.Version;
+            return info;
+        }
+
+        public void GetNftInfo(string address, ParamHandler<NftInfo, string> paramHandler)
+        {
+            CreateAccountState(address, (s, e) =>
+            {
+                NftInfo info = null;
+                if (s != null)
+                {
+                    info = GetNftInfo(s);
+                    s.Dispose();
+                }
+                paramHandler(info, e);
+            });
+        }
+
         public override void GetWallet(string address, ParamHandler<Wallet, string> paramHandler)
         {
             TonUnknownWallet wallet = WalletsData.GetWallet(this.ID, address, false) as TonUnknownWallet;
@@ -255,18 +295,26 @@ namespace Complex.Wallets
                                 break;
                             case WalletType.NftItem:
                             case WalletType.NftSingle:
-                                NftData data = NftController.GetNftData(s);
+                                NftInfo data = GetNftInfo(s);
+                                if (data != null)
+                                    wallet = new NftItem(this.ID, address, data, null);
+                                else
+                                    e = "GetNftDataError";
                                 break;
                             case WalletType.NftCollection:
-                                NftCollectionData collectionData = NftController.GetCollectionData(s);
-                                break;
-                            default:
-                                wallet = new TonUnknownWallet(this.ID, address);
+                                NftInfo collectionData = GetNftInfo(s);
+                                if (collectionData != null)
+                                    wallet = new NftCollection(this.ID, address, collectionData, null);
+                                else
+                                    e = "GetNftCollectionDataError";
                                 break;
                         }
+                        if(wallet == null)
+                            wallet = new TonUnknownWallet(this.ID, address);
                         wallet.Update(s);
                         s.Dispose();
                         WalletsData.Wallets.Add(wallet);
+
                     }
                     paramHandler(wallet, e);
 
@@ -421,11 +469,11 @@ namespace Complex.Wallets
             });
         }
 
-        public void GetNfts(string address, ParamHandler<INftInfo[], string> resultHanler)
+        public void GetNfts(string address, int offset, int count, ParamHandler<INftInfo[], string> resultHanler)
         {
             SingleThread.Run("HttpTonApi", () =>
             {
-                var (ts, e) = HttpTonApi.GetNftCollections(address, IsTestnet); ;
+                var (ts, e) = HttpTonApi.GetNftItems(address, offset, count, IsTestnet);
                 resultHanler(ts, e);
                 WinApi.Sleep(1000);
             });

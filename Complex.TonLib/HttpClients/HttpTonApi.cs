@@ -32,7 +32,7 @@ namespace Complex.Ton
                         //string owner = TonLib.AddressFromHex(metadata.GetString("address"));
                         int decimals = metadata.GetInt("decimals");
                         UInt128 total_supply = array.GetUInt128("total_supply");
-                        return (new JettonInfo(name, description, symbol, image, new Balance(symbol, total_supply, decimals, 3), decimals, address, null, metadata.GetString("color"), metadata.GetString("deployer")), null);
+                        return (new JettonInfo(name, description, symbol, image, total_supply, decimals, address, null, metadata.GetString("color"), metadata.GetString("deployer")), null);
                     }
                 }
             }
@@ -50,6 +50,7 @@ namespace Complex.Ton
             try
             {
                 string url = (isTestnet ? testnet : mainnet) + "v1/jetton/getBalances?account=" + address;
+                //string url = (isTestnet ? testnet : mainnet) + "/v2/accounts/" + address  + "/jettons";
                 //string data = System.IO.File.ReadAllText(@"E:\Complex\Ton\Crypto Api\ton_tokens.json");
                 string data = Http.GetBrouser(url);
                 JsonValue v = Json.Parse(data) as JsonValue;
@@ -88,7 +89,7 @@ namespace Complex.Ton
                                         string name = metadata.GetString("name");
                                         string description = metadata.GetString("description");
                                         int decimals = metadata.GetInt("decimals");
-                                        jinfo = new JettonInfo(name, description, symbol, image, new Balance(symbol, 0, decimals, 3), decimals, jetton_address, address, metadata.GetString("color"), metadata.GetString("deployer"));
+                                        jinfo = new JettonInfo(name, description, symbol, image, 0, decimals, jetton_address, address, metadata.GetString("color"), metadata.GetString("deployer"));
                                     }
                                 }
                                 if (jinfo != null)
@@ -115,13 +116,109 @@ namespace Complex.Ton
         }
 
 
-        public static (NftCollectionInfo[], string) GetNftCollections(string address, bool isTestnet)
+        private static NftInfo GetNftData(JsonArray arr, int previewIndex)
+        {
+            if (arr != null)
+            {
+                JsonArray metadata = arr.GetArray("metadata");
+                if (metadata != null)
+                {
+                    string nftAddress = TonLib.AddressFromHex(arr.GetString("address"));
+                    JsonArray owner = arr.GetArray("owner");
+                    string ownerAddress = TonLib.AddressFromHex(owner?.GetString("address"));
+
+                    JsonArray collection = arr.GetArray("collection");
+                    string collectionAddress = TonLib.AddressFromHex(collection?.GetString("address"));
+
+                    string image = null;
+                    JsonArray previews = arr.GetArray("previews");
+                    if (previews != null && previews.Count > previewIndex)
+                        image = previews.GetArray(previewIndex).GetString("url");
+                    if (image == null)
+                        image = metadata.GetString("image");
+
+                    NftContent content = new NftContent(metadata.GetString("name"), metadata.GetString("description"), image, metadata.GetString("external_url"), metadata.GetString("external_link"));
+                    NftInfo nftData = new NftInfo(nftAddress, arr.GetLong("index"), ownerAddress, collection?.GetString("name"), collectionAddress, content);
+                    return nftData;
+                }
+            }
+            return null;
+        }
+
+        public static NftInfo GetNftCollectionData(string address, bool isTestnet)
+        {
+            try
+            {
+                string url = (isTestnet ? testnet : mainnet) + "v2/nfts/collections/" + address;
+                string data = Http.GetBrouser(url);
+                return GetNftData(Json.Parse(data) as JsonArray, 1);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+
+        public static NftInfo GetNftData(string address, bool isTestnet)
+        {
+            try
+            {
+                string url = (isTestnet ? testnet : mainnet) + "v2/nfts/" + address;
+                string data = Http.GetBrouser(url);
+                return GetNftData(Json.Parse(data) as JsonArray, 1);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+
+        public static (NftInfo[], string) GetNftItems(string ownerAddress, int offset, int count, bool isTestnet)
+        {
+            string error = null;
+            try
+            {
+                string url = (isTestnet ? testnet : mainnet) + "v2/accounts/" + ownerAddress + "/nfts?limit=" + count + "&offset=" + offset + "&indirect_ownership=false";
+                //string data = System.IO.File.ReadAllText(@"E:\Complex\Ton\Crypto Api\nfts3.json");
+                string data = Http.GetBrouser(url);
+                JsonValue v = Json.Parse(data) as JsonValue;
+                if (v != null)
+                {
+                    JsonArray array = v.Value as JsonArray;
+                    if (array != null)
+                    {
+                        if (array.Count > 0)
+                        {
+                            Array<NftInfo> infos = new Array<NftInfo>();
+                            foreach (JsonArray arr in array)
+                            {
+                                NftInfo info = GetNftData(arr, 0);
+                                if(info != null)
+                                    infos.Add(info);
+                            }
+                            return (infos.ToArray(), null);
+                        }
+                        return (null, "");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+            }
+            return (new NftInfo[0], error);
+
+        }
+
+        public static (NftInfo[], string) GetNftCollections(string address, bool isTestnet)
         {
             string error = null;
             try
             {
                 string url = (isTestnet ? testnet : mainnet) + "v1/nft/getCollections?limit=15&offset=0&account=" + address;
-                //string data = System.IO.File.ReadAllText(@"E:\Complex\Ton\Crypto Api\nfts.json");
+                //string data = System.IO.File.ReadAllText(@"E:\Complex\Ton\Crypto Api\nfts2.json");
                 string data = Http.GetBrouser(url);
                 JsonValue v = Json.Parse(data) as JsonValue;
                 if (v != null)
@@ -131,23 +228,12 @@ namespace Complex.Ton
                     {
                         if (array.Count > 0)
                         {
-                            Array<NftCollectionInfo> infos = new Array<NftCollectionInfo>();
+                            Array<NftInfo> infos = new Array<NftInfo>();
                             foreach (JsonArray arr in array)
                             {
-                                JsonArray metadata = arr.GetArray("metadata");
-                                if (metadata != null)
-                                {
-                                    string nftAddress = TonLib.AddressFromHex(arr.GetString("address"));
-                                    JsonArray owner = arr.GetArray("owner");
-                                    string ownerAddress = TonLib.AddressFromHex(owner?.GetString("address"));
-                                    string name = metadata.GetString("name");
-                                    NftCollectionInfo info = new NftCollectionInfo(metadata.GetString("name"), metadata.GetString("description"), metadata.GetString("image"), nftAddress, ownerAddress, metadata.GetString("external_url"), metadata.GetString("external_link"));
+                                NftInfo info = GetNftData(arr, 0);
+                                if (info != null)
                                     infos.Add(info);
-                                }
-                                else
-                                {
-
-                                }
                             }
                             return (infos.ToArray(), null);
                         }
@@ -159,60 +245,9 @@ namespace Complex.Ton
             {
                 error = e.Message;
             }
-            return (new NftCollectionInfo[0], error);
+            return (new NftInfo[0], error);
         }
 
 
-        public static (NftItemInfo[], string) GetNftItems(string address, string collAddress, bool isTestnet)
-        {
-            string error = null;
-            try
-            {
-                string url = (isTestnet ? testnet : mainnet) + "v1/nft/searchItems?owner=" + address + "&collection="+ (collAddress == null ? "no" : collAddress) + "&include_on_sale=true&limit=15&offset=0";
-                //string data = System.IO.File.ReadAllText(@"E:\Complex\Ton\Crypto Api\nfts.json");
-                string data = Http.GetBrouser(url);
-                JsonValue v = Json.Parse(data) as JsonValue;
-                if (v != null)
-                {
-                    JsonArray array = v.Value as JsonArray;
-                    if (array != null)
-                    {
-                        if (array.Count > 0)
-                        {
-                            Array<NftItemInfo> infos = new Array<NftItemInfo>();
-                            foreach (JsonArray arr in array)
-                            {
-                                JsonArray metadata = arr.GetArray("metadata");
-                                if (metadata != null)
-                                {
-                                    string nftAddress = TonLib.AddressFromHex(arr.GetString("address"));
-                                    JsonArray owner = arr.GetArray("owner");
-                                    string ownerAddress = TonLib.AddressFromHex(owner?.GetString("address"));
-
-                                    JsonArray collection = arr.GetArray("collection");
-                                    string collectionAddress = TonLib.AddressFromHex(collection?.GetString("address"));
-
-                                    string name = metadata.GetString("name");
-                                    NftItemInfo info = new NftItemInfo(metadata.GetString("name"), metadata.GetString("description"), metadata.GetString("image"), nftAddress, collectionAddress, ownerAddress, metadata.GetString("external_url"), metadata.GetString("external_link"));
-                                    infos.Add(info);
-                                }
-                                else
-                                {
-
-                                }
-                            }
-                            return (infos.ToArray(), null);
-                        }
-                        return (null, "");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                error = e.Message;
-            }
-            return (new NftItemInfo[0], error);
-
-        }
     }
 }

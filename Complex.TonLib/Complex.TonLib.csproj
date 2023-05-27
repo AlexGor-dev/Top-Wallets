@@ -67,6 +67,10 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\DeployData.cs" />
+    <Compile Include="Contracts\Nft\NftDeployData.cs" />
+    <Compile Include="Contracts\Nft\NftContent.cs" />
+    <Compile Include="Contracts\Nft\NftInfo.cs" />
     <Compile Include="Nacl.cs" />
     <Compile Include="Queries\DeleteKeyQuery.cs" />
     <Compile Include="Queries\GetExportKeyQuery.cs" />
@@ -83,30 +87,23 @@
     <Compile Include="TonObjects\Cell.cs" />
     <Compile Include="TonObjects\CellBuilder.cs" />
     <Compile Include="Contracts\ContractController.cs" />
-    <Compile Include="Contracts\Data\NftCollectionData.cs" />
-    <Compile Include="Contracts\Data\ContractDeployData.cs" />
-    <Compile Include="Contracts\Data\NftData.cs" />
-    <Compile Include="Contracts\JettonController.cs" />
-    <Compile Include="Contracts\Data\JettonDeployData.cs" />
-    <Compile Include="Contracts\Data\JettonDeployInfo.cs" />
-    <Compile Include="Contracts\Data\MessageData.cs" />
-    <Compile Include="Contracts\NftController.cs" />
-    <Compile Include="Contracts\Data\NftInfo.cs" />
-    <Compile Include="Contracts\Data\NftCollectionInfo.cs" />
-    <Compile Include="Contracts\Data\NftItemInfo.cs" />
-    <Compile Include="Contracts\Data\NftMintItem.cs" />
-    <Compile Include="Contracts\Data\RoyaltyParams.cs" />
+    <Compile Include="Contracts\ContractDeployData.cs" />
+    <Compile Include="Contracts\Jetton\JettonController.cs" />
+    <Compile Include="Contracts\Jetton\JettonDeployData.cs" />
+    <Compile Include="Contracts\MessageData.cs" />
+    <Compile Include="Contracts\Nft\NftController.cs" />
+    <Compile Include="Contracts\Nft\NftMintItem.cs" />
+    <Compile Include="Contracts\Nft\RoyaltyParams.cs" />
     <Compile Include="HttpClients\HttpAnton.cs" />
     <Compile Include="HttpClients\HttpTonApi.cs" />
     <Compile Include="HttpClients\TonApiCat.cs" />
-    <Compile Include="HttpClients\TonHttpAdapter.cs" />
     <Compile Include="Queries\SendMessageQuery.cs" />
     <Compile Include="TonObjects\SerializeDict.cs" />
     <Compile Include="Transactions\TonTransaction.cs" />
     <Compile Include="Transactions\TonTransactionGroup.cs" />
     <Compile Include="TonObjects\Interfaces.cs" />
-    <Compile Include="Contracts\Data\JettonInfo.cs" />
-    <Compile Include="Contracts\Data\JettonWalletInfo.cs" />
+    <Compile Include="Contracts\Jetton\JettonInfo.cs" />
+    <Compile Include="Contracts\Jetton\JettonWalletInfo.cs" />
     <Compile Include="TonObjects\Slice.cs" />
     <Compile Include="Queries\CreateWalletQuery.cs" />
     <Compile Include="TonObjects\Crypto.cs" />
@@ -137,7 +134,6 @@
       <Name>Complex.Wallets.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

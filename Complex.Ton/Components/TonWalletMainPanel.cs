@@ -124,6 +124,82 @@ namespace Complex.Ton
                         this.Insert(2, container);
                     }
                     break;
+                case WalletType.NftItem:
+                case WalletType.NftSingle:
+                case WalletType.NftCollection:
+                    {
+                        this.nftWallet = this.wallet as NftWallet;
+                        Container container = new Container();
+                        //container.MinHeight = 40;
+                        container.Padding.Set(10, 4, 10, 4);
+                        container.Inflate.width = 6;
+                        container.Dock = DockStyle.Top;
+                        container.Style = Theme.Get<MapBackTheme>();
+                        NftInfo info = this.nftWallet.Info;
+
+                        TextComponent caption = new TextComponent(this.wallet.Type.ToString());
+                        caption.AppendRightText = ":";
+                        caption.Dock = DockStyle.Left;
+                        caption.Style = style;
+                        container.Add(caption);
+
+                        this.textButton = new CheckedTextButton("Content", false);
+                        this.textButton.Enabled = info != null;
+                        this.textButton.Dock = DockStyle.Left;
+                        this.textButton.MaxWidth = 250;
+                        this.textButton.CheckedChanged += (s) =>
+                        {
+                            info = this.nftWallet.Info;
+                            CheckedTextButton cb = s as CheckedTextButton;
+                            if (cb.Checked)
+                            {
+                                cb.IsFixed = true;
+                                NftInfoMenu menu = new NftInfoMenu(this.nftWallet, info);
+                                menu.Hided += (s2) =>
+                                {
+                                    cb.IsFixed = false;
+                                    cb.Checked = false;
+                                };
+                                menu.Show(s as Component, MenuAlignment.BottomLeft);
+                            }
+                        };
+                        container.Add(this.textButton);
+
+                        container.Add(new Separator(DockStyle.Left, 4));
+
+                        caption = new TextLocalizeComponent("owner");
+                        caption.AppendRightText = ":";
+                        caption.Dock = DockStyle.Left;
+                        caption.Style = style;
+                        container.Add(caption);
+
+                        string owner = this.nftWallet.Owner;
+                        if (!string.IsNullOrEmpty(owner))
+                        {
+                            Wallet wt = WalletsData.GetAnyWallet(this.wallet.AdapterID, owner);
+                            ownerButton = new TextButton(wt != null ? wt.Name : owner);
+                            ownerButton.MaxWidth = 250;
+                            ownerButton.Dock = DockStyle.Left;
+                            ownerButton.Executed += (s) =>
+                            {
+                                Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Adapter.Symbol, this.nftWallet.Owner);
+                            };
+                            container.Add(ownerButton);
+                        }
+                        else
+                        {
+                            caption = new TextComponent("null");
+                            caption.Dock = DockStyle.Left;
+                            container.Add(caption);
+
+                        }
+
+                        this.Insert(1, new Separator(DockStyle.Top, 20));
+
+                        this.Insert(2, container);
+
+                    }
+                    break;
             }
             this.InitTonConnect();
         }
@@ -137,6 +213,7 @@ namespace Complex.Ton
 
         private TonUnknownWallet wallet;
         private JettonMinter minter;
+        private NftWallet nftWallet;
 
         private CheckedTextButton textButton;
         private ColorButton burnButton;
@@ -269,7 +346,7 @@ namespace Complex.Ton
                 this.dappLabel.Dock = DockStyle.Right;
                 this.Add(this.dappLabel);
 
-                this.dappLabel.Image = connection.dapp.LoadImage((image) => { this.dappLabel.Image = image; this.dappLabel.Invalidate(); });
+                connection.dapp.LoadImage((image) => { this.dappLabel.Image = image; this.dappLabel.Invalidate(); });
 
             }
 

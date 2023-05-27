@@ -326,10 +326,8 @@ namespace Complex.Wallets
 
             protected override void OnVScroll()
             {
-                if (this.VScroll.IsEndScroll)
-                {
+                if (this.VScroll.IsEndScroll(0))
                     (this.Parent as TransactionPanel).GetTransactions();
-                }
                 base.OnVScroll();
             }
         }

@@ -167,6 +167,7 @@ myWallet; My wallet; Мой кошелёк;
 totalSupply; Total supply; Общий объем;
 owner; Owner; Владелец;
 ownerAddress; Owner address; Адрес владельца;
+collectionAddress; Collection address; Адрес коллекции;
 symbol; Symbol; Символ;
 decimals; Decimals; Точность;
 
@@ -197,6 +198,8 @@ sendTransactions; Send transactions; Отправить транзакции;
 totalSend; Total send; Всего отправить;
 totalFees; Total fees; Суммарная комиссия;
 sendTransactionsResult; Result of sending transactions; Результат отправки транзакций;
+
+hostNotSupportCurrentWindowsVersion; The host "{0}" does not support the current version of Windows; Хост "{0}" не поддерживает текущую версию Windows;
 
 
 

@@ -254,8 +254,8 @@ namespace Complex.Ton
             infoLabel.DescComponent.Text = data.info.Description;
 
 
-            jettonAddress = data.jettonMinterAddress;
-            jettonWalletAddress = data.jettonWalletAddress;
+            jettonAddress = data.JettonMinterAddress;
+            jettonWalletAddress = data.JettonWalletAddress;
             ownertAddress = data.deployParams.deployer;
 
             ownerAddressText.Text = !string.IsNullOrEmpty(ownertAddress) ? ownertAddress : "null";
@@ -266,7 +266,7 @@ namespace Complex.Ton
             currencyLabel.Visible = data.info.TotalSupply > 0;
             if (currencyLabel.Visible)
             {
-                currencyLabel.ValueTextComponent.Text = new Balance(data.info.Symbol, data.info.TotalSupply, data.info.Decimals, 3).GetTextSharps(data.info.Decimals);
+                currencyLabel.ValueTextComponent.Text = data.info.TotalSupply.GetTextSharps(data.info.Decimals);
                 currencyLabel.ValueTextComponent.ForeColor = data.info.ThremeColor;
                 currencyLabel.CurrencyTextComponent.Text = data.info.Symbol;
             }
@@ -277,7 +277,7 @@ namespace Complex.Ton
             symbolText.Text = info.Symbol;
             decimalText.Text = info.Decimals.ToString();
 
-            infoLabel.ImageComponent.Image = info.LoadImage((image) => infoLabel.ImageComponent.Image = image);
+            info.LoadImage((image) => infoLabel.ImageComponent.Image = image);
 
             infoLabel.TextComponent.Text = info.Name;
             infoLabel.DescComponent.Text = info.Description;
@@ -316,7 +316,7 @@ namespace Complex.Ton
             }
         }
 
-        public void Update(JettonDeployInfo info, JettonInfo jettonInfo, IImage img)
+        public void Update(JettonInfo info, JettonInfo jettonInfo, IImage img)
         {
             symbolText.Text = info.Symbol;
             decimalText.Text = info.Decimals.ToString();

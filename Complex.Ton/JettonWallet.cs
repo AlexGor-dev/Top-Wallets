@@ -79,7 +79,7 @@ namespace Complex.Ton
             return res;
         }
 
-        public void BurnCoins(string passcode, decimal amount, long queryId, ParamHandler<object, string> resultHanler)
+        public void BurnCoins(string passcode, long queryId, decimal amount, ParamHandler<object, string> resultHanler)
         {
             this.SendMessage(passcode, JettonController.CreateBurnData(this.Address, queryId, this.Parent.Address, this.Balance.FromDecimal(amount)), resultHanler);
         }

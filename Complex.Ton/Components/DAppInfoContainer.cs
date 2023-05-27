@@ -82,7 +82,7 @@ namespace Complex.Ton
                 this.Add(container);
             }
 
-            this.dappLabel.Image = connection.dapp.LoadImage((image) => { this.dappLabel.Image = image; this.dappLabel.Invalidate(); });
+            connection.dapp.LoadImage((image) => { this.dappLabel.Image = image; this.dappLabel.Invalidate(); });
         }
 
         private ImageNameLabel dappLabel;

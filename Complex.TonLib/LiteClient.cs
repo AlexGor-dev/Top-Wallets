@@ -254,7 +254,6 @@ namespace Complex.Ton
             }
             return null;
         }
-
         public (long time, string err) GetServerTime()
         {
             GetServerTimeQuery quety = new GetServerTimeQuery(null);

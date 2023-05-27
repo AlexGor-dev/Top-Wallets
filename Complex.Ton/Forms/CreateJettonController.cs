@@ -174,8 +174,10 @@ namespace Complex.Ton
             {
                 createJettonButton.BoxColor = controller.wallet.ThemeColor;
                 importJettonButton.BoxColor = controller.wallet.ThemeColor;
+                importJettonWalletButton.BoxColor = controller.wallet.ThemeColor;
                 createJettonButton.Enabled = controller.wallet.Adapter.IsConnected;
                 importJettonButton.Enabled = controller.wallet.Adapter.IsConnected;
+                importJettonWalletButton.Enabled = controller.wallet.Adapter.IsConnected;
             }
 
             private CreateJettonController controller;

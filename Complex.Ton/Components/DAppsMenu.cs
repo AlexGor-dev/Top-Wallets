@@ -36,7 +36,7 @@ namespace Complex.Ton
                     LargeButton button = new LargeButton(null, dapp.Name, dapp.Description);
                     button.Inflate.width = 8;
                     button.ImageComponent.MaxSize.Set(32);
-                    button.ImageComponent.Image = dapp.LoadImage((image) => { button.ImageComponent.Image = image; button.Invalidate(); });
+                    dapp.LoadImage((image) => { button.ImageComponent.Image = image; button.Invalidate(); });
                     button.DescComponent.MultilineLenght = 40;
                     button.Tag = dapp;
                     button.Executed += (s) =>

@@ -13,7 +13,7 @@ namespace Complex.Ton
             : base(new SwitchContainer(false))
         {
             this.wallet = wallet;
-            this.jettonWallet = wallet.Parent.GetMianChild(wallet.Symbol, WalletType.JettonWallet) as JettonWallet;
+            this.jettonWallet = wallet.Parent.GetMainChild(wallet.Symbol, WalletType.JettonWallet) as JettonWallet;
 
             this.switchContainer = this.Component as SwitchContainer;
             this.MinimumSize.Set(500, 550);
@@ -110,7 +110,7 @@ namespace Complex.Ton
             this.transactionWaitPanel.StartWait();
             this.switchContainer.Next = this.transactionWaitPanel;
             long qid = Utils.Random(int.MaxValue);
-            this.wallet.MintCoins(this.passwordPanel.Passcode, this.amount, qid, (h, e) =>
+            this.wallet.MintCoins(this.passwordPanel.Passcode, qid, this.amount, (h, e) =>
             {
                 if (h != null)
                 {

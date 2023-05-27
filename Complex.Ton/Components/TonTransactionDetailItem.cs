@@ -35,7 +35,7 @@ namespace Complex.Ton
             jettonButton.ImageComponent.MinSize.Set(32, 32);
             bot.Insert(0, jettonButton);
 
-            jettonButton.Image = jettonSource.Jetton.LoadImage((image) =>
+            jettonSource.Jetton.LoadImage((image) =>
             {
                 jettonButton.Image = image;
                 jettonButton.Parent.Layout();
@@ -54,7 +54,7 @@ namespace Complex.Ton
         private void Wallet_Changed(object sender)
         {
             jettonButton.Text = this.jettonSource.Jetton.Name;
-            jettonButton.Image = jettonSource.Jetton.LoadImage((image) =>
+            jettonSource.Jetton.LoadImage((image) =>
             {
                 jettonButton.Image = image;
                 jettonButton.Parent.Layout();

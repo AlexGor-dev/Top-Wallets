@@ -67,10 +67,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Complex.Navigation.dll</HintPath>
     </Reference>
-    <Reference Include="Complex.Navigation.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\Complex.Navigation.Components.dll</HintPath>
-    </Reference>
     <Reference Include="Complex.Navigation.Dialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Complex.Navigation.Dialogs.dll</HintPath>
@@ -87,10 +83,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Complex.Trader.dll</HintPath>
     </Reference>
-    <Reference Include="Complex.Trader.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\Complex.Trader.Components.dll</HintPath>
-    </Reference>
     <Reference Include="Complex.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Complex.Windows.dll</HintPath>
@@ -105,11 +97,18 @@
     <Compile Include="Components\JettonMenu.cs" />
     <Compile Include="Components\JettonWalletInfoContainer.cs" />
     <Compile Include="Components\JettonWalletItem.cs" />
+    <Compile Include="Components\NftInfoContainer.cs" />
+    <Compile Include="Components\NftInfoMenu.cs" />
+    <Compile Include="Components\TonNftItem.cs" />
     <Compile Include="Components\TonTokenItem.cs" />
     <Compile Include="Components\TonTransactionDetailItem.cs" />
     <Compile Include="Components\TonWalletMainPanel.cs" />
     <Compile Include="Forms\ChangeForm.Content.cs" />
     <Compile Include="Forms\ChangeForm.Owner.cs" />
+    <Compile Include="Forms\CreateNftController.Import.cs" />
+    <Compile Include="Forms\CreateNftController.CreateSingle.cs" />
+    <Compile Include="Forms\CreateNftController.CreateCollection.cs" />
+    <Compile Include="Forms\CreateNftController.cs" />
     <Compile Include="Forms\JettonMultiSendForm.cs" />
     <Compile Include="Forms\JettonReceiveForm.cs" />
     <Compile Include="Forms\JettonSendForm.cs" />
@@ -130,6 +129,10 @@
     <Compile Include="JettonMinter.cs" />
     <Compile Include="JettonWallet.cs" />
     <Compile Include="KnownAddress.cs" />
+    <Compile Include="NftCollection.cs" />
+    <Compile Include="NftWallet.cs" />
+    <Compile Include="NftItem.cs" />
+    <Compile Include="TokenWallet.cs" />
     <Compile Include="TonAdapterExtension.cs" />
     <Compile Include="TonAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

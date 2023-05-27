@@ -54,7 +54,7 @@ namespace Complex.Ton
         private JettonInfoPanel infoPanel;
         private PasswordPanel passwordPanel;
         private object ownerMessageHash;
-        private JettonDeployInfo info;
+        private JettonInfo info;
         private SendInfoPanel sendInfoPanel;
 
         private void CompleteChangeContent()
@@ -93,7 +93,7 @@ namespace Complex.Ton
             this.transactionWaitPanel.StartWait();
             this.switchContainer.Next = this.transactionWaitPanel;
             long qid = Utils.Random(int.MaxValue);
-            this.wallet.ChangeContent(this.passwordPanel.Passcode, this.info, null, qid, (h, e) =>
+            this.wallet.ChangeContent(this.passwordPanel.Passcode, qid, this.info, null, (h, e) =>
             {
                 if (h != null)
                 {
@@ -124,7 +124,7 @@ namespace Complex.Ton
             this.sendInfoPanel.UpdateFee(0, this.wallet.Balance, this.fees, this.wallet.Symbol);
             this.sendInfoPanel.Update(this.wallet.Address, "changeContentConfirmation", "changeContent2");
             this.sendInfoPanel.UpdateError(null);
-            wallet.ChangeContentCalcFee(this.info, null, 0, (fee, error) =>
+            wallet.ChangeContentCalcFee(0, this.info, null, (fee, error) =>
             {
                 if (error == null)
                 {
@@ -202,10 +202,10 @@ namespace Complex.Ton
 
             private ChangeForm form;
             private JettonInfoContainer infoContainer;
-            private JettonDeployInfo info;
+            private JettonInfo info;
             private IImage img;
 
-            public void Update(JettonDeployInfo info, IImage img)
+            public void Update(JettonInfo info, IImage img)
             {
                 this.info = info;
                 if (this.img != null)

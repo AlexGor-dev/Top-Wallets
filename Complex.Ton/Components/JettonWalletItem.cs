@@ -20,7 +20,7 @@ namespace Complex.Ton
             this.Init();
         }
 
-        public JettonWalletItem(JettonMinter wallet)
+        public JettonWalletItem(TokenWallet wallet)
             : base(wallet)
         {
             this.Init();
@@ -28,14 +28,15 @@ namespace Complex.Ton
 
         private void Init()
         {
-            this.label = new Label("jetton.svg", Wallet.Version);
+            this.label = new Label(Wallet.ImageID, Wallet.Version);
+            this.label.Inflate.height = 6;
             this.label.ImageComponent.Dock = DockStyle.TopCenter;
             this.label.ImageComponent.MaxSize.Set(32, 32);
             this.label.Dock = DockStyle.Right;
             this.label.TextComponent.Font = Theme.font10Bold;
             topContainer.Add(this.label);
 
-            this.label.Image = (this.Wallet as JettonMinter).JettonInfo.LoadImage((img) =>
+            (this.Wallet as TokenWallet).LoadImage((img) =>
             {
                 this.label.Image = img;
                 this.topContainer.Layout();

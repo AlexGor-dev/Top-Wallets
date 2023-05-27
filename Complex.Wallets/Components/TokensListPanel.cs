@@ -75,7 +75,6 @@ namespace Complex.Wallets
 
         protected override void OnCreated()
         {
-
             if(this.Wallet.Adapter.IsConnected)
                 this.listView.Load(this.adapter, false);
             base.OnCreated();
@@ -91,7 +90,6 @@ namespace Complex.Wallets
                         MessageView.Show(e);
                     if (ts != null && ts.Length > 0)
                     {
-                        //UniqueCollection<ITokenInfo> items = new UniqueCollection<ITokenInfo>();
                         foreach (ITokenInfo token in ts)
                         {
                             TokenItem old = this.adapter.items[token.ID];
@@ -115,7 +113,7 @@ namespace Complex.Wallets
 
         protected override void OnConnectionChanged()
         {
-            if (this.Wallet.Adapter.IsConnected)
+            if (this.Wallet.Adapter.IsConnected && this.adapter.items.Count == 0)
                 this.listView.Load(this.adapter, false);
             base.OnConnectionChanged();
         }
@@ -203,14 +201,6 @@ namespace Complex.Wallets
 
             }
 
-            public override void Subscribe()
-            {
-            }
-
-            public override void Unsubscribe()
-            {
-            }
-
             public void Add(ITokenInfo token)
             {
                 TokenItem item = new TokenItem(this.wallet, token, this.waitEffect);
@@ -227,51 +217,6 @@ namespace Complex.Wallets
             public void Change(ITokenInfo token)
             {
                 this.OnChanged(token.Address);
-            }
-
-            private void Tokens_Cleared(object sender)
-            {
-                this.OnCleared();
-            }
-
-            public override void ShowMenu(INavigationView view, float x, float y)
-            {
-                //INavigationItem[] selItems = view.SelectedItems;
-                //if (selItems.Length == 0 && view.FocusedItem != null)
-                //    selItems = new INavigationItem[] { view.FocusedItem };
-                //if (selItems.Length > 0)
-                //{
-                //    MenuStrip menu = new MenuStrip();
-                //    MenuStripButton button = new MenuStripButton("copyOperation.svg", "copyMessage");
-                //    button.Executed += (s) =>
-                //    {
-                //        string text = "";
-                //        foreach (MessageItem item in selItems)
-                //            text += Language.Current[item.data.Message] + Environment.NewLine;
-                //        Clipboard.SetText(text);
-                //    };
-                //    menu.Add(button);
-                //    menu.Add(ViewCopyMode.Columns).Executed += (object s) => view.Copy(selItems, (ViewCopyMode)(s as MenuStripButton).Tag);
-
-                //    menu.Add(new MenuStripSeparator());
-
-                //    button = new MenuStripButton("deleteOperation.svg", "deleteCmd");
-                //    button.Executed += (s) =>
-                //    {
-                //        foreach (MessageItem item in selItems)
-                //            MessageView.Messages.Remove(item.data);
-                //    };
-                //    menu.Add(button);
-
-                //    button = new MenuStripButton("clearAll");
-                //    button.Executed += (s) =>
-                //    {
-                //        MessageView.Messages.Clear();
-                //    };
-                //    menu.Add(button);
-
-                //    menu.Show(x, y);
-                //}
             }
         }
 
@@ -292,7 +237,15 @@ namespace Complex.Wallets
 
             protected override IImage GetImage()
             {
-                return token.LoadImage((img) => this.Image = img);
+                IImage image = null;
+                token.LoadImage((img) =>
+                {
+                    if (image == null)
+                        image = img;
+                    else
+                        this.Image = img;
+                });
+                return image;
             }
 
             public override Component GetSubitem(string name)

@@ -9,7 +9,7 @@ namespace Complex.Ton
 {
     public class JettonEnterInfoPanel : CaptionPanel
     {
-        public JettonEnterInfoPanel(string captionID, bool useTotalSupply, EmptyHandler goback, EmptyHandler closeHandler, int continueButtonColor, EmptyHandler waitHandler, ParamHandler<JettonDeployInfo,IImage> resultHandler)
+        public JettonEnterInfoPanel(string captionID, bool useTotalSupply, EmptyHandler goback, EmptyHandler closeHandler, int continueButtonColor, EmptyHandler waitHandler, ParamHandler<JettonInfo,IImage> resultHandler)
             : base(captionID, goback, closeHandler, "continue", continueButtonColor, ()=> { })
         {
             this.waitHandler = waitHandler;
@@ -137,7 +137,7 @@ namespace Complex.Ton
         }
 
         private EmptyHandler waitHandler;
-        private ParamHandler<JettonDeployInfo, IImage> resultHandler;
+        private ParamHandler<JettonInfo, IImage> resultHandler;
         private TextBox nameBox;
         private TextBox symbolBox;
         private TextEditor descBox;
@@ -225,7 +225,7 @@ namespace Complex.Ton
                 }
                 int dec = this.decimalBox.Value == 0 ? 9 : (int)this.decimalBox.Value;
                 UInt128 value = (UInt128)(this.totalBox.Value * (decimal)Math.Pow(10, dec));
-                JettonDeployInfo info = new JettonDeployInfo(this.nameBox.Text, this.descBox.Text, this.symbolBox.Text, image, value, dec, "#" + Color.A(this.colorPickerButton.ColorValue, this.colorPickerButton.ColorAlpha).ToString("X"), "{\"name\":\"Top-Wallets\",\"url\":\"https://complex-soft.com/top_wallets.html\"}");
+                JettonInfo info = new JettonInfo(this.nameBox.Text, this.descBox.Text, this.symbolBox.Text, image, value, dec, null, null, "#" + Color.A(this.colorPickerButton.ColorValue, this.colorPickerButton.ColorAlpha).ToString("X"), "{\"name\":\"Top-Wallets\",\"url\":\"https://complex-soft.com/top_wallets.html\"}");
                 this.resultHandler(info, img);
             });
         }

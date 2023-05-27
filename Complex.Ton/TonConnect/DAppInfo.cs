@@ -25,9 +25,9 @@ namespace Complex.Ton.TonConnect
             return name + " " + base.ToString();
         }
 
-        public IImage LoadImage(ParamHandler<IImage> resultHandler)
+        public void LoadImage(ParamHandler<IImage> resultHandler)
         {
-            return Images.LoadImage(iconUrl, "DAppInfo_" + name, "dapp.svg", resultHandler);
+            Images.LoadImage(iconUrl, "DAppInfo_" + name, "dapp.svg", 96, 16, resultHandler);
         }
 
     }

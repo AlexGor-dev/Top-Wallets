@@ -82,7 +82,7 @@ namespace Complex.Ton
                 this.dappLabel.textComponent.Dock = DockStyle.Bottom;
                 this.Add(this.dappLabel);
 
-                this.dappLabel.Image = connection.dapp.LoadImage((image) => { this.dappLabel.Image = image; this.dappLabel.Invalidate(); });
+                connection.dapp.LoadImage((image) => { this.dappLabel.Image = image; this.dappLabel.Invalidate(); });
 
             }
 

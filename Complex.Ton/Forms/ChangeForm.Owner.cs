@@ -41,7 +41,7 @@ namespace Complex.Ton
             this.transactionWaitPanel.StartWait();
             this.switchContainer.Next = this.transactionWaitPanel;
             long qid = Utils.Random(int.MaxValue);
-            this.wallet.ChangeOwner(this.passwordPanel.Passcode, this.newOwner, qid, (h, e) =>
+            this.wallet.ChangeOwner(this.passwordPanel.Passcode, qid, this.newOwner, (h, e) =>
             {
                 if (h != null)
                 {
@@ -64,7 +64,7 @@ namespace Complex.Ton
             this.sendInfoPanel.UpdateFee(0, this.wallet.Balance, this.fees, this.wallet.Symbol);
             this.sendInfoPanel.Update(this.wallet.Address, "changeOwnerConfirmation", "changeOwner2");
             this.sendInfoPanel.UpdateError("attentionChangeOwner");
-            wallet.ChangeOwnerCalcFee(newOwner, 0, (fee, error) =>
+            wallet.ChangeOwnerCalcFee(0, newOwner, (fee, error) =>
             {
                 if (error == null)
                 {

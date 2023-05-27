@@ -152,9 +152,9 @@ namespace Complex.Ton
             this.Adapter.GetTokens(this.address, resultHanler);
         }
 
-        public override void GetNfts(ParamHandler<INftInfo[], string> resultHanler)
+        public override void GetNfts(int offset, int count, ParamHandler<INftInfo[], string> resultHanler)
         {
-            this.Adapter.GetNfts(this.address, resultHanler);
+            this.Adapter.GetNfts(this.address, offset, count, resultHanler);
         }
 
         public override Component CreateMainPanel()
@@ -223,13 +223,19 @@ namespace Complex.Ton
                 return new TonTokenItem(this, jwi, waitEffect);
             return base.CreateTockenItem(token, waitEffect);
         }
-
         public override void CreateTokenInfoMenu(ITokenInfo token, ParamHandler<Menu> paramHandler)
         {
             if (token is JettonWalletInfo jwi)
                 paramHandler(new JettonMenu(this, jwi.JettonInfo, true));
             else
                 base.CreateTokenInfoMenu(token, paramHandler);
+        }
+
+        public override Component CreateNftItem(INftInfo nft, GridWaitEffect waitEffect)
+        {
+            if (nft is NftInfo ni)
+                return new TonNftItem(this, ni, waitEffect);
+            return base.CreateNftItem(nft, waitEffect);
         }
 
         public override void CreateTokenInfoAddressMenu(ITokenInfo token, ParamHandler<MenuStrip> paramHandler)

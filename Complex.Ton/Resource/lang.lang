@@ -20,9 +20,25 @@ removingWallet; Removing a wallet; Удаление кошелька;
 deleteToken; Delete token {0}?\nIn the future, you can connect the token to the address.; Удалить токен {0}?\nВ дальнейшем Вы сможете подключить токен по адресу.;
 deleteWalletInfo; Your wallet {0} will be deleted. {1} Subsequently, it can be restored by secret words.; Ваш кошелёк {0} будет удалён. {1} Впоследствии его можно будет восстановить по секретным словам.;
 deleteChildWallets; All child wallets will be deleted.; Будут удалены все дочерние кошельки.;
-
 mintYourToken; Mint your token; Выпустите свой токен;
 mintYourTokenInfo; Token is a fungible token standard for the TON blockchain. You can deploy your own Token on the mainnet with a single click. You will need at least 0.25 TON for the deployment fee.; Jetton — это стандарт взаимозаменяемых токенов для блокчейна TON. Вы можете развернуть свой собственный токен в основной сети одним щелчком мыши. Вам потребуется не менее 0,25 TON для платы за развертывание.;
+
+
+createNft; Create Nft; Создать Nft;
+attachNftCollection; Attach Nft collection; Подключить коллекцию Nft;
+attachNftItem; Attach Nft item; Подключить элемент Nft;
+attachNft; Attach Nft; Подключить Nft;
+createNftSingle; Create Nft-single; Создать элемент Nft;
+createNftCollection; Create Nft-collection; Создать коллекцию Nft;
+mintYourNft; Mint your Nft; Выпустите свой Nft;
+mintYourNftInfo; ; ;
+enterNftAddress; Enter NFT address; Введите адрес NFT;
+addressNotNft; Address not Nft; Адрес не Nft;
+NftAttached; Your Nft is attached.; Ваш Nft подключен.;
+transferItem; Transfer; Передать;
+mintNft; Mint Nft; Добавить Nft;
+
+
 enoughBalance; Not enough balance in deployer wallet.\nYou need at least 0.25 TON for the deployment fee.; Недостаточно баланса в кошельке владельца.\nНеобходимо не менее 0,25 TON для платы за развертывание.;
 enterTokenName; Enter token name; Введите имя токена;
 projectUnabbreviatedName; Your token unabbreviated name with spaces (usually 1-3 words).; Полное название вашего токена с пробелами (обычно 1-3 слова).;

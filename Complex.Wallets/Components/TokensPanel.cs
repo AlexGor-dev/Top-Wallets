@@ -21,7 +21,7 @@ namespace Complex.Wallets
         }
 
         public TokensPanel(Wallet wallet)
-            :base(wallet)
+            : base(wallet)
         {
             this.Init();
         }
@@ -43,7 +43,7 @@ namespace Complex.Wallets
         }
 
         private InsertedAnyView listView;
-        private Collection<ITokenInfo> tokens = new Collection<ITokenInfo>();
+        private Dict<Component> items = new Dict<Component>();
         private bool allTokensLoaded = false;
         private GridWaitEffect waitEffect;
         public GridWaitEffect WaitEffect => waitEffect;
@@ -105,28 +105,28 @@ namespace Complex.Wallets
                 this.listView.BeginUpdate();
                 Application.Run(() =>
                 {
-                    Wallet.GetTokens( (ts, e) =>
-                    {
-                        if (e != null)
-                            MessageView.Show(e);
-                        if (ts != null)
-                        {
-                            if (ts.Length > 0)
-                                this.AddTokens(ts);
-                        }
-                        else
-                        {
-                            this.allTokensLoaded = true;
-                        }
-                        Application.Invoke(() =>
-                        {
-                            if (this.tokens.Count > 0 || allTokensLoaded)
-                                this.StopWait();
-                            this.waitEffect.Stop();
-                            this.listView.EndUpdate();
-                            this.Invalidate();
-                        });
-                    });
+                    Wallet.GetTokens((ts, e) =>
+                   {
+                       if (e != null)
+                           MessageView.Show(e);
+                       if (ts != null)
+                       {
+                           if (ts.Length > 0)
+                               this.AddTokens(ts);
+                       }
+                       else
+                       {
+                           this.allTokensLoaded = true;
+                       }
+                       Application.Invoke(() =>
+                       {
+                           if (this.items.Count > 0 || allTokensLoaded)
+                               this.StopWait();
+                           this.waitEffect.Stop();
+                           this.listView.EndUpdate();
+                           this.Invalidate();
+                       });
+                   });
                 });
             }
 
@@ -134,17 +134,27 @@ namespace Complex.Wallets
 
         private void AddTokens(ITokenInfo[] tokens)
         {
-            bool added = this.tokens.Count == 0;
-            this.tokens.Add(tokens);
+            bool added = this.items.Count == 0;
             Array<Component> components = new Array<Component>();
             foreach (ITokenInfo token in tokens)
             {
-                if(added)
-                    this.listView.Add(this.Wallet.CreateTockenItem(token, this.waitEffect));
+                Component cp = this.items[token.ID];
+                if (cp != null)
+                {
+                    if (cp is ITokenInfoSource ts)
+                        ts.TokenInfo = token;
+                }
                 else
-                    components.Add(this.Wallet.CreateTockenItem(token, this.waitEffect));
+                {
+                    cp = this.Wallet.CreateTockenItem(token, this.waitEffect);
+                    if (added)
+                        this.listView.Add(cp);
+                    else
+                        components.Add(cp);
+                    this.items.Add(token.ID, cp);
+                }
             }
-            if(!added)
+            if (components.Count > 0)
                 this.listView.InsertAnimation(0, components);
         }
 
@@ -182,7 +192,7 @@ namespace Complex.Wallets
             {
                 WaitDna.DrawWait(g, waitRect, Wallet.ThemeColor, Theme.blue2, animationValue);
             }
-            else if (tokens.Count == 0 && allTokensLoaded)
+            else if (items.Count == 0 && allTokensLoaded)
             {
                 g.DrawTextExclude(Language.Current["noTokens"], font, clientRect, ParentBackColor, -15, 25, ContentAlignment.Center);
             }

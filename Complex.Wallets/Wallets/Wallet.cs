@@ -424,7 +424,7 @@ namespace Complex.Wallets
             resultHanler(null, "notSupport");
         }
 
-        public virtual void GetNfts(ParamHandler<INftInfo[], string> resultHanler)
+        public virtual void GetNfts(int offset, int count, ParamHandler<INftInfo[], string> resultHanler)
         {
             resultHanler(null, "notSupport");
         }
@@ -550,6 +550,11 @@ namespace Complex.Wallets
         public virtual Component CreateTockenItem(ITokenInfo token, GridWaitEffect waitEffect)
         {
             return new TokenItem(this, token, waitEffect);
+        }
+
+        public virtual Component CreateNftItem(INftInfo nft, GridWaitEffect waitEffect)
+        {
+            return new NftInfoItem(this, nft, waitEffect);
         }
 
         public virtual Component CreateTokensPanel()

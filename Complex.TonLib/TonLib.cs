@@ -7,7 +7,11 @@ namespace Complex.Ton
 {
     internal unsafe class TonLib
     {
+//#if DEBUG
+//        private const string Dll = @"E:\Complex\Ton\Top-Wallets\tonlib_win\x64\Debug\tonlib.dll";
+//#else
         private const string Dll = "tonlib.dll";
+//#endif
 
 
         [DllImport(Dll)]
@@ -37,8 +41,6 @@ namespace Complex.Ton
         [DllImport(Dll)]
         public static extern void LiteClientGetTransactions(IntPtr handle, string address, long lt, byte[] lt_hash, IntPtr resultHandler, int count, IntPtr handler);
 
-        [DllImport(Dll)]
-        public static extern long LiteClientFindAddress(IntPtr handle);
 
 
         [DllImport(Dll)]

@@ -105,11 +105,6 @@ void LiteClientGetTransactions(LiteClient* client, const char* address, td::uint
     });
 }
 
-comx::AccountState* LiteClientFindAddress(LiteClient* client)
-{
-    return findAddress(client);
-}
-
 void LiteClientGetAccountState(LiteClient* client, const char* address, QueryResultHandler resultHandler)
 {
     client->getAccountState(std::string(address), [resultHandler = resultHandler](auto rsate)

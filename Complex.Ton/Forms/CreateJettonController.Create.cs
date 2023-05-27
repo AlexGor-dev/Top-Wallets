@@ -67,14 +67,14 @@ namespace Complex.Ton
 
         private void CreateJettonMinter(ParamHandler<JettonMinter, string> resultHandler)
         {
-            this.wallet.Adapter.CreateAccountState(data.jettonMinterAddress, (s, e) =>
+            this.wallet.Adapter.CreateAccountState(data.JettonMinterAddress, (s, e) =>
             {
                 if (s != null)
                 {
                     JettonInfo info = JettonController.GetJettonInfo(s);
                     if (info != null)
                     {
-                        JettonMinter wallet = new JettonMinter(this.wallet.AdapterID, data.jettonMinterAddress, info, this.wallet);
+                        JettonMinter wallet = new JettonMinter(this.wallet.AdapterID, data.JettonMinterAddress, info, this.wallet);
                         wallet.Update(s);
                         s.Dispose();
                         resultHandler(wallet, null);
@@ -93,14 +93,14 @@ namespace Complex.Ton
 
         private void CreateJettonWallet(ParamHandler<JettonWallet, string> resultHandler)
         {
-            this.wallet.Adapter.CreateAccountState(data.jettonWalletAddress, (s, e) =>
+            this.wallet.Adapter.CreateAccountState(data.JettonWalletAddress, (s, e) =>
             {
                 if (s != null)
                 {
                     JettonWalletInfo info = JettonController.GetJettonWalletInfo(s);
                     if (info != null)
                     {
-                        JettonWallet wallet = new JettonWallet(this.wallet.AdapterID, data.jettonWalletAddress, info, this.wallet);
+                        JettonWallet wallet = new JettonWallet(this.wallet.AdapterID, data.JettonWalletAddress, info, this.wallet);
                         wallet.Update(s);
                         s.Dispose();
                         resultHandler(wallet, null);
@@ -273,7 +273,7 @@ namespace Complex.Ton
                 controller.Wait(null, "pleaseWait");
                 SingleThread.Run(() =>
                 {
-                    this.controller.wallet.Adapter.CreateAccountState(data.jettonMinterAddress, (s, e) =>
+                    this.controller.wallet.Adapter.CreateAccountState(data.JettonMinterAddress, (s, e) =>
                     {
                         if (s != null)
                         {
@@ -284,7 +284,7 @@ namespace Complex.Ton
                                 if (cs == ContractState.None)
                                     controller.EnterWalletPassword(this.data);
                                 else
-                                    this.controller.Error(Language.Current["jettonMinterIsCreated", data.jettonMinterAddress]);
+                                    this.controller.Error(Language.Current["jettonMinterIsCreated", data.JettonMinterAddress]);
 
                             });
                         }

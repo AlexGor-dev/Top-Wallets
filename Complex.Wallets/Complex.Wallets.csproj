@@ -72,6 +72,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Complex.Trader.dll</HintPath>
     </Reference>
+    <Reference Include="Complex.Trader.Adapters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Complex.Trader.Adapters.dll</HintPath>
+    </Reference>
     <Reference Include="Complex.Trader.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Complex.Trader.Components.dll</HintPath>
@@ -94,6 +98,7 @@
     <Compile Include="CoinImage.cs" />
     <Compile Include="CoinsAdapter.cs" />
     <Compile Include="Components\MarketPanel.cs" />
+    <Compile Include="Components\NftInfoItem.cs" />
     <Compile Include="Components\NftsPanel.cs" />
     <Compile Include="Components\TokenItem.cs" />
     <Compile Include="Components\TokensListPanel.cs" />
@@ -101,7 +106,6 @@
     <Compile Include="Components\TransactionDetailItem.cs" />
     <Compile Include="Components\TransactionExpandedPanel.cs" />
     <Compile Include="Components\TransactionGroupItem.cs" />
-    <Compile Include="Components\TransactionItem.cs" />
     <Compile Include="Components\TransactionWaitPanel.cs" />
     <Compile Include="Forms\AddressItem.cs" />
     <Compile Include="Forms\DoneWalletPanel.cs" />

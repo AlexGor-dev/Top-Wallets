@@ -107,7 +107,7 @@ namespace Complex.Ton
             this.transactionWaitPanel.StartWait();
             this.switchContainer.Next = this.transactionWaitPanel;
             long qid = Utils.Random(int.MaxValue);
-            this.wallet.BurnCoins(this.passwordPanel.Passcode, this.amount, qid, (h, e) =>
+            this.wallet.BurnCoins(this.passwordPanel.Passcode, qid, this.amount, (h, e) =>
             {
                 if (h != null)
                 {

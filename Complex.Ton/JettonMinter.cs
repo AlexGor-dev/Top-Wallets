@@ -6,9 +6,10 @@ using Complex.Controls;
 
 namespace Complex.Ton
 {
-    public class JettonMinter : TonUnknownWallet, IToken
+    public class JettonMinter : TokenWallet
     {
-        protected JettonMinter(IData data) : base(data)
+        protected JettonMinter(IData data) 
+            : base(data)
         {
         }
 
@@ -16,13 +17,11 @@ namespace Complex.Ton
         {
             base.Load(data);
             this.jettonInfo = data["jettonInfo"] as JettonInfo;
-            this.parent = data["parent"] as TonWallet;
         }
         protected override void Save(IData data)
         {
             base.Save(data);
             data["jettonInfo"] = this.jettonInfo;
-            data["parent"] = this.parent;
         }
 
         protected override void OnLoaded()
@@ -32,10 +31,9 @@ namespace Complex.Ton
         }
 
         public JettonMinter(string adapterID, string address, JettonInfo jettonInfo, TonWallet parent) 
-            : base(adapterID, address)
+            : base(adapterID, address, parent)
         {
             this.jettonInfo = jettonInfo;
-            this.parent = parent;
             this.Init();
         }
 
@@ -43,9 +41,7 @@ namespace Complex.Ton
         {
             Controller.AddCoinImage(BannerImageID, 96, this.ThemeColor, this.ImageID);
             Controller.AddCoinImage(SmallImageID, 48, this.ThemeColor, this.ImageID);
-            InitImages(jettonInfo.LoadImage((image) => InitImages(image)));
-            if (this.IsMain && this.parent != null)
-                this.parent.TransactionComplete += Parent_TransactionComplete;
+            jettonInfo.LoadImage((image) => InitImages(image));
         }
 
         private void InitImages(IImage image)
@@ -55,11 +51,6 @@ namespace Complex.Ton
                 Images.Add(BannerImageID, image);
                 Images.Add(SmallImageID, image);
             }
-        }
-
-        private void Parent_TransactionComplete(object sender, ITransactionBase t1, object t2)
-        {
-            this.OnTransactionComplete(sender, t1, t2);
         }
 
 
@@ -78,7 +69,7 @@ namespace Complex.Ton
                     if (prev.ImageData != this.jettonInfo.ImageData)
                     {
                         Images.Remove(prev.ImageID);
-                        InitImages(this.jettonInfo.LoadImage((image) => InitImages(image)));
+                        this.jettonInfo.LoadImage((image) => InitImages(image));
                     }
                     if (prev.Symbol != this.jettonInfo.Symbol)
                     {
@@ -104,39 +95,19 @@ namespace Complex.Ton
             }
         }
 
-        private TonWallet parent;
-        public TonWallet Parent
-        {
-            get => parent;
-            internal set
-            {
-                if (this.parent == value) return;
-                if(this.parent != null)
-                    this.parent.TransactionComplete -= Parent_TransactionComplete;
-                this.parent = value;
-                if(this.parent != null)
-                    this.parent.TransactionComplete += Parent_TransactionComplete;
 
-            }
-        }
 
-        public override bool IsMain => parent != null && parent.IsMain;
-
+        public override string ImageID => "jetton.svg";
         public override string SmallImageID => "Small_" + Symbol + (this.Adapter.IsTestnet ? "_Test" : "");
         public override string BannerImageID => "Banner_" + Symbol + (this.Adapter.IsTestnet ? "_Test" : "");
 
-        public override string ImageID => "jetton.svg";
-
         public override string Symbol => jettonInfo.Symbol.First(8);
 
-        public virtual string Owner => jettonInfo.OwnerAddress;
+        public override string Owner => jettonInfo.OwnerAddress;
 
         public override Balance Balance => jettonInfo.TotalSupply;
 
         public Balance TonBalance => base.Balance;
-
-        public override bool IsSupportMarket => false;
-        public override bool IsSupportExport => false;
 
         protected virtual int JettonColor => this.jettonInfo.ThremeColor;
 
@@ -155,39 +126,15 @@ namespace Complex.Ton
             }
         }
 
-        int ITokenInfo.Color => this.ThemeColor;
-
-        Wallet IToken.Parent => this.parent;
 
         private ColorButton changeContractButton;
         private ColorButton mintCoinsButton;
-
-        IImage ITokenInfo.LoadImage(ParamHandler<IImage> resultHandler)
-        {
-            IImage image = Images.Get(this.SmallImageID);
-            resultHandler(image);
-            return image;
-        }
-
-        public override string GetBalanceMarketPrice()
-        {
-            return base.Balance.GetTextSharps(8) + " " + base.Balance.Symbol;
-        }
-
-        public override string GetMarketPrice(decimal balance)
-        {
-            return null;
-        }
 
         protected virtual JettonInfo GetJettonInfo(AccountState state)
         {
             return this.Adapter.Client.GetJettonInfo(state);
         }
 
-        public virtual bool CheckNewOwner(Wallet wallet)
-        {
-            return wallet is TonWallet tonWallet && tonWallet.Address != this.parent.Address;
-        }
         public override bool Update(AccountState state)
         {
             bool firstUpdate = this.State == WalletState.None;
@@ -198,7 +145,7 @@ namespace Complex.Ton
                 {
                     JettonInfo info = GetJettonInfo(state);
                     this.JettonInfo = info;
-                    if (this.parent != null && this.jettonInfo != null && this.jettonInfo.OwnerAddress != this.parent.Address)
+                    if (this.Parent != null && this.jettonInfo != null && this.jettonInfo.OwnerAddress != this.Parent.Address)
                     {
                         if (this.changeContractButton != null)
                         {
@@ -222,67 +169,35 @@ namespace Complex.Ton
         }
 
 
-        protected override void DeleteWallet(Component item)
-        {
-            if (MessageBox.Show(item, MenuAlignment.Center, Language.Current["removingToken"], null, Language.Current["deleteToken", this.Name], MessageBoxButtons.OKCancel))
-            {
-                if (this.parent != null)
-                    this.parent.Wallets.Remove(this.ID);
-                WalletsData.Wallets.Remove(this);
-            }
-        }
 
-        public override void CheckPassword(string passcode, ParamHandler<string> resultHanler)
-        {
-            this.parent.CheckPassword(passcode, resultHanler);
-        }
-
-        protected void SendMessage(string passcode, MessageData data, ParamHandler<object, string> resultHanler)
-        {
-            this.Parent.SendMessage(passcode, data, (h, e) =>
-            {
-                data.Dispose();
-                resultHanler(h, e);
-            });
-        }
-
-        protected void CalcFees(MessageData data, ParamHandler<Balance, string> resultHanler)
-        {
-            this.parent.CalcFees(this.Address, data.amount, "", data.message, null, (fee, e) =>
-            {
-                data.Dispose();
-                resultHanler(fee, e);
-            });
-        }
-
-        public void MintCoins(string passcode, decimal amount, long queryId, ParamHandler<object, string> resultHanler)
+        public void MintCoins(string passcode, long queryId, decimal amount, ParamHandler<object, string> resultHanler)
         {
             this.SendMessage(passcode, JettonController.CreateMintData(this.Address, queryId, this.Parent.Address, this.Balance.FromDecimal(amount)), resultHanler);
         }
 
-        public void ChangeOwner(string passcode, string newOwner, long queryId, ParamHandler<object, string> resultHanler)
+        public void ChangeOwner(string passcode, long queryId, string newOwner, ParamHandler<object, string> resultHanler)
         {
             this.SendMessage(passcode, JettonController.CreateChangeOwner(this.Address, queryId, newOwner), resultHanler);
         }
 
-        public void ChangeContent(string passcode, JettonDeployInfo info, string offchainUri, long queryId, ParamHandler<object, string> resultHanler)
+        public void ChangeContent(string passcode, long queryId, JettonInfo info, string offchainUri, ParamHandler<object, string> resultHanler)
         {
             this.SendMessage(passcode, JettonController.CreateChangeContent(this.Address, queryId, info, offchainUri), resultHanler);
         }
 
-        public void ChangeOwnerCalcFee(string newOwner, long queryId, ParamHandler<Balance, string> resultHanler)
+        public void ChangeOwnerCalcFee(long queryId, string newOwner, ParamHandler<Balance, string> resultHanler)
         {
             this.CalcFees(JettonController.CreateChangeOwner(this.Address, queryId, newOwner), resultHanler);
         }
 
-        public void ChangeContentCalcFee(JettonDeployInfo info, string offchainUri, long queryId, ParamHandler<Balance, string> resultHanler)
+        public void ChangeContentCalcFee(long queryId, JettonInfo info, string offchainUri, ParamHandler<Balance, string> resultHanler)
         {
             this.CalcFees(JettonController.CreateChangeContent(this.Address, queryId, info, offchainUri), resultHanler);
         }
 
         public override ColorButton CreateMainLeftButton()
         {
-            if (this.jettonInfo != null && this.jettonInfo.OwnerAddress == this.parent.Address)
+            if (this.jettonInfo != null && this.jettonInfo.OwnerAddress == this.Parent.Address)
             {
                 changeContractButton = new ColorButton("changeContract");
                 changeContractButton.Padding.Set(6);
@@ -299,7 +214,7 @@ namespace Complex.Ton
 
         public override ColorButton CreateMainRightButton()
         {
-            if (this.jettonInfo != null && this.jettonInfo.OwnerAddress == this.parent.Address)
+            if (this.jettonInfo != null && this.jettonInfo.OwnerAddress == this.Parent.Address)
             {
                 mintCoinsButton = new ColorButton("mintCoins");
                 mintCoinsButton.Padding.Set(6);
@@ -314,10 +229,6 @@ namespace Complex.Ton
             return null;
         }
 
-        public override Component CreateWalletItem()
-        {
-            return new JettonWalletItem(this);
-        }
 
         protected override void UpdateWaitTransactions(ITransactionBase last, ITransactionBase[] ts)
         {
@@ -333,5 +244,9 @@ namespace Complex.Ton
 
         }
 
+        public override void LoadImage(ParamHandler<IImage> paramHandler)
+        {
+            this.jettonInfo.LoadImage(paramHandler);
+        }
     }
 }

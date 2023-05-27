@@ -9,7 +9,6 @@ LiteClientIsConnected
 LiteClientSend
 LiteClientLast;
 LiteClientGetTransactions
-LiteClientFindAddress
 LiteClientExportKey
 LiteClientImportKey
 LiteClientDeleteKey

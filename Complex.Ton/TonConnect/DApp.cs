@@ -25,9 +25,9 @@ namespace Complex.Ton
             }
         }
 
-        public IImage LoadImage(ParamHandler<IImage> resultHandler)
+        public void LoadImage(ParamHandler<IImage> resultHandler)
         {
-            return Images.LoadImage(image, "DApp_" + name, "dapp.svg", resultHandler);
+            Images.LoadImage(image, "DApp_" + name, "dapp.svg", 96, 16, resultHandler);
         }
 
     }

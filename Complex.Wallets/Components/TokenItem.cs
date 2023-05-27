@@ -7,7 +7,7 @@ using Complex.Trader;
 
 namespace Complex.Wallets
 {
-    public class TokenItem : Container, IFocusedComponent
+    public class TokenItem : Container, IFocusedComponent, ITokenInfoSource
     {
         public TokenItem(Wallet wallet, ITokenInfo token, GridWaitEffect waitEffect)
         {
@@ -50,13 +50,13 @@ namespace Complex.Wallets
             addressButton.Dock = DockStyle.Left;
             this.Add(addressButton);
 
-            tokenButton.Image = token.LoadImage((image) =>
+            token.LoadImage((image) =>
             {
                 tokenButton.Image = image;
                 tokenButton.Parent.Layout();
             });
 
-            CurrencyLabel currencyLabel = new CurrencyLabel(token.Balance.GetTextSharps(9), token.Balance.Symbol);
+            currencyLabel = new CurrencyLabel(token.Balance.GetTextSharps(9), token.Balance.Symbol);
             currencyLabel.ValueTextComponent.ForeColor = token.Color;
             currencyLabel.CurrencyTextComponent.MaxWidth = 100;
             currencyLabel.Dock = DockStyle.Right;
@@ -64,11 +64,37 @@ namespace Complex.Wallets
         }
 
         private Wallet wallet;
-        private ITokenInfo token;
         private GridWaitEffect waitEffect;
 
         private CheckedButton tokenButton;
         private TextButton addressButton;
+        CurrencyLabel currencyLabel;
+
+        private ITokenInfo token;
+        public ITokenInfo TokenInfo
+        { 
+            get => token;
+            set
+            {
+                token = value;
+                this.OnTokenInfoChanged();
+            }
+        }
+
+        protected virtual void OnTokenInfoChanged()
+        {
+            tokenButton.Text = token.Name;
+            token.LoadImage((image) =>
+            {
+                tokenButton.Image = image;
+                tokenButton.Parent.Layout();
+            });
+            Wallet wt = WalletsData.GetAnyWallet(wallet.AdapterID, token.Address);
+            addressButton.Text = wt != null ? wt.Name : Controller.GetKnownAddress(wallet.Adapter, token.Address);
+            currencyLabel.ValueTextComponent.Text = token.Balance.GetTextSharps(9);
+            currencyLabel.CurrencyTextComponent.Text = token.Balance.Symbol;
+            this.Layout();
+        }
 
         protected virtual void OnNameButtonClicked(CheckedButton button)
         {
