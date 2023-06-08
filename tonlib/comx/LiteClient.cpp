@@ -239,7 +239,7 @@ namespace comx
                             handler(toHandle<rawtransaction>(&r));
                             for (object_ptr<raw_message>& message : tr->out_msgs_)
                             {
-                                if (message->value_ > 0)
+                                if (message->value_ > 0 || !message->destination_->account_address_.empty())
                                 {
                                     rawmessage m(std::move(message), true);
                                     handler(toHandle<rawmessage>(&m));
@@ -247,7 +247,7 @@ namespace comx
                             }
                             if (tr->in_msg_ != NULL)
                             {
-                                if (tr->in_msg_->value_ > 0)
+                                if (tr->in_msg_->value_ > 0 || !tr->in_msg_->source_->account_address_.empty())
                                 {
                                     rawmessage m(std::move(tr->in_msg_), false);
                                     handler(toHandle<rawmessage>(&m));
@@ -274,7 +274,7 @@ namespace comx
         });
     }
 
-    void LiteClientActor::calcFee(CalcFee* calc, const std::function<void(td::Result<int64_t>)>& lambda)
+    void LiteClientActor::calcFee(std::shared_ptr<CalcFee> calc, const std::function<void(td::Result<int64_t>)>& lambda)
     {
         send_query(ton::lite_api::liteServer_getConfigAll(0, create_tl_lite_block_id(state.last_key_block_id)), 
                    [this, calc = std::move(calc), lambda = lambda](td::Result<ton::ton_api::object_ptr<ton::lite_api::liteServer_configInfo>> r_config)
@@ -299,7 +299,6 @@ namespace comx
             {
                 lambda(r_config.move_as_error());
             }
-            delete calc;
         });
     }
 
@@ -410,7 +409,7 @@ namespace comx
         });
     }
 
-    void LiteClient::calcFee(CalcFee* query, const std::function<void(td::Result<int64_t>)>& lambda)
+    void LiteClient::calcFee(std::shared_ptr<CalcFee> query, const std::function<void(td::Result<int64_t>)>& lambda)
     {
         scheduler.run_in_context([this, query = std::move(query), lambda = lambda]
         {

@@ -44,9 +44,10 @@ namespace Complex.Ton
             this.passwordPanel.DescriptionID = "enterWalletPassword";
             this.passwordPanel.Complete += (s) =>
             {
+                controller.Wait("pleaseWait", null, null, CloseCheck);
                 this.connection.wallet.CheckPassword(this.passwordPanel.Passcode, (e) =>
                 {
-                    Application.Invoke(() =>
+                    Timer.Delay(300, () =>
                     {
                         if (e == null)
                             this.Connect(this.passwordPanel.Passcode);

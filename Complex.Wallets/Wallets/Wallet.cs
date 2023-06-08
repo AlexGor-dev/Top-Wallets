@@ -107,6 +107,8 @@ namespace Complex.Wallets
 
         public virtual bool IsMain => false;
 
+        public virtual bool IsSupportSupport => IsMain;
+
         public virtual bool CanTokens => false;
         public virtual bool CanNfts => false;
 
@@ -480,17 +482,17 @@ namespace Complex.Wallets
             paramHandler(menu);
         }
 
-        public virtual void CreateTokenInfoMenu(ITokenInfo token, ParamHandler<Menu> paramHandler)
+        public virtual void CreateTokenInfoMenu(ITokenInfoBase token, ParamHandler<Menu> paramHandler)
         {
             paramHandler(null);
         }
 
-        public virtual void CreateTokenInfoAddressMenu(ITokenInfo token, ParamHandler<MenuStrip> paramHandler)
+        public virtual void CreateTokenInfoAddressMenu(ITokenInfoBase token, ParamHandler<MenuStrip> paramHandler)
         {
             paramHandler(null);
         }
 
-        public virtual void CreateTransactionAddressMenu(string address, ParamHandler<MenuStrip> paramHandler)
+        public virtual void CreateAddressMenu(string address, ParamHandler<MenuStrip> paramHandler)
         {
             MenuStrip menu = new MenuStrip();
             menu.MinimumSize.width = 200;

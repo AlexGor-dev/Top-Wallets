@@ -14,17 +14,17 @@ namespace Complex.Ton
             : base(wallet, nft, waitEffect)
         {
 
-            if (!string.IsNullOrEmpty(nft.Collection))
+            if (!string.IsNullOrEmpty(nft.CollectionAddress))
             {
                 string name = nft.CollectionName;
                 if (name == null)
                 {
-                    Wallet wt = WalletsData.GetAnyWallet(wallet.AdapterID, nft.Collection);
+                    Wallet wt = WalletsData.GetAnyWallet(wallet.AdapterID, nft.CollectionAddress);
                     if (wt != null)
                         name = wt.Name;
                 }
 
-                TextButton addressButton = new TextButton(name != null ? name : Controller.GetKnownAddress(wallet.Adapter, nft.Collection));
+                TextButton addressButton = new TextButton(name != null ? name : Controller.GetKnownAddress(wallet.Adapter, nft.CollectionAddress));
                 addressButton.ToolTipInfo = new ToolTipInfo("Nft collection", name);
                 addressButton.DrawBorder = false;
                 addressButton.Padding.Set(4);
@@ -34,7 +34,7 @@ namespace Complex.Ton
                 addressButton.Executed += (s) =>
                 {
                     if (this.waitEffect != null)
-                        Controller.ShowAnyWallet(wallet.Adapter, wallet.Symbol, nft.Collection, () => this.waitEffect.Start(), () => this.waitEffect.Stop());
+                        Controller.ShowAnyWallet(wallet.Adapter, wallet.Symbol, nft.CollectionAddress, () => this.waitEffect.Start(), () => this.waitEffect.Stop());
                 };
                 addressButton.Dock = DockStyle.Bottom;
                 this.Add(addressButton);

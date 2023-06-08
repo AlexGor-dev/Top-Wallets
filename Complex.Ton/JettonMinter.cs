@@ -103,7 +103,7 @@ namespace Complex.Ton
 
         public override string Symbol => jettonInfo.Symbol.First(8);
 
-        public override string Owner => jettonInfo.OwnerAddress;
+        public override string OwnerAddress => jettonInfo.OwnerAddress;
 
         public override Balance Balance => jettonInfo.TotalSupply;
 
@@ -127,12 +127,17 @@ namespace Complex.Ton
         }
 
 
-        private ColorButton changeContractButton;
-        private ColorButton mintCoinsButton;
+        private ColorButton changeOwnerButton;
+        private ColorButton changeContentButton;
 
         protected virtual JettonInfo GetJettonInfo(AccountState state)
         {
             return this.Adapter.Client.GetJettonInfo(state);
+        }
+
+        public override string GetBalanceMarketPrice()
+        {
+            return base.Balance.GetTextSharps(8) + " " + base.Balance.Symbol;
         }
 
         public override bool Update(AccountState state)
@@ -147,18 +152,18 @@ namespace Complex.Ton
                     this.JettonInfo = info;
                     if (this.Parent != null && this.jettonInfo != null && this.jettonInfo.OwnerAddress != this.Parent.Address)
                     {
-                        if (this.changeContractButton != null)
+                        if (this.changeOwnerButton != null)
                         {
-                            this.changeContractButton.Parent.Remove(this.changeContractButton);
-                            this.changeContractButton.Dispose();
-                            this.changeContractButton = null;
+                            this.changeOwnerButton.Parent.Remove(this.changeOwnerButton);
+                            this.changeOwnerButton.Dispose();
+                            this.changeOwnerButton = null;
                         }
 
-                        if (this.mintCoinsButton != null)
+                        if (this.changeContentButton != null)
                         {
-                            this.mintCoinsButton.Parent.Remove(this.mintCoinsButton);
-                            this.mintCoinsButton.Dispose();
-                            this.mintCoinsButton = null;
+                            this.changeContentButton.Parent.Remove(this.changeContentButton);
+                            this.changeContentButton.Dispose();
+                            this.changeContentButton = null;
                         }
 
                     }
@@ -172,42 +177,48 @@ namespace Complex.Ton
 
         public void MintCoins(string passcode, long queryId, decimal amount, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, JettonController.CreateMintData(this.Address, queryId, this.Parent.Address, this.Balance.FromDecimal(amount)), resultHanler);
+            this.SendMessage(passcode, JettonController.CreateMintData(queryId, this.Address, this.Parent.Address, this.Balance.FromDecimal(amount)), resultHanler);
         }
 
-        public void ChangeOwner(string passcode, long queryId, string newOwner, ParamHandler<object, string> resultHanler)
+        public override void ChangeOwner(string passcode, long queryId, string newOwner, UInt128 forwardAmount, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, JettonController.CreateChangeOwner(this.Address, queryId, newOwner), resultHanler);
+            this.SendMessage(passcode, JettonController.CreateChangeOwner(queryId, this.Address, newOwner, forwardAmount), resultHanler);
+        }
+        public override void ChangeOwnerCalcFee(long queryId, string newOwner, UInt128 forwardAmount, ParamHandler<Balance, string> resultHanler)
+        {
+            this.CalcFees(JettonController.CreateChangeOwner(queryId, this.Address, newOwner, forwardAmount), resultHanler);
         }
 
         public void ChangeContent(string passcode, long queryId, JettonInfo info, string offchainUri, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, JettonController.CreateChangeContent(this.Address, queryId, info, offchainUri), resultHanler);
-        }
-
-        public void ChangeOwnerCalcFee(long queryId, string newOwner, ParamHandler<Balance, string> resultHanler)
-        {
-            this.CalcFees(JettonController.CreateChangeOwner(this.Address, queryId, newOwner), resultHanler);
+            this.SendMessage(passcode, JettonController.CreateChangeContent(queryId, this.Address, info, offchainUri), resultHanler);
         }
 
         public void ChangeContentCalcFee(long queryId, JettonInfo info, string offchainUri, ParamHandler<Balance, string> resultHanler)
         {
-            this.CalcFees(JettonController.CreateChangeContent(this.Address, queryId, info, offchainUri), resultHanler);
+            this.CalcFees(JettonController.CreateChangeContent(queryId, this.Address, info, offchainUri), resultHanler);
+        }
+
+        public override void ChangeContent(string passcode, long queryId, object content, ParamHandler<object, string> resultHanler)
+        {
+            this.ChangeContent(passcode, queryId, content as JettonInfo, null, resultHanler);
+        }
+
+        public override void ChangeContentCalcFee(long queryId, object content, ParamHandler<Balance, string> resultHanler)
+        {
+            this.ChangeContentCalcFee(queryId, content as JettonInfo, null, resultHanler);
         }
 
         public override ColorButton CreateMainLeftButton()
         {
-            if (this.jettonInfo != null && this.jettonInfo.OwnerAddress == this.Parent.Address)
+            if (this.jettonInfo != null && this.OwnerAddress == this.Parent.Address)
             {
-                changeContractButton = new ColorButton("changeContract");
-                changeContractButton.Padding.Set(6);
-                changeContractButton.Enabled = this.Adapter.IsConnected && this.State != WalletState.None;
-                changeContractButton.Radius = 6;
-                changeContractButton.Executed += (s) =>
-                {
-                    new ChangeForm(this).Show(s as Component, MenuAlignment.Bottom);
-                };
-                return changeContractButton;
+                changeOwnerButton = new ColorButton("changeOwner");
+                changeOwnerButton.Padding.Set(6);
+                changeOwnerButton.Enabled = this.Adapter.IsConnected && this.State != WalletState.None;
+                changeOwnerButton.Radius = 6;
+                changeOwnerButton.Executed += (s) => new ChangeOwnerForm(this).Show(s as Component, MenuAlignment.Bottom);
+                return changeOwnerButton;
             }
             return null;
         }
@@ -216,33 +227,17 @@ namespace Complex.Ton
         {
             if (this.jettonInfo != null && this.jettonInfo.OwnerAddress == this.Parent.Address)
             {
-                mintCoinsButton = new ColorButton("mintCoins");
-                mintCoinsButton.Padding.Set(6);
-                mintCoinsButton.Enabled = this.Adapter.IsConnected && this.State != WalletState.None;
-                mintCoinsButton.Radius = 6;
-                mintCoinsButton.Executed += (s) =>
-                {
-                    new MintCoinsForm(this).Show(s as Component, MenuAlignment.Bottom);
-                };
-                return mintCoinsButton;
+                changeContentButton = new ColorButton("changeContent");
+                changeContentButton.Padding.Set(6);
+                changeContentButton.Enabled = this.Adapter.IsConnected && this.State != WalletState.None;
+                changeContentButton.Radius = 6;
+                changeContentButton.Executed += (s) => new ChangeContentMinterForm(this).Show(s as Component, MenuAlignment.Bottom);
+                return changeContentButton;
             }
             return null;
         }
 
 
-        protected override void UpdateWaitTransactions(ITransactionBase last, ITransactionBase[] ts)
-        {
-            if (last == null && ts != null && this.WaitTransactions.Count > 0)
-            {
-                foreach (ITransactionBase transaction in ts)
-                {
-                    this.CheckQueryIdTransaction(transaction);
-                    if (this.WaitTransactions.Count == 0)
-                        break;
-                }
-            }
-
-        }
 
         public override void LoadImage(ParamHandler<IImage> paramHandler)
         {

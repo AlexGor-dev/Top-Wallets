@@ -23,7 +23,7 @@ namespace Complex.Wallets
                 Array<Wallet> arr = new Array<Wallet>();
                 foreach (Wallet wallet in WalletsData.Wallets)
                 {
-                    if (wallet.IsMain && wallet.Balance > 0 && wallet.AdapterID == coin.Symbol + " Test" && wallet.Symbol == c.Symbol)
+                    if (wallet.IsMain && wallet.IsSupportSupport && wallet.Balance > 0 && wallet.AdapterID == coin.Symbol + " Test" && wallet.Symbol == c.Symbol)
                     {
                         if (wallet.Address != c.SupportAddress)
                         {

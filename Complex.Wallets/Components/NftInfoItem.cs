@@ -32,6 +32,15 @@ namespace Complex.Wallets
                 if (this.waitEffect != null)
                     Controller.ShowAnyWallet(wallet.Adapter, wallet.Symbol, nft.Address, () => this.waitEffect.Start(), () => this.waitEffect.Stop());
             };
+            addressButton.RightClick += (s) =>
+            {
+                this.wallet.CreateAddressMenu(nft.Address, (m) =>
+                {
+                    if (m != null)
+                        Application.Invoke(() => m.Show(s as Component, MenuAlignment.Bottom));
+                });
+            };
+
             addressButton.Dock = DockStyle.Fill;
             caption.Add(addressButton);
             this.Add(caption);

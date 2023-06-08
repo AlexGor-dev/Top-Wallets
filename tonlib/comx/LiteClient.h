@@ -6,6 +6,7 @@
 #include "RawTransaction.h"
 #include "CalcFee.h"
 #include "Ping.h"
+#include "AccountState.h"
 
 namespace comx
 {
@@ -52,7 +53,7 @@ namespace comx
         void send(td::Ref<vm::Cell> cell, const std::function<void(td::Result<std::string>)>& lambda);
         void getAccountState(block::StdAddress address, const std::function<void(td::Result<td::unique_ptr<AccountState>>)>& lambda);
         void getTransactions(block::StdAddress address, ton::LogicalTime last_trans_lt, ton::Bits256 last_trans_hash, int count, QueryLongHandler handler, const std::function<void(td::Result<int64_t>)>& lambda);
-        void calcFee(CalcFee* query, const std::function<void(td::Result<int64_t>)>& lambda);
+        void calcFee(std::shared_ptr<CalcFee> query, const std::function<void(td::Result<int64_t>)>& lambda);
         void last(const std::function<void(td::Result<int64_t>)>& lambda);
         void getServerTime(const std::function<void(td::Result<int64_t>)>& lambda);
 
@@ -124,7 +125,7 @@ namespace comx
         void getTransactions(std::string& address, ton::LogicalTime last_trans_lt, ton::Bits256 last_trans_hash, int count, QueryLongHandler handler, const std::function<void(td::Result<int64_t>)>& lambda);
         void last(const std::function<void(td::Result<int64_t>)>& lambda);
         void send(td::Ref<vm::Cell> cell, const std::function<void(td::Result<std::string>)>& lambda);
-        void calcFee(CalcFee* query, const std::function<void(td::Result<int64_t>)>& lambda);
+        void calcFee(std::shared_ptr<CalcFee> query, const std::function<void(td::Result<int64_t>)>& lambda);
         void getServerTime(const std::function<void(td::Result<int64_t>)>& lambda);
 
         bool isConnected()

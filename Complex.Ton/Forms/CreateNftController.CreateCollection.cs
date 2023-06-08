@@ -7,9 +7,15 @@ namespace Complex.Ton
 {
     public partial class CreateNftController
     {
+        private NftCollectionEnterInfoPanel enterCollectionInfoPanel;
+
         private void CreateCollection()
         {
-            MessageView.Show("notImplemented");
+            if (enterCollectionInfoPanel == null)
+                enterCollectionInfoPanel = new NftCollectionEnterInfoPanel(this.wallet, "createNftCollection", () => switchContainer.Current = mainPanel, closeHandler, wallet.ThemeColor, () => Wait(null, "pleaseWait"), (info) =>
+                {
+                });
+            this.switchContainer.Current = this.enterCollectionInfoPanel;
         }
     }
 }

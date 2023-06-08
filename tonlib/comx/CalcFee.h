@@ -1,9 +1,20 @@
 #pragma once
 
-#include "objects.h"
+#include "AccountState.h"
 
 namespace comx
 {
+    struct MessageRaw
+    {
+        td::unique_ptr<AccountState> source;
+        std::vector<td::unique_ptr<AccountState>> destinations;
+
+        td::uint32 valid_until{ std::numeric_limits<td::uint32>::max() };
+
+        td::Ref<vm::Cell> message;
+        td::Ref<vm::Cell> new_state;
+        td::Ref<vm::Cell> message_body;
+    };
 
     class CalcFee
     {

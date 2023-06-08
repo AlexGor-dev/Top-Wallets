@@ -40,23 +40,20 @@ namespace Complex.Wallets
                         }
                         else
                         {
-                            Application.Invoke(() =>
-                            {
-                                Formatter data = new Formatter();
-                                data["wallet"] = this.wallet;
-                                data["exportData"] = exportData;
+                            Formatter data = new Formatter();
+                            data["wallet"] = this.wallet;
+                            data["exportData"] = exportData;
 
-                                savePanel = new FilePanel(FilesDialogType.SaveFile, wallet, Language.Current["exporToFile", wallet.Name], null,  (fileName) =>
-                                {
-                                    data.Save(fileName, true);
-                                    Done("perfect", Language.Current["exportWalletDone"], "close", wallet.ThemeColor, doneHandler);
-                                    savePanel.Save();
-                                },null, () => 
-                                { 
-                                    Error("exportWalletCancelled", "", false, ()=> { this.switchContainer.Current = savePanel; });
-                                });
-                                this.switchContainer.Current = savePanel;
+                            savePanel = new FilePanel(FilesDialogType.SaveFile, wallet, Language.Current["exporToFile", wallet.Name], null,  (fileName) =>
+                            {
+                                data.Save(fileName, true);
+                                Done("perfect", Language.Current["exportWalletDone"], "close", wallet.ThemeColor, doneHandler);
+                                savePanel.Save();
+                            },null, () => 
+                            { 
+                                Error("exportWalletCancelled", "", false, ()=> { this.switchContainer.Current = savePanel; });
                             });
+                            this.switchContainer.Current = savePanel;
                         }
                     });
                 });

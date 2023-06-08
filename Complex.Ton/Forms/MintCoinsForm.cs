@@ -92,9 +92,6 @@ namespace Complex.Ton
             this.infoPanel.UpdateFee(0, this.wallet.Balance, this.fee, this.wallet.Symbol);
             this.infoPanel.Update(this.wallet.Address, Language.Current["mintConfirmationText", amount.GetTextSharps(8), this.GetSymbolCoinsText()], Language.Current["mint2"] + " " + amount.GetTextSharps(8) + " " + this.GetSymbolCoinsText());
             this.switchContainer.Current = this.infoPanel;
-
-            this.switchContainer.Current = this.infoPanel;
-
         }
 
         private void Complete()
@@ -138,6 +135,7 @@ namespace Complex.Ton
                 this.passwordPanel = new PasswordPanel(false, () => this.switchContainer.Current = this.infoPanel, CloseCheck);
                 this.passwordPanel.Complete += (s) =>
                 {
+                    this.controller.Wait("checkPasscode", null, "waitCheckPasscode", CloseCheck);
                     wallet.CheckPassword(this.passwordPanel.Passcode, (e) =>
                     {
                         Timer.Delay(300, () =>

@@ -19,29 +19,29 @@ namespace Complex.Ton
         {
         }
 
-        public void MintItems(string passcode, long queryId, NftMintItem[] items, ParamHandler<object, string> resultHanler)
+        public void MintItems(string passcode, long queryId, NftMintItemInfo[] items, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, NftController.CreateMintData(this.Address, queryId, items), resultHanler);
+            this.SendMessage(passcode, NftController.CreateMintData(queryId, this.Address, items), resultHanler);
         }
 
         public void ChangeOwner(string passcode, long queryId, string newOwner, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, NftController.CreateChangeOwner(this.Address, queryId, newOwner), resultHanler);
+            this.SendMessage(passcode, NftController.CreateChangeOwner(queryId, this.Address, newOwner), resultHanler);
         }
 
         public void ChangeContent(string passcode, long queryId, string collectionContent, string commonContent, RoyaltyParams royaltyParams, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, NftController.CreateChangeContent(this.Address, queryId, collectionContent, commonContent, royaltyParams), resultHanler);
+            this.SendMessage(passcode, NftController.CreateChangeContent(queryId, this.Address, collectionContent, commonContent, royaltyParams), resultHanler);
         }
 
         public void GetRoyaltyParams(string passcode, long queryId, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, NftController.CreateGetRoyaltyParams(this.Address, queryId), resultHanler);
+            this.SendMessage(passcode, NftController.CreateGetRoyaltyParams(queryId, this.Address), resultHanler);
         }
 
         public override ColorButton CreateMainLeftButton()
         {
-            if (this.Info != null && this.Info.Owner == this.Parent.Address)
+            if (this.Info != null && this.Info.OwnerAddress == this.Parent.Address)
             {
                 ColorButton button = new ColorButton("changeContract");
                 button.Padding.Set(6);
@@ -58,7 +58,7 @@ namespace Complex.Ton
 
         public override ColorButton CreateMainRightButton()
         {
-            if (this.Info != null && this.Info.Owner == this.Parent.Address)
+            if (this.Info != null && this.Info.OwnerAddress == this.Parent.Address)
             {
                 ColorButton button = new ColorButton("mintNft");
                 button.Padding.Set(6);

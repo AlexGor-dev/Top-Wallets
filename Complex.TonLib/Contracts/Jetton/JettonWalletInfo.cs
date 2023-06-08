@@ -28,9 +28,9 @@ namespace Complex.Ton
         string IUnique.ID => address;
 
         private string owner;
-        public string Owner => owner;
+        public string OwnerAddress => owner;
 
-        string ITokenInfo.Name => this.jettonInfo.Name;
+        string ITokenInfoBase.Name => this.jettonInfo.Name;
 
         int ITokenInfo.Color => this.jettonInfo.ThremeColor;
 

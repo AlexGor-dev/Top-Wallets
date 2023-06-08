@@ -72,6 +72,7 @@ waitCreateWordsDescription; Please wait a few seconds for the secret words to be
 waitImportCaption; Import wallet data; Импорт данных кошелька;
 waitImportDescription; Please wait a few seconds while the data is being imported..; Пожалуйста, подождите несколько секунд, пока импортируются данные..;
 walletAlreadyExist; Wallet with address\n{0}\nhas already been added to your list of wallets.; Кошелёк с адресом\n{0}\nуже добавлен в Ваш список кошельков.;
+walletAlreadyDeployed; Wallet with address\n{0}\nhas already been deployed.; Кошелёк с адресом\n{0}\nуже развёрнут.;
 importWalletError; Failed to import wallet.; Не удалось импортировать кошелёк.;
 notFoundAddress; Not found wallet address; Не найден адрес кошелька;
 transactionsIntervals; Transactions intervals; Интервалы транзакций;
@@ -113,6 +114,8 @@ walletDeletedSuccessfully; Wallet deleted successfully.; Кошелёк успе
 waitDeleteWalletCaption; Deleting a wallet; Удаление кошелька;
 waitDeleteWalletDescription; Please wait a few seconds while the wallet is deleted..; Пожалуйста, подождите несколько секунд, пока удаляется кошелёк..;
 pleaseWait; Please wait a few seconds..; Пожалуйста, подождите несколько секунд..;
+checkPasscode; Password check; Проверка пароля;
+waitCheckPasscode; Please wait a few seconds while your password is being verified..; Пожалуйста, подождите несколько секунд, пока проверяется Ваш пароль..;
 
 buyCoins; Buy {0}; Купить {0};
 sellCoins; Sell {0}; Продать {0};
@@ -200,6 +203,7 @@ totalFees; Total fees; Суммарная комиссия;
 sendTransactionsResult; Result of sending transactions; Результат отправки транзакций;
 
 hostNotSupportCurrentWindowsVersion; The host "{0}" does not support the current version of Windows; Хост "{0}" не поддерживает текущую версию Windows;
+notSet; Not set; Не задан;
 
 
 

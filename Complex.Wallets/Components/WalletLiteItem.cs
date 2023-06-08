@@ -44,6 +44,7 @@ namespace Complex.Wallets
         private void Init()
         {
             this.MinHeight = 70;
+            this.Inflate.height = 4;
 
             this.nameCaption = new Caption(wallet.Name);
             this.nameCaption.TextChanged += (s) => { this.nameCaption.Invalidate(); };
@@ -51,7 +52,7 @@ namespace Complex.Wallets
             this.nameCaption.Dock = DockStyle.Top;
             this.Add(this.nameCaption);
 
-            this.Add(new Dummy(DockStyle.Top, 0, 10));
+            //this.Add(new Dummy(DockStyle.Top, 0, 6));
 
             topContainer = new Container();
             topContainer.Dock = DockStyle.Top;
@@ -63,6 +64,8 @@ namespace Complex.Wallets
 
 
             this.Add(topContainer);
+
+            this.clickEffect = new ClickEffect(this, ClickEffectMode.Quad);
 
             this.wallet.Changed += Wallet_Changed;
 
@@ -109,6 +112,7 @@ namespace Complex.Wallets
         protected Container topContainer;
 
         private AdapterCurrencyLabel adapterLabel;
+        private ClickEffect clickEffect;
 
         public override void GetDisplayRectangle(Rect rect)
         {

@@ -71,7 +71,7 @@ namespace Complex.Wallets
                 };
                 textButton.RightClick += (s) =>
                 {
-                    this.wallet.CreateTransactionAddressMenu(this.address, (m) =>
+                    this.wallet.CreateAddressMenu(this.address, (m) =>
                     {
                         if (m != null)
                             Application.Invoke(()=> m.Show(s as Component, MenuAlignment.Bottom));

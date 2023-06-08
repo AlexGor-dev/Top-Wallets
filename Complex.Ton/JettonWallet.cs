@@ -51,7 +51,7 @@ namespace Complex.Ton
 
         public override Balance Balance => walletInfo.Balance;
 
-        public override string Owner => walletInfo.Owner;
+        public override string OwnerAddress => walletInfo.OwnerAddress;
         public override bool IsSupportInvoiceUrl => true;
 
         protected override JettonInfo GetJettonInfo(AccountState state)
@@ -81,13 +81,13 @@ namespace Complex.Ton
 
         public void BurnCoins(string passcode, long queryId, decimal amount, ParamHandler<object, string> resultHanler)
         {
-            this.SendMessage(passcode, JettonController.CreateBurnData(this.Address, queryId, this.Parent.Address, this.Balance.FromDecimal(amount)), resultHanler);
+            this.SendMessage(passcode, JettonController.CreateBurnData(queryId, this.Address, this.Parent.Address, this.Balance.FromDecimal(amount)), resultHanler);
         }
 
         public override void SendAmount(string passcode, string destAddress, decimal amount, string message, ParamHandler<object, string> resultHanler)
         {
             long queryId = Utils.Random(int.MaxValue);
-            this.SendMessage(passcode, JettonController.CreateTransferData(this.Address, queryId, destAddress, this.Parent.Address, this.Balance.FromDecimal(amount)), (h,e)=>
+            this.SendMessage(passcode, JettonController.CreateTransferData(queryId, this.Address, destAddress, this.Parent.Address, this.Balance.FromDecimal(amount)), (h,e)=>
             {
                 if (h != null)
                     this.WaitTransactions.Add(queryId);
@@ -110,12 +110,6 @@ namespace Complex.Ton
             base.OnTransactionComplete(sender, transaction, value);
         }
 
-        public override bool CheckSendWallet(Wallet wallet)
-        {
-            if (base.CheckSendWallet(wallet) && !(wallet is JettonMinter))
-                return this.walletInfo.Owner != wallet.Address;
-            return false;
-        }
         public override ColorButton CreateMainLeftButton()
         {
             ColorButton button = new ColorButton("send");
@@ -141,7 +135,7 @@ namespace Complex.Ton
         {
             if (address != this.Address)
                 return base.GetInvoiceUrl(address, amount, message);
-            string url = "ton://transfer/" + this.walletInfo.Owner + "?jetton=" + this.walletInfo.JettonInfo.JettonAddress;
+            string url = "ton://transfer/" + this.walletInfo.OwnerAddress + "?jetton=" + this.walletInfo.JettonInfo.JettonAddress;
 
             if (amount > 0)
             {

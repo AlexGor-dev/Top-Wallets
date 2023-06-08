@@ -41,12 +41,16 @@ namespace Complex.Wallets
         Array<ITransactionDetail> Details { get; }
     }
 
-    public interface ITokenInfo : IUnique
+    public interface ITokenInfoBase : IUnique
     {
         string Name { get; }
-        Balance Balance { get; }
         string Address { get; }
-        string Owner { get; }
+        string OwnerAddress { get; }
+    }
+
+    public interface ITokenInfo : ITokenInfoBase
+    {
+        Balance Balance { get; }
         int Color { get; }
         void LoadImage(ParamHandler<IImage> resultHandler);
     }
@@ -56,11 +60,8 @@ namespace Complex.Wallets
         ITokenInfo TokenInfo { get; set; }
     }
 
-    public interface INftInfo : IUnique
+    public interface INftInfo : ITokenInfoBase
     {
-        string Name { get; }
-        string Address { get; }
-        string Owner { get; }
         void LoadImage(int imageSize, float ovalRadius, ParamHandler<IImage, string> resultHandler);
 
     }

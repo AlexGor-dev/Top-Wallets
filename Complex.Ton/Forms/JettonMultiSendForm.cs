@@ -39,7 +39,7 @@ namespace Complex.Ton
                 Array<Wallet> arr = new Array<Wallet>();
                 foreach (Wallet wallet in WalletsData.Wallets)
                 {
-                    if (wallet.IsMain && wallet is JettonWallet jw && jw.WalletInfo.JettonInfo.JettonAddress == tonUrl.Jetton && jw.WalletInfo.Owner != tonUrl.Address)
+                    if (wallet.IsMain && wallet is JettonWallet jw && jw.WalletInfo.JettonInfo.JettonAddress == tonUrl.Jetton && jw.WalletInfo.OwnerAddress != tonUrl.Address)
                     {
                         arr.Add(wallet);
                     }

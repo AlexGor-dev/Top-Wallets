@@ -12,9 +12,6 @@ using System.Collections.Generic;
 
 namespace Complex.Wallets
 {
-    //https://ton.org/testnet-global.config.json
-    //https://ton.org/global-config.json
-
     public class TonAdapter : WalletAdapter
     {
         const string testUrl = "https://ton.org/testnet-global.config.json";
@@ -241,10 +238,12 @@ namespace Complex.Wallets
                         info = NftController.GetCollectionData(state);
                     break;
                 case WalletType.NftItem:
-                case WalletType.NftSingle:
                     info = HttpTonApi.GetNftData(state.Address, this.IsTestnet);
-                    if(info == null)
+                    if (info == null)
                         info = NftController.GetNftData(state);
+                    break;
+                case WalletType.NftSingle:
+                    info = NftController.GetNftData(state);
                     break;
             }
             if (info != null)
@@ -473,7 +472,7 @@ namespace Complex.Wallets
         {
             SingleThread.Run("HttpTonApi", () =>
             {
-                var (ts, e) = HttpTonApi.GetNftItems(address, offset, count, IsTestnet);
+                var (ts, e) = HttpTonApi.GetAllNftItems(address, offset, count, IsTestnet);
                 resultHanler(ts, e);
                 WinApi.Sleep(1000);
             });

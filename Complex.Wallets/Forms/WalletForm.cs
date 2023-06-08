@@ -16,10 +16,11 @@ namespace Complex.Wallets
             this.passwordPanel.DescriptionID = "enterWalletPassword";
             this.passwordPanel.Complete += (s) =>
             {
+                this.controller.Wait("checkPasscode", null, "waitCheckPasscode", CloseCheck);
                 this.wallet.CheckPassword(this.passwordPanel.Passcode, (e) =>
                 {
                     this.controller = CreateController(wallet, switchContainer, this.passwordPanel.Passcode, CloseCheck, CloseCheck);
-                    Application.Invoke(() =>
+                    Timer.Delay(300, () =>
                     {
                         if (e == null)
                             this.controller.Start();

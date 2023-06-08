@@ -157,10 +157,10 @@ namespace Complex.Ton
         {
             this.walletInfo = walletInfo;
 
-            jettonWalletAddress = walletInfo.Owner;
+            jettonWalletAddress = walletInfo.OwnerAddress;
             ownertAddress = walletInfo.Address;
 
-            ownerAddressText.Text = walletInfo.Owner;
+            ownerAddressText.Text = walletInfo.OwnerAddress;
             jettonWalletAddressText.Text = walletInfo.Address;
 
             currencyLabel.ValueTextComponent.Text = walletInfo.Balance.GetTextSharps(walletInfo.JettonInfo.Decimals);

@@ -62,7 +62,7 @@ namespace Complex.Ton
         private TonWallet wallet;
         private MainPanel mainPanel;
         private object messageHash;
-        private long queryId;
+        private long queryId = -1;
         private TransactionWaitPanel transactionWaitPanel;
         private Array<TransactionsInfo> transactionsInfos = new Array<TransactionsInfo>();
 
@@ -77,7 +77,7 @@ namespace Complex.Ton
             if (this.messageHash != null)
             {
                 this.transactionsInfos.Add(new TransactionsInfo(sender as Wallet, wallet.Name, transaction));
-                if (this.transactionsInfos.Count == 2)
+                if (this.transactionsInfos.Count == 1 && queryId == -1 || this.transactionsInfos.Count == 2)
                 {
                     this.transactionWaitPanel.StopWait();
                     this.transactionWaitPanel.ContinueEnabled(true);
@@ -143,7 +143,8 @@ namespace Complex.Ton
                 createNftCollectionButton.MinHeight = 40;
                 createNftCollectionButton.Executed += (s) =>
                 {
-                    controller.CreateCollection();
+                    //controller.CreateCollection();
+                    MessageView.Show("notImplemented");
                 };
                 this.Add(createNftCollectionButton);
 

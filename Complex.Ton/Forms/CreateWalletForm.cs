@@ -64,13 +64,10 @@ namespace Complex.Ton
                             var (w, e) = this.adapter.GetWallet(keyData.Address, this.passwordPanel.Passcode, keyData.PublicKey, keyData.DataToEncrypt);
                             if (w != null)
                             {
-                                Application.Invoke(() =>
+                                this.switchContainer.Current = new DoneWalletPanel(w, UniqueHelper.NextName("Wallet", WalletsData.Wallets), () =>
                                 {
-                                    this.switchContainer.Current = new DoneWalletPanel(w, UniqueHelper.NextName("Wallet", WalletsData.Wallets), () =>
-                                    {
-                                        paramHandler(w, null);
-                                        this.Close();
-                                    });
+                                    paramHandler(w, null);
+                                    this.Close();
                                 });
                             }
                             else

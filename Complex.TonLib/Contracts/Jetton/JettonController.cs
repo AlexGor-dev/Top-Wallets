@@ -18,6 +18,7 @@ namespace Complex.Ton
         public static UInt128 MessageTransferFee = Gram.FromValue(0.05m);
         public static UInt128 BurnFee = Gram.FromValue(0.05m);
         public static UInt128 MintFee = mintGas + deployGas;
+        public static UInt128 ChangeOwnerFee = Gram.FromValue(0.005m);
 
         static Hashtable<byte[], string> hashKeysBytes = new Hashtable<byte[], string>();
 
@@ -38,33 +39,33 @@ namespace Complex.Ton
             ContractDeployData deployParams = CreateDeployParams(queryId, owner, info, offchainUri);
             string jettonMinterAddress = ContractController.GetAddress(0, deployParams.stateInit);
             string jettonWalletAddress = ContractController.GetAddress(0, CalculateJettonWalletStateInit(owner, jettonMinterAddress, JettonWalletCode));
-            return new JettonDeployData(owner, queryId, jettonMinterAddress, jettonWalletAddress, deployParams, info, offchainUri);
+            return new JettonDeployData(owner, jettonMinterAddress, jettonWalletAddress, deployParams, info, offchainUri);
         }
 
-        public static MessageData CreateMintData(string jettonMinterAddress, long queryId, string owner, UInt128 jettonAmount)
+        public static MessageData CreateMintData(long queryId, string jettonMinterAddress, string owner, UInt128 jettonAmount)
         {
             return new MessageData(jettonMinterAddress, deployGas, Mint(queryId, owner, jettonAmount, mintGas));
         }
 
-        public static MessageData CreateTransferData(string myJettonWalletAddress, long queryId, string toOwnerAddress, string fromOwnerAddress, UInt128 jettonAmount)
+        public static MessageData CreateTransferData(long queryId, string myJettonWalletAddress, string toOwnerAddress, string fromOwnerAddress, UInt128 jettonAmount)
         {
             Cell cell = Transfer(queryId, toOwnerAddress, fromOwnerAddress, jettonAmount);
             return new MessageData(myJettonWalletAddress, MessageTransferFee, cell);
         }
 
-        public static MessageData CreateBurnData(string jettonWalletAddress, long queryId, string owner, UInt128 jettonAmount)
+        public static MessageData CreateBurnData(long queryId, string jettonWalletAddress, string owner, UInt128 jettonAmount)
         {
             Cell cell = Burn(queryId, jettonAmount, owner);
             return new MessageData(jettonWalletAddress, BurnFee, cell);
         }
 
-        public static MessageData CreateChangeOwner(string jettonMinterAddress, long queryId, string newOwner)
+        public static MessageData CreateChangeOwner(long queryId, string jettonMinterAddress, string newOwner, UInt128 forwardAmount)
         {
             Cell cell = ChangeOwner(queryId, newOwner);
-            return new MessageData(jettonMinterAddress, MessageTransferFee, cell);
+            return new MessageData(jettonMinterAddress, forwardAmount, cell);
         }
 
-        public static MessageData CreateChangeContent(string jettonMinterAddress, long queryId, JettonInfo info, string offchainUri)
+        public static MessageData CreateChangeContent(long queryId, string jettonMinterAddress, JettonInfo info, string offchainUri)
         {
             Cell cell = ChangeContent(queryId, !string.IsNullOrEmpty(offchainUri) ? BuildJettonOffChainMetadata(offchainUri) : BuildJettonOnchainMetadata(info));
             return new MessageData(jettonMinterAddress, MessageTransferFee, cell);

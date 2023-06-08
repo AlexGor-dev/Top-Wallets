@@ -4,15 +4,27 @@ namespace Complex.Ton
 {
     public class RoyaltyParams
     {
-        public RoyaltyParams(int royaltyFactor, int royaltyBase, string royaltyAddress)
+        public RoyaltyParams(int numerator, int denominator, string destination)
         {
-            this.royaltyFactor = royaltyFactor;
-            this.royaltyBase = royaltyBase;
-            this.royaltyAddress = royaltyAddress;
+            this.numerator = numerator;
+            this.denominator = denominator;
+            this.destination = destination;
         }
 
-        public readonly int royaltyFactor;
-        public readonly int royaltyBase;
-        public readonly string royaltyAddress;
+        public RoyaltyParams(decimal procent, string destination)
+        {
+            FractionU128 p = (FractionU128)procent;
+            this.numerator = (int)p.Numerator;
+            this.denominator = (int)p.Denominator * 100;
+            this.destination = destination;
+        }
+
+        public readonly int numerator;
+        public readonly int denominator;
+        public readonly string destination;
+
+
+        public decimal Procent => denominator == 0 ? 0 : 100 * numerator / (decimal)denominator;
+
     }
 }

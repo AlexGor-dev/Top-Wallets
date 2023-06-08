@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
+using Complex.Collections;
 
 namespace Complex.Ton
 {
@@ -122,7 +123,7 @@ namespace Complex.Ton
 
 
         [DllImport(Dll)]
-        private static extern void AccountRunMethod(IntPtr handle, string methodName, IntPtr[] param, int paramsLen, IntPtr[] res, int* resLen);
+        private static extern void AccountRunMethod(IntPtr handle, string methodName, IntPtr[] param, int paramsLen, IntPtr vmHandler);
 
         [DllImport(Dll)]
         private static extern void DeleteVmObject(IntPtr handle);
@@ -797,7 +798,6 @@ namespace Complex.Ton
         public static object[] AccountRunMethod(IntPtr handle, string methodName, params object[] args)
         {
             IntPtr[] res = new IntPtr[10];
-            int resLen = 0;
             IntPtr[] param = new IntPtr[args.Length];
             for (int i = 0; i < args.Length; i++)
             {
@@ -811,31 +811,32 @@ namespace Complex.Ton
                 param[i] = Marshal.AllocHGlobal(Marshal.SizeOf(vm));
                 Marshal.StructureToPtr(vm, param[i], false);
             }
-            AccountRunMethod(handle, methodName, param, param.Length, res, &resLen);
-            object[] buff = new object[resLen];
-            for (int i = 0; i < resLen; i++)
+            Array<object> array = new Array<object>();
+            QueryLongHandler vmHandler = (result) =>
             {
-                VmObjectType type = (VmObjectType)Marshal.ReadInt32(res[i]);
+                VmObjectType type = (VmObjectType)Marshal.ReadInt32((IntPtr)result);
                 switch (type)
                 {
                     case VmObjectType.Number:
-                        VmNumber number = (VmNumber)Marshal.PtrToStructure(res[i], typeof(VmNumber));
-                        buff[i] = number.value;
+                        VmNumber number = (VmNumber)Marshal.PtrToStructure((IntPtr)result, typeof(VmNumber));
+                        array.Add(number.value);
                         break;
                     case VmObjectType.Cell:
-                        VmCell cell = (VmCell)Marshal.PtrToStructure(res[i], typeof(VmCell));
-                        buff[i] = new Cell(cell.value);
+                        VmCell cell = (VmCell)Marshal.PtrToStructure((IntPtr)result, typeof(VmCell));
+                        array.Add(new Cell(cell.value));
                         break;
                     case VmObjectType.Slice:
-                        VmSlice slice = (VmSlice)Marshal.PtrToStructure(res[i], typeof(VmSlice));
-                        buff[i] = new Slice(slice.value);
+                        VmSlice slice = (VmSlice)Marshal.PtrToStructure((IntPtr)result, typeof(VmSlice));
+                        array.Add(new Slice(slice.value));
                         break;
                 }
-                TonLib.DeleteVmObject(res[i]);
-            }
+
+            };
+            using (Fixed f = Fixed.Normal(vmHandler))
+                AccountRunMethod(handle, methodName, param, param.Length, f);
             foreach (IntPtr ptr in param)
                 Marshal.FreeHGlobal(ptr);
-            return buff;
+            return array.ToArray();
         }
 
         public static string AddressToString(Address address)

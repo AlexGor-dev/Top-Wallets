@@ -11,42 +11,12 @@ namespace Complex.Ton
     {
         private WordsPanel importWordsPanel;
         private TestWordsPanel testWordsPanel;
-
-        //String[] testWorlds = new String[]
-        // {
-        //            "news",
-        //            "proof",
-        //            "mutual",
-        //            "similar",
-        //            "spend",
-        //            "switch",
-        //            "toddler",
-        //            "payment",
-        //            "bid",
-        //            "please",
-        //            "increase",
-        //            "drop",
-        //            "mutual",
-        //            "advance",
-        //            "text",
-        //            "earn",
-        //            "learn",
-        //            "magnet",
-        //            "alter",
-        //            "index",
-        //            "approve",
-        //            "behave",
-        //            "cattle",
-        //            "price"
-        // };
         private void ImportWallet()
         {
             if (this.importWordsPanel == null)
                 this.importWordsPanel = new WordsPanel(this.adapter, true, null, () => switchContainer.Current = mainPanel, CloseCheck, () => ImportWallet(this.importWordsPanel.GetWords()));
-            //this.importWordsPanel.UpdateWorts(testWorlds);
             this.switchContainer.Current = this.importWordsPanel;
         }
-
 
         private void ImportWallet(string[] words)
         {

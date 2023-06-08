@@ -62,8 +62,8 @@ namespace Complex.Ton
         }
 
 
-
         public override bool IsMain => parent != null && parent.IsMain;
+        public override bool IsSupportSupport => false;
         public override bool IsSupportMarket => false;
         public override bool IsSupportExport => false;
 
@@ -71,16 +71,11 @@ namespace Complex.Ton
 
         Wallet IToken.Parent => this.parent;
 
-        public abstract string Owner { get; }
+        public abstract string OwnerAddress { get; }
 
         void ITokenInfo.LoadImage(ParamHandler<IImage> resultHandler)
         {
             resultHandler(Images.Get(this.SmallImageID));
-        }
-
-        public override string GetBalanceMarketPrice()
-        {
-            return base.Balance.GetTextSharps(8) + " " + base.Balance.Symbol;
         }
 
         public override string GetMarketPrice(decimal balance)
@@ -93,6 +88,26 @@ namespace Complex.Ton
             this.OnTransactionComplete(sender, t1, t2);
         }
 
+        public virtual void ChangeOwner(string passcode, long queryId, string newOwner, UInt128 forwardAmount, ParamHandler<object, string> resultHanler)
+        {
+            resultHanler(null, "notSupport");
+        }
+
+        public virtual void ChangeOwnerCalcFee(long queryId, string newOwner, UInt128 forwardAmount, ParamHandler<Balance, string> resultHanler)
+        {
+            resultHanler(null, "notSupport");
+        }
+
+        public virtual void ChangeContent(string passcode, long queryId, object content, ParamHandler<object, string> resultHanler)
+        {
+            resultHanler(null, "notSupport");
+        }
+
+        public virtual void ChangeContentCalcFee(long queryId, object content, ParamHandler<Balance, string> resultHanler)
+        {
+            resultHanler(null, "notSupport");
+        }
+
         public virtual bool CheckNewOwner(Wallet wallet)
         {
             return wallet is TonWallet tonWallet && tonWallet.Address != this.parent.Address;
@@ -102,9 +117,9 @@ namespace Complex.Ton
         {
             if (MessageBox.Show(item, MenuAlignment.Center, Language.Current["removingToken"], null, Language.Current["deleteToken", this.Name], MessageBoxButtons.OKCancel))
             {
+                WalletsData.Wallets.Remove(this);
                 if (this.parent != null)
                     this.parent.Wallets.Remove(this.ID);
-                WalletsData.Wallets.Remove(this);
             }
         }
 
@@ -136,6 +151,28 @@ namespace Complex.Ton
             return new JettonWalletItem(this);
         }
 
+        public override bool CheckSendWallet(Wallet wallet)
+        {
+            if (base.CheckSendWallet(wallet) && !(wallet is TokenWallet))
+                return this.OwnerAddress != wallet.Address;
+            return false;
+        }
+
         public abstract void LoadImage(ParamHandler<IImage> paramHandler);
+
+        protected override void UpdateWaitTransactions(ITransactionBase last, ITransactionBase[] ts)
+        {
+            if (last == null && ts != null && this.WaitTransactions.Count > 0)
+            {
+                foreach (ITransactionBase transaction in ts)
+                {
+                    this.CheckQueryIdTransaction(transaction);
+                    if (this.WaitTransactions.Count == 0)
+                        break;
+                }
+            }
+
+        }
+
     }
 }

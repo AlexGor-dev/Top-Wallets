@@ -1,4 +1,4 @@
-#include "objects.h"
+#include "AccountState.h"
 
 namespace comx
 {
@@ -150,9 +150,9 @@ namespace comx
         }
 
     };
-    std::vector<VmObject*> AccountState::runMethod(std::string methodName, std::vector<VmObject*> params)
+    std::vector<td::unique_ptr<VmObject>> AccountState::runMethod(std::string methodName, std::vector<std::shared_ptr<VmObject>> params)
     {
-        std::vector<VmObject*> res_stack;
+        std::vector<td::unique_ptr<VmObject>> res_stack;
 
         ton::SmartContract smc(ton::SmartContract::State{raw.code, raw.data});
         td::Ref<vm::Stack> stack(true);
@@ -160,18 +160,18 @@ namespace comx
         ton::SmartContract::Args args;
         args.set_method_id(methodName);
 
-        for (VmObject* entry : params)
+        for (std::shared_ptr<VmObject> entry : params)
         {
             switch (entry->getType())
             {
                 case VmObjectType::Number:
-                    stack.write().push_int(td::dec_string_to_int256(((VmObjectNumber*)entry)->getValue()));
+                    stack.write().push_int(td::dec_string_to_int256(((VmObjectNumber*)entry.get())->getValue()));
                     break;
                 case VmObjectType::Cell:
-                    stack.write().push_cell(vm::Ref<vm::Cell>(((VmObjectCell*)entry)->getValue()));
+                    stack.write().push_cell(vm::Ref<vm::Cell>(((VmObjectCell*)entry.get())->getValue()));
                     break;
                 case VmObjectType::Slice:
-                    stack.write().push_cellslice(vm::Ref<vm::CellSlice>(((VmObjectSlice*)entry)->getValue()));
+                    stack.write().push_cellslice(vm::Ref<vm::CellSlice>(((VmObjectSlice*)entry.get())->getValue()));
                     break;
             }
         }
@@ -184,18 +184,191 @@ namespace comx
             switch (entry.type())
             {
             case vm::StackEntry::Type::t_int:
-                res_stack.push_back(new VmObjectNumber(dec_string(entry.as_int())));
+                res_stack.push_back(td::make_unique<VmObjectNumber>(dec_string(entry.as_int())));
                 break;
             case vm::StackEntry::Type::t_cell:
-                res_stack.push_back(new VmObjectSlice(new vm::CellSlice(vm::CellBuilder()
+                res_stack.push_back(td::make_unique<VmObjectSlice>(new vm::CellSlice(vm::CellBuilder()
                 .append_data_cell(vm::Ref<vm::DataCell>(entry.as_cell())).finalize_novm())));
                 break;
             case vm::StackEntry::Type::t_slice:
-                res_stack.push_back(new VmObjectSlice(new vm::CellSlice(entry.as_slice().write())));
+                res_stack.push_back(td::make_unique<VmObjectSlice>(new vm::CellSlice(entry.as_slice().write())));
                 break;
             }
         }
         return res_stack;
+    }
+
+    td::Result<td::Ref<vm::Cell>> AccountState::getStateInit(std::string& public_key, std::int64_t wallet_id)
+    {
+        TRY_RESULT_PREFIX(pubKey, block::PublicKey::parse(public_key), tonlib::TonlibError::InvalidPublicKey());
+        if (wallet_type == WalletType::Unknown)
+            guess_type();
+        auto key = td::Ed25519::PublicKey(td::SecureString(pubKey.key));
+        switch (wallet_type)
+        {
+        case WalletType::WalletV4:
+            return ton::WalletV4::get_init_state(key, static_cast<td::uint32>(wallet_id), wallet_revision);
+        case WalletType::WalletV3:
+            return ton::WalletV3::get_init_state(key, static_cast<td::uint32>(wallet_id), wallet_revision);
+        case WalletType::WalletV1:
+            return ton::TestWallet::get_init_state(key, wallet_revision);
+        case WalletType::WalletV2:
+            return ton::Wallet::get_init_state(key, wallet_revision);
+        case WalletType::HighloadWalletV1:
+            return ton::HighloadWallet::get_init_state(key, static_cast<td::uint32>(wallet_id), wallet_revision);
+        case WalletType::HighloadWalletV2:
+            return ton::HighloadWalletV2::get_init_state(key, static_cast<td::uint32>(wallet_id), wallet_revision);
+        }
+        return td::Status::Error("unknownType");
+    }
+
+    td::unique_ptr<ton::WalletInterface> AccountState::getWallet()
+    {
+        switch (get_wallet_type())
+        {
+        case WalletType::WalletV4:
+            return td::make_unique<WalletV4>(get_smc_state());
+        case WalletType::WalletV3:
+            return td::make_unique<WalletV3>(get_smc_state());
+        case WalletType::HighloadWalletV2:
+            return td::make_unique<HighloadWalletV2>(get_smc_state());
+        case WalletType::HighloadWalletV1:
+            return td::make_unique<HighloadWallet>(get_smc_state());
+        case WalletType::RestrictedWallet:
+            return td::make_unique<RestrictedWallet>(get_smc_state());
+        case WalletType::Giver:
+            return td::make_unique<TestGiver>(get_smc_state());
+        case WalletType::WalletV1:
+            return td::make_unique<TestWallet>(get_smc_state());
+        case WalletType::WalletV2:
+            return td::make_unique<Wallet>(get_smc_state());
+        default:
+            break;
+        }
+        return nullptr;
+    }
+
+    WalletType AccountState::guess_type()
+    {
+        if (raw.code.is_null())
+        {
+            wallet_type = WalletType::Empty;
+            return wallet_type;
+        }
+        if (wallet_type == WalletType::Empty)
+        {
+            vm::Cell::Hash code_hash = raw.code->get_hash();
+
+            if (guess_revision(WalletType::WalletV3, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::WalletV4, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::NftCollection, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::NftItem, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::NftSingle, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::NftMarketplace, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::NftSale, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::JettonMinter, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::JettonWallet, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::HighloadWalletV2, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::HighloadWalletV1, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::ManualDns, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::RestrictedWallet, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::Giver, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::WalletV1, code_hash))
+                return wallet_type;
+
+            if (guess_revision(WalletType::WalletV2, code_hash))
+                return wallet_type;
+
+            wallet_revision = -1;
+            std::vector<std::shared_ptr<VmObject>> vparams;
+            std::vector<td::unique_ptr<VmObject>> vres = runMethod("get_wallet_data", vparams);
+            if (vres.size() >= 3 && is<VmObjectNumber>(vres[0].get()) && is<VmObjectSlice>(vres[1].get()) && is<VmObjectSlice>(vres[2].get()))
+            {
+                wallet_type = WalletType::JettonWallet;
+                return wallet_type;
+            }
+            vres = runMethod("get_jetton_data", vparams);
+            if (vres.size() >= 4 && is<VmObjectNumber>(vres[0].get()) && is<VmObjectSlice>(vres[1].get()) && is<VmObjectSlice>(vres[2].get()))
+            {
+                wallet_type = WalletType::JettonMinter;
+                return wallet_type;
+            }
+            vres = runMethod("get_collection_data", vparams);
+            if (vres.size() == 3 && is<VmObjectNumber>(vres[0].get()) && is<VmObjectSlice>(vres[1].get()) && is<VmObjectSlice>(vres[2].get()))
+            {
+                wallet_type = WalletType::NftCollection;
+                return wallet_type;
+            }
+            vres = runMethod("get_nft_data", vparams);
+            if (vres.size() >= 3 && is<VmObjectNumber>(vres[0].get()) && is<VmObjectNumber>(vres[1].get()) && is<VmObjectSlice>(vres[2].get()))
+            {
+                if (((VmObjectSlice*)vres[2].get())->getValue()->fetch_ulong(2) == 2)
+                    wallet_type = WalletType::NftItem;
+                else
+                    wallet_type = WalletType::NftSingle;
+                return wallet_type;
+            }
+
+            if (wallet_type == WalletType::Empty)
+                wallet_type = WalletType::Unknown;
+        }
+        return wallet_type;
+    }
+
+    std::string AccountState::getVersion()
+    {
+        WalletType type = get_wallet_type();
+        std::string s = std::to_string(wallet_revision);
+        switch (type)
+        {
+        case WalletType::RestrictedWallet:
+            return "Rw r" + s;
+        case WalletType::WalletV4:
+            return "V4 r" + s;
+        case WalletType::WalletV3:
+            return "V3 r" + s;
+        case WalletType::WalletV1:
+            return "V1 r" + s;
+        case WalletType::WalletV2:
+            return "V r" + s;
+        case WalletType::HighloadWalletV1:
+            return "Hv1 r" + s;
+        case WalletType::HighloadWalletV2:
+            return "Hv2 r" + s;
+        case WalletType::ManualDns:
+            return "Md r" + s;
+        case WalletType::Giver:
+            return "Giver";
+        }
+        return SmartContractCode::getWalletName(type);
     }
 
 }

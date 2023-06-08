@@ -55,6 +55,7 @@ namespace Complex.Wallets
 
             Controller.Extensions.Add(new TonAdapterExtension());
             Controller.Extensions.Add(new TonAdapterExtension(true));
+
             Application.Start<MainForm>(fileName, cmd);
         }
     }

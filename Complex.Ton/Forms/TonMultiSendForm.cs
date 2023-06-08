@@ -141,6 +141,7 @@ namespace Complex.Ton
                 this.passwordPanel = new PasswordPanel(false, () => this.switchContainer.Current = this.mainPanel, Cancel);
                 this.passwordPanel.Complete += (s) =>
                 {
+                    controller.Wait("pleaseWait", null, null, CloseCheck);
                     wallet.CheckPassword(this.passwordPanel.Passcode, (e) =>
                     {
                         Timer.Delay(300, () =>

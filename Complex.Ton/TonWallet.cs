@@ -51,9 +51,15 @@ namespace Complex.Ton
         {
             this.wallets.Added += (s, w) =>
             {
-                if (w is JettonMinter m)
-                    m.Parent = this;
+                if (w is TokenWallet token)
+                    token.Parent = this;
             };
+            //this.wallets.Removed += (s, w) =>
+            //{
+            //    if (w is TokenWallet token && token.Parent == this)
+            //        token.Parent = null;
+            //};
+
         }
 
         private PublicKey publicKey;
@@ -182,6 +188,16 @@ namespace Complex.Ton
         public void CreateJetton(string passcode, JettonDeployData data, ParamHandler<object, string> resultHanler)
         {
             this.SendMessage(passcode, data.JettonMinterAddress, data.deployParams.amount, "", data.deployParams.message, data.deployParams.stateInit, resultHanler);
+        }
+
+        public void CreateNftCollection(string passcode, NftDeployData data, ParamHandler<object, string> resultHanler)
+        {
+            this.SendMessage(passcode, data.CollectionAddress, data.deployParams.amount, "", data.deployParams.message, data.deployParams.stateInit, resultHanler);
+        }
+
+        public void CreateNftSingle(string passcode, NftSingleDeployData data, ParamHandler<object, string> resultHanler)
+        {
+            this.SendMessage(passcode, data.SingleAddress, data.deployParams.amount, "", data.deployParams.message, data.deployParams.stateInit, resultHanler);
         }
 
         public override void CreateWallet(string passcode, ParamHandler<object, string> resultHanler)
@@ -317,41 +333,45 @@ namespace Complex.Ton
         }
 
 
-        public override void CreateTransactionAddressMenu(string address, ParamHandler<MenuStrip> paramHandler)
+        public override void CreateAddressMenu(string address, ParamHandler<MenuStrip> paramHandler)
         {
             if (this.wallets.ContainsKey(GetID(this.AdapterID, address, this.IsMain)))
             {
-                base.CreateTransactionAddressMenu(address, paramHandler);
+                base.CreateAddressMenu(address, paramHandler);
             }
             else
             {
                 this.Adapter.CreateAccountState(address, (s, e) =>
                 {
-                    base.CreateTransactionAddressMenu(address, (menu) =>
+                    base.CreateAddressMenu(address, (menu) =>
                     {
                         if (s != null)
                         {
-                            if (s.Type == WalletType.JettonMinter)
+                            switch (s.Type)
                             {
-                                JettonInfo info = JettonController.GetJettonInfo(s);
-                                if (info != null && info.OwnerAddress == this.Address)
-                                {
-                                    menu.Add(null, "attachJetton", true).Executed += (s2) =>
+                                case WalletType.JettonMinter:
                                     {
-                                        new AttachJettonForm(this, info).ShowDialog(Application.Form);
-                                    };
-                                }
-                            }
-                            else if (s.Type == WalletType.JettonWallet)
-                            {
-                                JettonWalletInfo info = JettonController.GetJettonWalletInfo(s);
-                                if (info != null && info.Owner == this.Address)
-                                {
-                                    menu.Add(null, "attachJettonWallet", true).Executed += (s2) =>
+                                        JettonInfo info = JettonController.GetJettonInfo(s);
+                                        if (info != null && info.OwnerAddress == this.Address)
+                                            menu.Add(null, "attachJetton", true).Executed += (s2) =>  new AttachJettonForm(this, info).ShowDialog(Application.Form);
+                                    }
+                                    break;
+                                case WalletType.JettonWallet:
                                     {
-                                        new AttachJettonWalletForm(this, info).ShowDialog(Application.Form);
-                                    };
-                                }
+                                        JettonWalletInfo info = JettonController.GetJettonWalletInfo(s);
+                                        if (info != null && info.OwnerAddress == this.Address)
+                                            menu.Add(null, "attachJettonWallet", true).Executed += (s2) => new AttachJettonWalletForm(this, info).ShowDialog(Application.Form);
+                                    }
+                                    break;
+                                case WalletType.NftSingle:
+                                case WalletType.NftItem:
+                                case WalletType.NftCollection:
+                                    {
+                                        NftInfo info = this.Adapter.GetNftInfo(s);
+                                        if(info != null && (info.OwnerAddress == this.Address || info is NftSingleInfo si && si.EditorAddress == this.Address))
+                                            menu.Add(null, "attach" + s.Type, true).Executed += (s2) => new AttachNftForm(this, info).ShowDialog(Application.Form);
+                                    }
+                                    break;
                             }
                             s.Dispose();
                             paramHandler(menu);
@@ -361,7 +381,7 @@ namespace Complex.Ton
             }
         }
 
-        public override void CreateTokenInfoAddressMenu(ITokenInfo token, ParamHandler<MenuStrip> paramHandler)
+        public override void CreateTokenInfoAddressMenu(ITokenInfoBase token, ParamHandler<MenuStrip> paramHandler)
         {
             if (token is JettonWalletInfo jwi)
             {
@@ -404,8 +424,7 @@ namespace Complex.Ton
 
         public void GetStateInit(ParamHandler<string, string> paramHandler)
         {
-            this.Adapter.CreateAccountState(this.Address
-                , (s, e) =>
+            this.Adapter.CreateAccountState(this.Address, (s, e) =>
             {
                 if (s != null)
                 {

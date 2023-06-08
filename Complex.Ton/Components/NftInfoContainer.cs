@@ -69,7 +69,7 @@ namespace Complex.Ton
 
             Container container = null;
 
-            if (!string.IsNullOrEmpty(info.Owner))
+            if (!string.IsNullOrEmpty(info.OwnerAddress))
             {
                 main.Add(new Separator(DockStyle.Bottom, 20));
 
@@ -84,18 +84,19 @@ namespace Complex.Ton
                 text.Style = Theme.Get<CaptionStyle>();
                 container.Add(text);
 
-                TextButton ownerAddressText = new TextButton(info.Owner);
-                ownerAddressText.MaxWidth = 250;
-                ownerAddressText.Dock = DockStyle.Fill;
-                ownerAddressText.Executed += (s) =>
+                TextButton addressButton = new TextButton(info.OwnerAddress);
+                addressButton.Alignment = ContentAlignment.Left;
+                addressButton.MaxWidth = 250;
+                addressButton.Dock = DockStyle.Fill;
+                addressButton.Executed += (s) =>
                 {
                     if (this.activeButton)
                     {
-                        Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Symbol, info.Owner);
+                        Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Symbol, info.OwnerAddress);
                         this.Form.Hide();
                     }
                 };
-                container.Add(ownerAddressText);
+                container.Add(addressButton);
 
                 ImageButton button = new ImageButton("copyAddress.svg");
                 button.MaxHeight = 20;
@@ -103,14 +104,14 @@ namespace Complex.Ton
                 button.Dock = DockStyle.Right;
                 button.Executed += (s) =>
                 {
-                    Clipboard.SetText(info.Owner);
-                    MessageView.Show(Language.Current["address"] + " " + info.Owner + " " + Language.Current["copiedToClipboard"] + ".", MessageViewType.Message);
+                    Clipboard.SetText(info.OwnerAddress);
+                    MessageView.Show(Language.Current["address"] + " " + info.OwnerAddress + " " + Language.Current["copiedToClipboard"] + ".", MessageViewType.Message);
                 };
                 container.Add(button);
                 main.Add(container);
             }
 
-            if (!string.IsNullOrEmpty(info.Collection))
+            if (!string.IsNullOrEmpty(info.CollectionAddress))
             {
                 main.Add(new Separator(DockStyle.Bottom, 20));
 
@@ -125,18 +126,19 @@ namespace Complex.Ton
                 text.Style = Theme.Get<CaptionStyle>();
                 container.Add(text);
 
-                TextButton ownerAddressText = new TextButton(info.Collection);
-                ownerAddressText.MaxWidth = 250;
-                ownerAddressText.Dock = DockStyle.Fill;
-                ownerAddressText.Executed += (s) =>
+                TextButton addressButton = new TextButton(info.CollectionAddress);
+                addressButton.Alignment = ContentAlignment.Left;
+                addressButton.MaxWidth = 250;
+                addressButton.Dock = DockStyle.Fill;
+                addressButton.Executed += (s) =>
                 {
                     if (this.activeButton)
                     {
-                        Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Symbol, info.Collection);
+                        Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Symbol, info.CollectionAddress);
                         this.Form.Hide();
                     }
                 };
-                container.Add(ownerAddressText);
+                container.Add(addressButton);
 
                 ImageButton button = new ImageButton("copyAddress.svg");
                 button.MaxHeight = 20;
@@ -144,13 +146,55 @@ namespace Complex.Ton
                 button.Dock = DockStyle.Right;
                 button.Executed += (s) =>
                 {
-                    Clipboard.SetText(info.Collection);
-                    MessageView.Show(Language.Current["address"] + " " + info.Collection + " " + Language.Current["copiedToClipboard"] + ".", MessageViewType.Message);
+                    Clipboard.SetText(info.CollectionAddress);
+                    MessageView.Show(Language.Current["address"] + " " + info.CollectionAddress + " " + Language.Current["copiedToClipboard"] + ".", MessageViewType.Message);
                 };
                 container.Add(button);
                 main.Add(container);
             }
 
+            if (info is NftSingleInfo sinfo)
+            {
+                main.Add(new Separator(DockStyle.Bottom, 20));
+
+                container = new Container();
+                container.Dock = DockStyle.Bottom;
+
+                TextComponent text = new TextLocalizeComponent("editorAddress");
+                text.MinWidth = 200;
+                text.Alignment = ContentAlignment.Left;
+                text.AppendRightText = ":";
+                text.Dock = DockStyle.Left;
+                text.Style = Theme.Get<CaptionStyle>();
+                container.Add(text);
+
+                TextButton addressButton = new TextButton(sinfo.EditorAddress);
+                addressButton.Alignment = ContentAlignment.Left;
+                addressButton.MaxWidth = 250;
+                addressButton.Dock = DockStyle.Fill;
+                addressButton.Executed += (s) =>
+                {
+                    if (this.activeButton)
+                    {
+                        Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Symbol, sinfo.EditorAddress);
+                        this.Form.Hide();
+                    }
+                };
+                container.Add(addressButton);
+
+                ImageButton button = new ImageButton("copyAddress.svg");
+                button.MaxHeight = 20;
+                button.ToolTipInfo = new ToolTipInfo(button.Image, "copyAddress", null);
+                button.Dock = DockStyle.Right;
+                button.Executed += (s) =>
+                {
+                    Clipboard.SetText(info.CollectionAddress);
+                    MessageView.Show(Language.Current["address"] + " " + sinfo.EditorAddress + " " + Language.Current["copiedToClipboard"] + ".", MessageViewType.Message);
+                };
+                container.Add(button);
+                main.Add(container);
+
+            }
             this.Add(main);
 
 
@@ -164,10 +208,14 @@ namespace Complex.Ton
 
         private Caption caption;
         private ImageComponent imageComponent;
+        public ImageComponent ImageComponent => imageComponent;
+
         private TextComponent descriptionComponent;
         private TextComponent errorComponent;
 
         private Container main;
+        public Container MainContainer => main;
+
         private WaitDna waitDna;
 
         private NftContent content;
@@ -187,7 +235,8 @@ namespace Complex.Ton
             {
                 descriptionComponent.Text = error;
                 descriptionComponent.ForeColor = Theme.red0;
-                main.Layout();
+                main.Measured = false; 
+                this.Layout();
             }
             else
             {
@@ -230,7 +279,8 @@ namespace Complex.Ton
                                 errorComponent.Visible = true;
                             }
 
-                            main.Layout();
+                            main.Measured = false;
+                            this.Layout();
                             this.animator.Start(1);
                         }
                     }

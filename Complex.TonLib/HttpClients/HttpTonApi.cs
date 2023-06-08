@@ -212,12 +212,12 @@ namespace Complex.Ton
 
         }
 
-        public static (NftInfo[], string) GetNftCollections(string address, bool isTestnet)
+        public static (NftInfo[], string) GetNftCollections(string address, int offset, int count, bool isTestnet)
         {
             string error = null;
             try
             {
-                string url = (isTestnet ? testnet : mainnet) + "v1/nft/getCollections?limit=15&offset=0&account=" + address;
+                string url = (isTestnet ? testnet : mainnet) + "v1/nft/getCollections?limit=" + count + "&offset=" + offset + "&owner=" + address;
                 //string data = System.IO.File.ReadAllText(@"E:\Complex\Ton\Crypto Api\nfts2.json");
                 string data = Http.GetBrouser(url);
                 JsonValue v = Json.Parse(data) as JsonValue;
@@ -248,6 +248,61 @@ namespace Complex.Ton
             return (new NftInfo[0], error);
         }
 
+        public static (NftInfo[], string) GetNftSingles(string address, int offset, int count, bool isTestnet)
+        {
+            string error = null;
+            try
+            {
+                string url = (isTestnet ? testnet : mainnet) + "v1/nft/searchItems?limit=" + count + "&offset=" + offset + "&owner=" + address + "&collection=no";
+                //string data = System.IO.File.ReadAllText(@"E:\Complex\Ton\Crypto Api\nfts2.json");
+                string data = Http.GetBrouser(url);
+                JsonValue v = Json.Parse(data) as JsonValue;
+                if (v != null)
+                {
+                    JsonArray array = v.Value as JsonArray;
+                    if (array != null)
+                    {
+                        if (array.Count > 0)
+                        {
+                            Array<NftInfo> infos = new Array<NftInfo>();
+                            foreach (JsonArray arr in array)
+                            {
+                                NftInfo info = GetNftData(arr, 0);
+                                if (info != null)
+                                    infos.Add(info);
+                            }
+                            return (infos.ToArray(), null);
+                        }
+                        return (null, "");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+            }
+            return (new NftInfo[0], error);
+        }
 
+        public static (NftInfo[], string) GetAllNftItems(string ownerAddress, int offset, int count, bool isTestnet)
+        {
+            string error = null;
+            NftInfo[] infos1 = null;
+            NftInfo[] infos2 = null;
+            NftInfo[] infos3 = null;
+            string e1 = null;
+            string e2 = null;
+            string e3 = null;
+            if (offset == 0)
+            {
+                //(infos1, e1) = GetNftCollections(ownerAddress, 0, 1000, isTestnet);
+                //(infos2, e1) = GetNftSingles(ownerAddress, 0, 1000, isTestnet);
+            }
+            (infos3, e3) = GetNftItems(ownerAddress, 0, 1000, isTestnet);
+            NftInfo[] res = infos1.Concat<NftInfo>(infos2).Concat<NftInfo>(infos3);
+            if (res != null)
+                return (res, null);
+            return (new NftInfo[0], e1 + e2 + e3);
+        }
     }
 }

@@ -223,7 +223,7 @@ namespace Complex.Ton
                 return new TonTokenItem(this, jwi, waitEffect);
             return base.CreateTockenItem(token, waitEffect);
         }
-        public override void CreateTokenInfoMenu(ITokenInfo token, ParamHandler<Menu> paramHandler)
+        public override void CreateTokenInfoMenu(ITokenInfoBase token, ParamHandler<Menu> paramHandler)
         {
             if (token is JettonWalletInfo jwi)
                 paramHandler(new JettonMenu(this, jwi.JettonInfo, true));
@@ -238,7 +238,7 @@ namespace Complex.Ton
             return base.CreateNftItem(nft, waitEffect);
         }
 
-        public override void CreateTokenInfoAddressMenu(ITokenInfo token, ParamHandler<MenuStrip> paramHandler)
+        public override void CreateTokenInfoAddressMenu(ITokenInfoBase token, ParamHandler<MenuStrip> paramHandler)
         {
             if (token is JettonWalletInfo jwi)
             {

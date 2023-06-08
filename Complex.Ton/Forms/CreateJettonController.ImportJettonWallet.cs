@@ -105,7 +105,7 @@ namespace Complex.Ton
                 this.info = info;
                 infoContainer.Update(info);
 
-                this.validOwnerAddress = info.Owner == this.controller.wallet.Address;
+                this.validOwnerAddress = info.OwnerAddress == this.controller.wallet.Address;
                 if (this.validOwnerAddress)
                 {
                     descriptionComponent.TextID = "addressOwnerValid";

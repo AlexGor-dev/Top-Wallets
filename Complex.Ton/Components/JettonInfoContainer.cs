@@ -198,25 +198,25 @@ namespace Complex.Ton
             container = new Container();
             container.Dock = DockStyle.Top;
 
-            deploerText = new TextLocalizeComponent("createdWith");
-            deploerText.Visible = false;
-            deploerText.MinWidth = 200;
-            deploerText.Alignment = ContentAlignment.Left;
-            deploerText.AppendRightText = ":";
-            deploerText.Dock = DockStyle.Left;
-            deploerText.Style = Theme.Get<CaptionStyle>();
-            container.Add(deploerText);
+            deployerText = new TextLocalizeComponent("createdWith");
+            deployerText.Visible = false;
+            deployerText.MinWidth = 200;
+            deployerText.Alignment = ContentAlignment.Left;
+            deployerText.AppendRightText = ":";
+            deployerText.Dock = DockStyle.Left;
+            deployerText.Style = Theme.Get<CaptionStyle>();
+            container.Add(deployerText);
 
-            deploerButton = new TextButton();
-            deploerButton.ForeColor = Theme.blue0;
-            deploerButton.Visible = false;
-            deploerButton.MaxWidth = 250;
-            deploerButton.Dock = DockStyle.Left;
-            deploerButton.Executed += (s) =>
+            deployerButton = new TextButton();
+            deployerButton.ForeColor = Theme.blue0;
+            deployerButton.Visible = false;
+            deployerButton.MaxWidth = 250;
+            deployerButton.Dock = DockStyle.Left;
+            deployerButton.Executed += (s) =>
             {
-                WinApi.ShellExecute(deploerButton.Tag as string);
+                WinApi.ShellExecute(deployerButton.Tag as string);
             };
-            container.Add(deploerButton);
+            container.Add(deployerButton);
             this.Add(container);
 
         }
@@ -240,8 +240,8 @@ namespace Complex.Ton
         private string jettonAddress;
         private string jettonWalletAddress;
         private string ownertAddress;
-        private TextLocalizeComponent deploerText;
-        private TextButton deploerButton;
+        private TextLocalizeComponent deployerText;
+        private TextButton deployerButton;
 
         public void Update(JettonDeployData data, IImage img)
         {
@@ -303,16 +303,16 @@ namespace Complex.Ton
                 JsonArray array = Json.Parse(info.Deployer) as JsonArray;
                 if (array != null && array.Contains("name"))
                 {
-                    deploerButton.Text = array.GetString("name");
-                    deploerButton.Tag = array.GetString("url");
-                    deploerText.Visible = true;
-                    deploerButton.Visible = true;
+                    deployerButton.Text = array.GetString("name");
+                    deployerButton.Tag = array.GetString("url");
+                    deployerText.Visible = true;
+                    deployerButton.Visible = true;
                 }
             }
             else
             {
-                deploerText.Visible = false;
-                deploerButton.Visible = false;
+                deployerText.Visible = false;
+                deployerButton.Visible = false;
             }
         }
 

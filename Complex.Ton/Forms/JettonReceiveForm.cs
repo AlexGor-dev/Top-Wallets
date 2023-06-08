@@ -28,7 +28,7 @@ namespace Complex.Ton
 
             protected override string GetReceiveAddress()
             {
-                return (this.wallet as JettonWallet).WalletInfo.Owner;
+                return (this.wallet as JettonWallet).WalletInfo.OwnerAddress;
             }
         }
     }

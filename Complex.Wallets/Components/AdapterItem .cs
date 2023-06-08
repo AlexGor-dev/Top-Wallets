@@ -88,12 +88,8 @@ namespace Complex.Wallets
             g.Smoosh(() =>
             {
                 int color = Theme.unselectedItemBackColor;
-                //int back2 = Theme.selectedItemBackColor;
                 if (this.Selected)
-                {
                     color = Theme.selectedItemBackColor;
-                    //back2 = Theme.unselectedItemBackColor;
-                }
                 g.FillRoundRect(dispRect, 10, color);
             });
 

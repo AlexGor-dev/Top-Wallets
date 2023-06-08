@@ -83,7 +83,7 @@ namespace Complex.Ton
                         caption.Style = style;
                         container.Add(caption);
 
-                        string owner = this.minter.Owner;
+                        string owner = this.minter.OwnerAddress;
                         if (!string.IsNullOrEmpty(owner))
                         {
                             Wallet wt = WalletsData.GetAnyWallet(this.wallet.AdapterID, owner);
@@ -92,7 +92,7 @@ namespace Complex.Ton
                             ownerButton.Dock = DockStyle.Left;
                             ownerButton.Executed += (s) =>
                             {
-                                Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Adapter.Symbol, this.minter.Owner);
+                                Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Adapter.Symbol, this.minter.OwnerAddress);
                             };
                             container.Add(ownerButton);
                         }
@@ -104,19 +104,28 @@ namespace Complex.Ton
 
                         }
 
-                        if (this.wallet.IsMain && this.wallet is JettonWallet jw && jw.WalletInfo.Owner == jw.WalletInfo.JettonInfo.OwnerAddress)
+                        if (this.wallet.IsMain && this.minter.OwnerAddress == this.minter.JettonInfo.OwnerAddress)
                         {
-                            burnButton = new ColorButton("burnCoins");
-                            burnButton.Dock = DockStyle.Right;
-                            //burnButton.Padding.Set(6);
-                            burnButton.Enabled = this.Adapter.IsConnected && jw.State != WalletState.None;
-                            burnButton.Radius = 6;
-                            burnButton.BoxColor = Theme.red0;
-                            burnButton.Executed += (s) =>
+                            if (this.wallet.Type == WalletType.JettonWallet)
                             {
-                                new BurnCoinsForm(jw).Show(burnButton, MenuAlignment.BottomRight);
-                            };
-                            container.Add(burnButton);
+                                extButton = new ColorButton("burnCoins");
+                                extButton.Dock = DockStyle.Right;
+                                extButton.Enabled = this.Adapter.IsConnected && this.minter.State != WalletState.None;
+                                extButton.Radius = 6;
+                                extButton.BoxColor = Theme.red0;
+                                extButton.Executed += (s) => new BurnCoinsForm(this.minter as JettonWallet).Show(extButton, MenuAlignment.BottomRight);
+                                container.Add(extButton);
+                            }
+                            else
+                            {
+                                extButton = new ColorButton("mintCoins");
+                                extButton.Dock = DockStyle.Right;
+                                extButton.Enabled = this.Adapter.IsConnected && this.minter.State != WalletState.None;
+                                extButton.Radius = 6;
+                                extButton.BoxColor = Theme.green2;
+                                extButton.Executed += (s) => new MintCoinsForm(this.minter).Show(extButton, MenuAlignment.BottomRight);
+                                container.Add(extButton);
+                            }
 
                         }
                         this.Insert(1, new Separator(DockStyle.Top, 20));
@@ -173,7 +182,7 @@ namespace Complex.Ton
                         caption.Style = style;
                         container.Add(caption);
 
-                        string owner = this.nftWallet.Owner;
+                        string owner = this.nftWallet.OwnerAddress;
                         if (!string.IsNullOrEmpty(owner))
                         {
                             Wallet wt = WalletsData.GetAnyWallet(this.wallet.AdapterID, owner);
@@ -182,7 +191,7 @@ namespace Complex.Ton
                             ownerButton.Dock = DockStyle.Left;
                             ownerButton.Executed += (s) =>
                             {
-                                Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Adapter.Symbol, this.nftWallet.Owner);
+                                Controller.ShowAnyWallet(this.wallet.Adapter, this.wallet.Adapter.Symbol, this.nftWallet.OwnerAddress);
                             };
                             container.Add(ownerButton);
                         }
@@ -216,7 +225,7 @@ namespace Complex.Ton
         private NftWallet nftWallet;
 
         private CheckedTextButton textButton;
-        private ColorButton burnButton;
+        private ColorButton extButton;
         private TextButton ownerButton;
         private TonConnectionContainer connectionContainer;
         private bool tonConnectInited = false;
@@ -239,15 +248,15 @@ namespace Complex.Ton
         }
         protected override void OnConnectionChanged()
         {
-            if(burnButton != null)
-                burnButton.Enabled = this.Adapter.IsConnected && this.wallet.State != WalletState.None;
+            if(extButton != null)
+                extButton.Enabled = this.Adapter.IsConnected && this.wallet.State != WalletState.None;
             base.OnConnectionChanged();
         }
 
         protected override void OnDrawBack(Graphics g)
         {
-            if (burnButton != null)
-                burnButton.BoxColor = Theme.red0;
+            if (extButton != null)
+                extButton.BoxColor = this.wallet.Type == WalletType.JettonWallet ? Theme.red0 : Theme.green2;
             base.OnDrawBack(g);
         }
 

@@ -12,8 +12,8 @@ using Complex;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.2")]
-[assembly: AssemblyFileVersion("1.2")]
+[assembly: AssemblyVersion("1.21")]
+[assembly: AssemblyFileVersion("1.21")]
 [assembly: Image("top_wallets_96.png")]
 [assembly: MainAssembly]
 

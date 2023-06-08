@@ -4,8 +4,8 @@ namespace Complex.Ton
 {
     public class JettonDeployData : DeployData
     {
-        public JettonDeployData(string ownerAddress, long queryId, string jettonMinterAddress, string jettonWalletAddress, ContractDeployData deployParams, JettonInfo info, string offchainUri)
-            :base(ownerAddress, queryId, jettonMinterAddress, new string[] { jettonWalletAddress }, deployParams)
+        public JettonDeployData(string ownerAddress, string jettonMinterAddress, string jettonWalletAddress, ContractDeployData deployParams, JettonInfo info, string offchainUri)
+            :base(ownerAddress, jettonMinterAddress, new string[] { jettonWalletAddress }, deployParams)
         {
             this.info = info;
             this.offchainUri = offchainUri;

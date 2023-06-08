@@ -71,6 +71,9 @@
     <Compile Include="Contracts\Nft\NftDeployData.cs" />
     <Compile Include="Contracts\Nft\NftContent.cs" />
     <Compile Include="Contracts\Nft\NftInfo.cs" />
+    <Compile Include="Contracts\Nft\NftMintItemInfo.cs" />
+    <Compile Include="Contracts\Nft\NftSingleDeployData.cs" />
+    <Compile Include="Contracts\Nft\NftSingleInfo.cs" />
     <Compile Include="Nacl.cs" />
     <Compile Include="Queries\DeleteKeyQuery.cs" />
     <Compile Include="Queries\GetExportKeyQuery.cs" />

@@ -12,7 +12,7 @@ namespace Complex.Wallets
 
             confirmText = new TextComponent();
             confirmText.Dock = DockStyle.Top;
-            confirmText.MaxHeight = 30;
+            confirmText.MultilineLenght = 50;
             this.Add(confirmText);
 
             this.addressText = new TextComponent();
@@ -31,7 +31,7 @@ namespace Complex.Wallets
             this.errText = new TextComponent();
             this.errText.MultilineLenght = 50;
             this.errText.ForeColor = Theme.red0;
-            this.errText.Font = Theme.font11Bold;
+            this.errText.Font = Theme.font10Bold;
             this.errText.MinHeight = 40;
             this.errText.Dock = DockStyle.Top;
             this.Add(this.errText);
@@ -50,7 +50,7 @@ namespace Complex.Wallets
             this.errBotText = new TextComponent();
             this.errBotText.MultilineLenght = 50;
             this.errBotText.ForeColor = Theme.red1;
-            this.errBotText.Font = Theme.font11Bold;
+            this.errBotText.Font = Theme.font10Bold;
             this.errBotText.MinHeight = 40;
             this.errBotText.Dock = DockStyle.Bottom;
             this.Add(this.errBotText);

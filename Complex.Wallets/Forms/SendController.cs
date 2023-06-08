@@ -128,12 +128,16 @@ namespace Complex.Wallets
                 this.passwordPanel.DescriptionID = Language.Current["enterPasswordForWallet", passWallet.OriginalName, passWallet.Address];
                 this.passwordPanel.Complete += (s) =>
                 {
+                    this.Wait("checkPasscode", null, "waitCheckPasscode", closeHandler);
                     this.wallet.CheckPassword(this.passwordPanel.Passcode, (e) =>
                     {
-                        if (e == null)
-                            SingleThread.Run(this.SendAmmount);
-                        else
-                            this.ErrorLang("error", e, () => this.switchContainer.Current = this.passwordPanel);
+                        Timer.Delay(300, () =>
+                        {
+                            if (e == null)
+                                SingleThread.Run(this.SendAmmount);
+                            else
+                                this.ErrorLang("error", e, () => this.switchContainer.Current = this.passwordPanel);
+                        });
                     });
                 };
 

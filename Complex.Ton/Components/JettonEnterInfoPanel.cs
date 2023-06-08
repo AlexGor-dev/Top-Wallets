@@ -9,8 +9,8 @@ namespace Complex.Ton
 {
     public class JettonEnterInfoPanel : CaptionPanel
     {
-        public JettonEnterInfoPanel(string captionID, bool useTotalSupply, EmptyHandler goback, EmptyHandler closeHandler, int continueButtonColor, EmptyHandler waitHandler, ParamHandler<JettonInfo,IImage> resultHandler)
-            : base(captionID, goback, closeHandler, "continue", continueButtonColor, ()=> { })
+        public JettonEnterInfoPanel(string captionID, bool useTotalSupply, EmptyHandler goback, EmptyHandler closeHandler, int continueButtonColor, EmptyHandler waitHandler, ParamHandler<JettonInfo, IImage> resultHandler)
+            : base(captionID, goback, closeHandler, "continue", continueButtonColor, () => { })
         {
             this.waitHandler = waitHandler;
             this.resultHandler = resultHandler;
@@ -138,6 +138,7 @@ namespace Complex.Ton
 
         private EmptyHandler waitHandler;
         private ParamHandler<JettonInfo, IImage> resultHandler;
+
         private TextBox nameBox;
         private TextBox symbolBox;
         private TextEditor descBox;

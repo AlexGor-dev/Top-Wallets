@@ -4,8 +4,8 @@ namespace Complex.Ton
 {
     public class NftDeployData : DeployData
     {
-        public NftDeployData(string ownerAddress, long queryId, string nftCollectionAddress, string[] nftItemsAddress, ContractDeployData deployParams, string collectioContent, RoyaltyParams royaltyParams, NftMintItem[] items)
-            :base(ownerAddress, queryId, nftCollectionAddress, nftItemsAddress, deployParams)
+        public NftDeployData(string ownerAddress, string nftCollectionAddress, string[] nftItemsAddress, ContractDeployData deployParams, string collectioContent, RoyaltyParams royaltyParams, NftMintItemInfo[] items)
+            :base(ownerAddress, nftCollectionAddress, nftItemsAddress, deployParams)
         {
             this.collectioContent = collectioContent;
             this.royaltyParams = royaltyParams;
@@ -14,9 +14,9 @@ namespace Complex.Ton
 
         public readonly string collectioContent;
         public readonly RoyaltyParams royaltyParams;
-        public readonly NftMintItem[] items;
+        public readonly NftMintItemInfo[] items;
 
-        public string NftCollectionAddress => parentAddress;
-        public string[] NftItemsAddress => childsAddress;
+        public string CollectionAddress => parentAddress;
+        public string[] ItemsAddress => childsAddress;
     }
 }

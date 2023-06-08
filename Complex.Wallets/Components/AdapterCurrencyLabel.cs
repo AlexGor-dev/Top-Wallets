@@ -14,11 +14,11 @@ namespace Complex.Wallets
             this.Padding.Set(4);
             this.MinHeight = 50;
 
-            this.imageComponent = new ImageComponent(wallet.Adapter.ImageID);
-            this.imageComponent.MaxSize.Set(32, 32);
-            //this.imageComponent.Image = wallet.Adapter.Extension.Image;
-            this.imageComponent.Dock = DockStyle.Left;
-            //this.Add(this.imageComponent);
+            //this.imageComponent = new ImageComponent(wallet.Adapter.ImageID);
+            //this.imageComponent.MaxSize.Set(32, 32);
+            ////this.imageComponent.Image = wallet.Adapter.Extension.Image;
+            //this.imageComponent.Dock = DockStyle.Left;
+            ////this.Add(this.imageComponent);
 
             this.textCurrencyLabel = new CurrencyLabel(wallet.Balance.ToKMB(3), wallet.Symbol);
             this.textCurrencyLabel.ValueTextComponent.ForeColor = wallet.ThemeColor;
@@ -34,18 +34,18 @@ namespace Complex.Wallets
         }
 
 
-        private ImageComponent imageComponent;
+        //private ImageComponent imageComponent;
         private CurrencyLabel textCurrencyLabel;
         private AdapterWaitLabel adapterLabel;
 
-        protected override void OnMeasure(float widthMeasure, float heightMeasure)
-        {
-            this.imageComponent.Measure();
-            this.textCurrencyLabel.Measure();
-            this.adapterLabel.Measure();
-            this.SetMeasured(this.Padding.horizontal + this.imageComponent.MeasuredWidth + this.Inflate.width + Math.Max(this.textCurrencyLabel.MeasuredWidth, this.adapterLabel.MeasuredWidth),
-                this.Padding.vertical + Math.Max(this.imageComponent.MeasuredHeight, this.textCurrencyLabel.MeasuredHeight + this.Inflate.height + this.adapterLabel.MeasuredHeight));
-        }
+        //protected override void OnMeasure(float widthMeasure, float heightMeasure)
+        //{
+        //    this.imageComponent.Measure();
+        //    this.textCurrencyLabel.Measure();
+        //    this.adapterLabel.Measure();
+        //    this.SetMeasured(this.Padding.horizontal + this.imageComponent.MeasuredWidth + this.Inflate.width + Math.Max(this.textCurrencyLabel.MeasuredWidth, this.adapterLabel.MeasuredWidth),
+        //        this.Padding.vertical + Math.Max(this.imageComponent.MeasuredHeight, this.textCurrencyLabel.MeasuredHeight + this.Inflate.height + this.adapterLabel.MeasuredHeight));
+        //}
 
         public void Update()
         {

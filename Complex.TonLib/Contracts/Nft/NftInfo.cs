@@ -9,25 +9,25 @@ namespace Complex.Ton
 {
     public class NftInfo : INftInfo
     {
-        public NftInfo(string address, long index, string owner, string collectionName, string collection, string content)
+        public NftInfo(string address, long index, string ownerAddress, string collectionName, string collectionAddress, string content)
         {
             this.address = address;
             this.index = index;
-            this.owner = owner;
+            this.ownerAddress = ownerAddress;
             this.collectionName = collectionName;
-            this.collection = collection;
+            this.collectionAddress = collectionAddress;
             this.content = content;
         }
 
-        public NftInfo(string address, long index, string owner, string collectionName, string collection, NftContent content)
-            : this(address, index, owner, collectionName, collection, null as string)
+        public NftInfo(string address, long index, string ownerAddress, string collectionName, string collectionAddress, NftContent content)
+            : this(address, index, ownerAddress, collectionName, collectionAddress, null as string)
         {
             this.nftContent = content;
         }
 
 
-        private string owner;
-        public string Owner => owner;
+        private string ownerAddress;
+        public string OwnerAddress => ownerAddress;
 
         private long index;
         public long Index => index;
@@ -35,20 +35,20 @@ namespace Complex.Ton
         private string collectionName;
         public string CollectionName => collectionName;
 
-        private string collection;
-        public string Collection => collection;
+        private string collectionAddress;
+        public string CollectionAddress => collectionAddress;
 
         private string address;
         public string Address => address;
 
         private NftContent nftContent;
 
-        string INftInfo.Name => nftContent?.Name;
+        string ITokenInfoBase.Name => nftContent?.Name;
 
         string IUnique.ID => address;
 
         private string content;
-
+        public string Content => content;
         public string Type { get; set; }
 
 

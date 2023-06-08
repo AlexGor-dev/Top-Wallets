@@ -393,7 +393,7 @@ void LiteClientCalcFee(LiteClient* client, const char* srcAddress, MessageInfo* 
         return;
     }
 
-    client->calcFee(new CalcFee(raw.move_as_ok()), [resultHandler = resultHandler](td::Result<int64_t> rfees)
+    client->calcFee(std::make_shared<CalcFee>(raw.move_as_ok()), [resultHandler = resultHandler](td::Result<int64_t> rfees)
     {
         if (rfees.is_error())
             resultHandler(-1, rfees.move_as_error().to_string().c_str());
@@ -553,15 +553,14 @@ void AccountGetMsgHash(comx::AccountState* state, const char* res)
     SliceToArray(state->raw.info.root.get()->get_hash().as_slice(), res, &resLen);
 }
 
-void AccountRunMethod(comx::AccountState* state, const char* methodName, comx::VmObject** params, size_t paramsLen, comx::VmObject** res, size_t* resLen)
+void AccountRunMethod(comx::AccountState* state, const char* methodName, comx::VmObject** params, size_t paramsLen, QueryLongHandler vmHandler)
 {
-    std::vector<comx::VmObject*> vparams;
+    std::vector<std::shared_ptr<VmObject>> vparams;
     for (int i = 0; i < paramsLen; i++)
-        vparams.push_back((comx::VmObject*)params[i]);
-    std::vector<comx::VmObject*> vres = state->runMethod(methodName, vparams);
-    *resLen = vres.size();
+        vparams.push_back(std::shared_ptr<VmObject>((VmObject*)params[i]));
+    std::vector<td::unique_ptr<VmObject>> vres = state->runMethod(methodName, vparams);
     for (int i = 0; i < vres.size(); i++)
-        res[i] = vres[i];
+        vmHandler(toHandle<VmObject>(vres[i].get()));
 }
 
 void DeleteVmObject(comx::VmObject* vmObject)

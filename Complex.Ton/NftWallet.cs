@@ -45,10 +45,22 @@ namespace Complex.Ton
             Controller.AddCoinImage(SmallImageID, 48, this.ThemeColor, this.ImageID);
         }
 
-        private NftInfo info;
-        public NftInfo Info => info;
+        private NftInfo prevInfo;
+        protected NftInfo PrevInfo => prevInfo;
 
-        public override string Owner => info.Owner;
+        private NftInfo info;
+        public NftInfo Info
+        {
+            get => info;
+            private set
+            {
+                if (value == null) return;
+                this.prevInfo = this.info;
+                this.info = value;
+            }
+        }
+
+        public override string OwnerAddress => info.OwnerAddress;
 
         public override string ImageID => "nft_token.svg";
 
@@ -57,11 +69,44 @@ namespace Complex.Ton
 
         public override ThemeColor ThemeColor => Theme.gray2;
 
+
+        public override bool Update(AccountState state)
+        {
+            bool firstUpdate = this.State == WalletState.None;
+            if (base.Update(state))
+            {
+                if (!firstUpdate)
+                {
+                    NftInfo info = this.Adapter.GetNftInfo(state);
+                    this.Info = info;
+                    if (this.CheckInfoChanged())
+                        this.OnInfoChanged();
+                }
+                return true;
+            }
+            return false;
+        }
+
+        protected virtual bool CheckInfoChanged()
+        {
+            return this.Parent != null && this.info != null && this.info.OwnerAddress != this.Parent.Address;
+        }
+
+        protected virtual void OnInfoChanged()
+        {
+
+        }
         public override void LoadImage(ParamHandler<IImage> paramHandler)
         {
             paramHandler(Images.Get(SmallImageID));
         }
 
+        //public override string GetBalanceMarketPrice()
+        //{
+        //    if (this.Parent != null)
+        //        return this.Parent.GetMarketPrice(this.Balance);
+        //    return base.GetBalanceMarketPrice();
+        //}
         public override ColorButton CreateMainLeftButton()
         {
             return null;

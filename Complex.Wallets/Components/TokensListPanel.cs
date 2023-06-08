@@ -303,7 +303,7 @@ namespace Complex.Wallets
                         };
                         addressButton.RightClick += (s) =>
                         {
-                            this.wallet.CreateTransactionAddressMenu(token.Address, (m) =>
+                            this.wallet.CreateAddressMenu(token.Address, (m) =>
                             {
                                 if (m != null)
                                     Application.Invoke(() => m.Show(s as Component, MenuAlignment.Bottom));

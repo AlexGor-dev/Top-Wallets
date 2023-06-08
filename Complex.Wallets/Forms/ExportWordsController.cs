@@ -25,13 +25,9 @@ namespace Complex.Wallets
                     }
                     else
                     {
-                        Application.Invoke(() =>
-                        {
-                            WordsPanel wordsPanel = new WordsPanel(wallet.Adapter, false, null, null, closeHandler, doneHandler);
-                            wordsPanel.UpdateWorts(ws);
-                            this.switchContainer.Current = wordsPanel;
-                        });
-
+                        WordsPanel wordsPanel = new WordsPanel(wallet.Adapter, false, null, null, closeHandler, doneHandler);
+                        wordsPanel.UpdateWorts(ws);
+                        this.switchContainer.Current = wordsPanel;
                     }
                 });
             });
